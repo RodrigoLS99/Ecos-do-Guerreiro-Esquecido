@@ -4,15 +4,18 @@ const SPEED := 160.0
 const JUMP_VELOCITY := -320.0
 const GRAVITY := 900.0
 const CLIMB_SPEED := 100.0
+const ATTACK_DURATION := 0.25
+const ATTACK_HITBOX_WINDOW := 0.12
 const ECHO_SCENE := preload("res://scenes/player/echo.tscn")
 
-enum State { IDLE, RUN, JUMP, FALL, CLIMB }
+enum State { IDLE, RUN, JUMP, FALL, CLIMB, ATTACK }
 
 var ladders_in_range: Array[Area2D] = []
 var ladders_below_in_range: Array[Area2D] = []
 var state: State = State.IDLE
 var drop_through_remaining := 0.0
 var current_echo: Node2D = null
+var attack_in_progress := false
 
 
 func _physics_process(delta: float) -> void:
@@ -25,8 +28,16 @@ func _physics_process(delta: float) -> void:
 	var horizontal_direction := Input.get_axis("ui_left", "ui_right")
 	var vertical_direction := Input.get_axis("ui_up", "ui_down")
 
+	if state == State.ATTACK:
+		_handle_attack(delta)
+		return
+
 	if state == State.CLIMB:
 		_handle_climb(delta, horizontal_direction, vertical_direction)
+		return
+
+	if Input.is_action_just_pressed("attack"):
+		attack()
 		return
 
 	var can_climb_up := not ladders_in_range.is_empty() and vertical_direction < 0.0
@@ -79,6 +90,13 @@ func _update_movement_state(horizontal_direction: float) -> void:
 		state = State.RUN
 	else:
 		state = State.IDLE
+
+
+func _handle_attack(delta: float) -> void:
+	if not is_on_floor():
+		velocity.y += GRAVITY * delta
+	velocity.x = 0.0
+	move_and_slide()
 
 
 func _on_ladder_detector_area_entered(area: Area2D) -> void:
@@ -146,3 +164,20 @@ func collapse_echo() -> void:
 	current_echo.queue_free()
 	current_echo = null
 	global_position = target
+
+
+func attack() -> void:
+	if attack_in_progress:
+		return
+
+	attack_in_progress = true
+	state = State.ATTACK
+	velocity.x = 0.0
+	$AttackHitbox/CollisionShape2D.set_deferred("disabled", false)
+
+	await get_tree().create_timer(ATTACK_HITBOX_WINDOW).timeout
+	$AttackHitbox/CollisionShape2D.set_deferred("disabled", true)
+	await get_tree().create_timer(ATTACK_DURATION - ATTACK_HITBOX_WINDOW).timeout
+
+	attack_in_progress = false
+	_update_movement_state(0.0)

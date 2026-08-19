@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_script"]
 
@@ -10,6 +10,9 @@ size = Vector2(32, 48)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ladder_below_detector"]
 size = Vector2(28, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_attack"]
+size = Vector2(36, 28)
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_script")
@@ -39,6 +42,15 @@ enabled = true
 target_position = Vector2(0, 32)
 collision_mask = 1
 exclude_parent = true
+
+[node name="AttackHitbox" type="Area2D" parent="."]
+position = Vector2(34, 0)
+collision_layer = 0
+collision_mask = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackHitbox"]
+shape = SubResource("RectangleShape2D_attack")
+disabled = true
 
 [connection signal="area_entered" from="LadderDetector" to="." method="_on_ladder_detector_area_entered"]
 [connection signal="area_exited" from="LadderDetector" to="." method="_on_ladder_detector_area_exited"]
