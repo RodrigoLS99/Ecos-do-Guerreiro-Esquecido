@@ -56,3 +56,4 @@ disabled = true
 [connection signal="area_exited" from="LadderDetector" to="." method="_on_ladder_detector_area_exited"]
 [connection signal="area_entered" from="LadderBelowDetector" to="." method="_on_ladder_below_detector_area_entered"]
 [connection signal="area_exited" from="LadderBelowDetector" to="." method="_on_ladder_below_detector_area_exited"]
+[connection signal="body_entered" from="AttackHitbox" to="." method="_on_attack_hitbox_body_entered"]

@@ -181,3 +181,8 @@ func attack() -> void:
 
 	attack_in_progress = false
 	_update_movement_state(0.0)
+
+
+func _on_attack_hitbox_body_entered(body: Node2D) -> void:
+	if body.is_in_group(&"enemy") and body.has_method("take_damage"):
+		body.take_damage(1)
