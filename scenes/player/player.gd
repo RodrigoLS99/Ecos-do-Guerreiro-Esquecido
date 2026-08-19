@@ -19,6 +19,8 @@ func _physics_process(delta: float) -> void:
 	_update_drop_through(delta)
 	if Input.is_action_just_pressed("echo_create"):
 		create_echo()
+	if Input.is_action_just_pressed("echo_collapse"):
+		collapse_echo()
 
 	var horizontal_direction := Input.get_axis("ui_left", "ui_right")
 	var vertical_direction := Input.get_axis("ui_up", "ui_down")
@@ -133,3 +135,14 @@ func create_echo() -> void:
 	current_echo = ECHO_SCENE.instantiate()
 	current_echo.global_position = global_position
 	get_tree().current_scene.add_child(current_echo)
+
+
+func collapse_echo() -> void:
+	if current_echo == null or not is_instance_valid(current_echo):
+		current_echo = null
+		return
+
+	var target := current_echo.global_position
+	current_echo.queue_free()
+	current_echo = null
+	global_position = target
