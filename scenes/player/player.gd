@@ -8,10 +8,14 @@ const CLIMB_SPEED := 100.0
 enum State { IDLE, RUN, JUMP, FALL, CLIMB }
 
 var ladders_in_range: Array[Area2D] = []
+var ladders_below_in_range: Array[Area2D] = []
 var state: State = State.IDLE
+var drop_through_remaining := 0.0
 
 
 func _physics_process(delta: float) -> void:
+	_update_drop_through(delta)
+
 	var horizontal_direction := Input.get_axis("ui_left", "ui_right")
 	var vertical_direction := Input.get_axis("ui_up", "ui_down")
 
@@ -19,7 +23,11 @@ func _physics_process(delta: float) -> void:
 		_handle_climb(delta, horizontal_direction, vertical_direction)
 		return
 
-	if not ladders_in_range.is_empty() and vertical_direction != 0.0:
+	var can_climb_up := not ladders_in_range.is_empty() and vertical_direction < 0.0
+	var can_climb_down := not ladders_below_in_range.is_empty() and vertical_direction > 0.0 and _can_drop_through()
+	if can_climb_up or can_climb_down:
+		if can_climb_down:
+			_start_drop_through()
 		state = State.CLIMB
 		_handle_climb(delta, horizontal_direction, vertical_direction)
 		return
@@ -35,7 +43,7 @@ func _physics_process(delta: float) -> void:
 
 
 func _handle_climb(delta: float, horizontal_direction: float, vertical_direction: float) -> void:
-	if ladders_in_range.is_empty():
+	if ladders_in_range.is_empty() and ladders_below_in_range.is_empty():
 		state = State.FALL
 		velocity.y = 0.0
 		return
@@ -47,10 +55,14 @@ func _handle_climb(delta: float, horizontal_direction: float, vertical_direction
 		move_and_slide()
 		return
 
-	var ladder := ladders_in_range[0]
+	var ladder := _get_active_ladder(vertical_direction)
+	if ladder == null:
+		state = State.FALL
+		return
+
 	global_position.x = ladder.global_position.x
 	velocity.x = 0.0
-	velocity.y = vertical_direction * CLIMB_SPEED
+	velocity.y = CLIMB_SPEED if drop_through_remaining > 0.0 and vertical_direction == 0.0 else vertical_direction * CLIMB_SPEED
 	move_and_slide()
 
 
@@ -71,3 +83,40 @@ func _on_ladder_detector_area_entered(area: Area2D) -> void:
 func _on_ladder_detector_area_exited(area: Area2D) -> void:
 	if area.is_in_group(&"ladder"):
 		ladders_in_range.erase(area)
+
+
+func _on_ladder_below_detector_area_entered(area: Area2D) -> void:
+	if area.is_in_group(&"ladder") and not ladders_below_in_range.has(area):
+		ladders_below_in_range.append(area)
+
+
+func _on_ladder_below_detector_area_exited(area: Area2D) -> void:
+	if area.is_in_group(&"ladder"):
+		ladders_below_in_range.erase(area)
+
+
+func _get_active_ladder(vertical_direction: float) -> Area2D:
+	if vertical_direction > 0.0 and not ladders_below_in_range.is_empty():
+		return ladders_below_in_range[0]
+	if not ladders_in_range.is_empty():
+		return ladders_in_range[0]
+	return null
+
+
+func _can_drop_through() -> bool:
+	var floor_body := $FloorDetector.get_collider() as Node2D
+	return floor_body != null and floor_body.is_in_group(&"drop_through_platform")
+
+
+func _start_drop_through() -> void:
+	drop_through_remaining = 0.7
+	$CollisionShape2D.set_deferred("disabled", true)
+
+
+func _update_drop_through(delta: float) -> void:
+	if drop_through_remaining <= 0.0:
+		return
+
+	drop_through_remaining -= delta
+	if drop_through_remaining <= 0.0:
+		$CollisionShape2D.set_deferred("disabled", false)

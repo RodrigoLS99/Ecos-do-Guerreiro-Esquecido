@@ -8,6 +8,9 @@ size = Vector2(32, 48)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ladder_detector"]
 size = Vector2(32, 48)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ladder_below_detector"]
+size = Vector2(28, 20)
+
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_script")
 
@@ -24,5 +27,20 @@ monitoring = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LadderDetector"]
 shape = SubResource("RectangleShape2D_ladder_detector")
 
+[node name="LadderBelowDetector" type="Area2D" parent="."]
+monitoring = true
+position = Vector2(0, 36)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LadderBelowDetector"]
+shape = SubResource("RectangleShape2D_ladder_below_detector")
+
+[node name="FloorDetector" type="RayCast2D" parent="."]
+enabled = true
+target_position = Vector2(0, 32)
+collision_mask = 1
+exclude_parent = true
+
 [connection signal="area_entered" from="LadderDetector" to="." method="_on_ladder_detector_area_entered"]
 [connection signal="area_exited" from="LadderDetector" to="." method="_on_ladder_detector_area_exited"]
+[connection signal="area_entered" from="LadderBelowDetector" to="." method="_on_ladder_below_detector_area_entered"]
+[connection signal="area_exited" from="LadderBelowDetector" to="." method="_on_ladder_below_detector_area_exited"]
