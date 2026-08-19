@@ -248,7 +248,7 @@ func die_instant() -> void:
 		return
 
 	state = State.DEAD
-	get_tree().call_deferred(&"reload_current_scene")
+	GameState.respawn_current_floor()
 
 
 func take_damage(amount: int) -> void:

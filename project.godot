@@ -18,6 +18,10 @@ config/name="Ecos do Guerreiro Esquecido"
 run/main_scene="res://scenes/test/test_arena.tscn"
 config/features=PackedStringArray("4.7")
 
+[autoload]
+
+GameState="*res://autoload/game_state.gd"
+
 [display]
 
 window/size/window_width_override=1152
