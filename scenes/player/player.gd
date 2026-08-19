@@ -27,7 +27,22 @@ var invincibility_remaining := 0.0
 var hurt_remaining := 0.0
 
 
+func _ready() -> void:
+	var camera := get_node_or_null("Camera2D") as Camera2D
+	if camera != null:
+		camera.limit_left = 0
+		camera.limit_top = 0
+		camera.limit_bottom = 648
+		var limit_marker := get_tree().current_scene.get_node_or_null("CameraLimitRight")
+		if limit_marker != null:
+			camera.limit_right = int(limit_marker.global_position.x)
+
+
 func _physics_process(delta: float) -> void:
+	if global_position.y > 700.0 and state != State.DEAD:
+		die_instant()
+		return
+
 	_update_drop_through(delta)
 	_update_damage_timers(delta)
 	if Input.is_action_just_pressed("echo_create"):

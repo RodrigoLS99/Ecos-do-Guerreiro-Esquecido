@@ -73,10 +73,10 @@ position = Vector2(704, 503)
 position = Vector2(810, 528)
 
 [node name="Spike" parent="." instance=ExtResource("4_spike")]
-position = Vector2(360, 536)
+position = Vector2(360, 552)
 
 [node name="Pit" parent="." instance=ExtResource("5_pit")]
-position = Vector2(576, 640)
+position = Vector2(576, 0)
 
 [node name="FloorExit" parent="." instance=ExtResource("6_exit")]
 position = Vector2(920, 360)

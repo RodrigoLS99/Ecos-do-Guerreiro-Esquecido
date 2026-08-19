@@ -27,6 +27,12 @@ shape = SubResource("RectangleShape2D_player")
 polygon = PackedVector2Array(-16, -24, 16, -24, 16, 24, -16, 24)
 color = Color(0.2, 0.72, 0.92, 1)
 
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_enabled = true
+limit_left = 0
+limit_top = 0
+limit_bottom = 648
+
 [node name="LadderDetector" type="Area2D" parent="."]
 monitoring = true
 
