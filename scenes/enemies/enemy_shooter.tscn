@@ -11,9 +11,26 @@ script = ExtResource("1_script")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_enemy")
 
-[node name="Placeholder" type="Polygon2D" parent="."]
-polygon = PackedVector2Array(-16, -24, 16, -24, 16, 24, -16, 24)
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="Body" type="Polygon2D" parent="Visuals"]
 color = Color(0.9, 0.31, 0.35, 1)
+polygon = PackedVector2Array(-16, -24, 16, -24, 16, 24, -16, 24)
+
+[node name="VisorEye" type="Polygon2D" parent="Visuals"]
+color = Color(1, 0.9, 0.2, 1)
+polygon = PackedVector2Array(-14, -16, -4, -16, -4, -8, -14, -8)
+
+[node name="HealthBar" type="Node2D" parent="."]
+position = Vector2(0, -32)
+
+[node name="Heart1" type="Polygon2D" parent="HealthBar"]
+color = Color(0.2, 0.9, 0.4, 1)
+polygon = PackedVector2Array(-12, -4, -4, -4, -4, 4, -12, 4)
+
+[node name="Heart2" type="Polygon2D" parent="HealthBar"]
+color = Color(0.2, 0.9, 0.4, 1)
+polygon = PackedVector2Array(4, -4, 12, -4, 12, 4, 4, 4)
 
 [node name="ProjectileSpawn" type="Marker2D" parent="."]
 position = Vector2(-24, 0)
