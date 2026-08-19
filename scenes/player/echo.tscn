@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scenes/player/echo.gd" id="1_script"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_echo"]
+size = Vector2(48, 16)
+
+[node name="Echo" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="Placeholder" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-24, -8, 24, -8, 24, 8, -24, 8)
+color = Color(0.35, 0.85, 1, 0.5)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_echo")
+one_way_collision = true
+one_way_collision_margin = 1.0

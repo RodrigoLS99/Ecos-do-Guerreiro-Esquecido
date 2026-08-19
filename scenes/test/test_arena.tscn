@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene format=3 uid="uid://bybdxu1d455i6"]
 
 [ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="1_player"]
 [ext_resource type="PackedScene" path="res://scenes/common/ladder_zone.tscn" id="2_ladder"]
@@ -9,54 +9,57 @@ size = Vector2(1152, 64)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_platform"]
 size = Vector2(180, 24)
 
-[node name="TestArena" type="Node2D"]
+[node name="TestArena" type="Node2D" unique_id=1971271328]
 
-[node name="Background" type="Polygon2D" parent="."]
-polygon = PackedVector2Array(0, 0, 1152, 0, 1152, 648, 0, 648)
+[node name="Background" type="Polygon2D" parent="." unique_id=1939827575]
 color = Color(0.055, 0.075, 0.13, 1)
+polygon = PackedVector2Array(0, 0, 1152, 0, 1152, 648, 0, 648)
 
-[node name="Ground" type="StaticBody2D" parent="."]
+[node name="Ground" type="StaticBody2D" parent="." unique_id=589701282]
 position = Vector2(576, 584)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground" unique_id=1876492217]
 shape = SubResource("RectangleShape2D_ground")
 
-[node name="Visual" type="Polygon2D" parent="Ground"]
-polygon = PackedVector2Array(-576, -32, 576, -32, 576, 32, -576, 32)
+[node name="Visual" type="Polygon2D" parent="Ground" unique_id=1658840878]
 color = Color(0.18, 0.26, 0.37, 1)
+polygon = PackedVector2Array(-576, -32, 576, -32, 576, 32, -576, 32)
 
-[node name="PlatformLower" type="StaticBody2D" parent="."]
+[node name="PlatformLower" type="StaticBody2D" parent="." unique_id=21309099]
 position = Vector2(480, 512)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlatformLower"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlatformLower" unique_id=461976781]
 shape = SubResource("RectangleShape2D_platform")
+one_way_collision = true
 
-[node name="Visual" type="Polygon2D" parent="PlatformLower"]
-polygon = PackedVector2Array(-90, -12, 90, -12, 90, 12, -90, 12)
+[node name="Visual" type="Polygon2D" parent="PlatformLower" unique_id=1674136746]
 color = Color(0.29, 0.42, 0.55, 1)
+polygon = PackedVector2Array(-90, -12, 90, -12, 90, 12, -90, 12)
 
-[node name="PlatformMiddle" type="StaticBody2D" parent="."]
+[node name="PlatformMiddle" type="StaticBody2D" parent="." unique_id=266823574]
 position = Vector2(700, 458)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlatformMiddle"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlatformMiddle" unique_id=2039937297]
 shape = SubResource("RectangleShape2D_platform")
+one_way_collision = true
 
-[node name="Visual" type="Polygon2D" parent="PlatformMiddle"]
-polygon = PackedVector2Array(-90, -12, 90, -12, 90, 12, -90, 12)
+[node name="Visual" type="Polygon2D" parent="PlatformMiddle" unique_id=1635041903]
 color = Color(0.29, 0.42, 0.55, 1)
+polygon = PackedVector2Array(-90, -12, 90, -12, 90, 12, -90, 12)
 
-[node name="PlatformUpper" type="StaticBody2D" parent="."]
+[node name="PlatformUpper" type="StaticBody2D" parent="." unique_id=1905641272]
 position = Vector2(920, 404)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlatformUpper"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlatformUpper" unique_id=153850623]
 shape = SubResource("RectangleShape2D_platform")
+one_way_collision = true
 
-[node name="Visual" type="Polygon2D" parent="PlatformUpper"]
-polygon = PackedVector2Array(-90, -12, 90, -12, 90, 12, -90, 12)
+[node name="Visual" type="Polygon2D" parent="PlatformUpper" unique_id=434533960]
 color = Color(0.29, 0.42, 0.55, 1)
+polygon = PackedVector2Array(-90, -12, 90, -12, 90, 12, -90, 12)
 
-[node name="Player" parent="." instance=ExtResource("1_player")]
+[node name="Player" parent="." unique_id=1405385551 instance=ExtResource("1_player")]
 position = Vector2(220, 528)
 
-[node name="LadderZone" parent="." instance=ExtResource("2_ladder")]
-position = Vector2(480, 500)
+[node name="LadderZone" parent="." unique_id=1968641011 instance=ExtResource("2_ladder")]
+position = Vector2(704, 503)
