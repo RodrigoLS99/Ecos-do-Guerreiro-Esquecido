@@ -10,9 +10,16 @@ const FLOOR_PATHS: Array[String] = [
 ]
 
 
+func start_game() -> void:
+	current_floor_index = 1
+	respawn_current_floor()
+
+
 func respawn_current_floor() -> void:
 	if current_floor_index >= 1 and current_floor_index <= FLOOR_PATHS.size() and ResourceLoader.exists(FLOOR_PATHS[current_floor_index - 1]):
 		get_tree().call_deferred(&"change_scene_to_file", FLOOR_PATHS[current_floor_index - 1])
+	elif ResourceLoader.exists("res://scenes/test/test_arena.tscn"):
+		get_tree().call_deferred(&"change_scene_to_file", "res://scenes/test/test_arena.tscn")
 	else:
 		get_tree().call_deferred(&"reload_current_scene")
 
@@ -28,5 +35,7 @@ func go_to_next_floor() -> void:
 	else:
 		if ResourceLoader.exists(FLOOR_PATHS[current_floor_index - 1]):
 			get_tree().call_deferred(&"change_scene_to_file", FLOOR_PATHS[current_floor_index - 1])
+		elif ResourceLoader.exists("res://scenes/test/test_arena.tscn"):
+			get_tree().call_deferred(&"change_scene_to_file", "res://scenes/test/test_arena.tscn")
 		else:
 			get_tree().call_deferred(&"reload_current_scene")
