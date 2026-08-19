@@ -16,6 +16,8 @@ func start_game() -> void:
 
 
 func respawn_current_floor() -> void:
+	_sync_floor_index_from_current_scene()
+
 	if current_floor_index >= 1 and current_floor_index <= FLOOR_PATHS.size() and ResourceLoader.exists(FLOOR_PATHS[current_floor_index - 1]):
 		get_tree().call_deferred(&"change_scene_to_file", FLOOR_PATHS[current_floor_index - 1])
 	elif ResourceLoader.exists("res://scenes/test/test_arena.tscn"):
@@ -25,6 +27,7 @@ func respawn_current_floor() -> void:
 
 
 func go_to_next_floor() -> void:
+	_sync_floor_index_from_current_scene()
 	current_floor_index += 1
 	if current_floor_index > FLOOR_PATHS.size():
 		var victory_path := "res://scenes/ui/victory_screen.tscn"
@@ -39,3 +42,12 @@ func go_to_next_floor() -> void:
 			get_tree().call_deferred(&"change_scene_to_file", "res://scenes/test/test_arena.tscn")
 		else:
 			get_tree().call_deferred(&"reload_current_scene")
+
+
+func _sync_floor_index_from_current_scene() -> void:
+	var current_scene := get_tree().current_scene
+	if current_scene != null and current_scene.scene_file_path:
+		for i in range(FLOOR_PATHS.size()):
+			if FLOOR_PATHS[i] == current_scene.scene_file_path:
+				current_floor_index = i + 1
+				return

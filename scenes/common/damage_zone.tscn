@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scenes/common/damage_zone.gd" id="1_script"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hazard_zone"]
+size = Vector2(370, 104)
+
+[node name="DamageZone" type="Area2D"]
+collision_layer = 1
+collision_mask = 1
+script = ExtResource("1_script")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_hazard_zone")
+
+[node name="Visual" type="Polygon2D" parent="."]
+color = Color(0.85, 0.2, 0.25, 0.35)
+polygon = PackedVector2Array(-185, -52, 185, -52, 185, 52, -185, 52)
