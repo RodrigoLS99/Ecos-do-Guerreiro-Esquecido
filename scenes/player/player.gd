@@ -228,13 +228,27 @@ func _on_attack_hitbox_area_entered(area: Area2D) -> void:
 func _on_hurtbox_body_entered(body: Node2D) -> void:
 	if body.is_in_group(&"enemy"):
 		take_damage(1)
+	elif body.is_in_group(&"hazard"):
+		die_instant()
 
 
 func _on_hurtbox_area_entered(area: Area2D) -> void:
+	if area.is_in_group(&"hazard") or area.is_in_group(&"pit"):
+		die_instant()
+		return
+
 	if area.is_in_group(&"projectile"):
 		if area.has_method("destroy"):
 			area.destroy()
 		take_damage(1)
+
+
+func die_instant() -> void:
+	if state == State.DEAD:
+		return
+
+	state = State.DEAD
+	get_tree().call_deferred(&"reload_current_scene")
 
 
 func take_damage(amount: int) -> void:
@@ -248,5 +262,4 @@ func take_damage(amount: int) -> void:
 	state = State.HURT
 
 	if health <= 0:
-		state = State.DEAD
-		get_tree().reload_current_scene()
+		die_instant()

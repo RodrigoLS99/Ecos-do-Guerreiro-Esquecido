@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="1_player"]
 [ext_resource type="PackedScene" path="res://scenes/common/ladder_zone.tscn" id="2_ladder"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/enemy_shooter.tscn" id="3_enemy"]
+[ext_resource type="PackedScene" path="res://scenes/hazards/spike.tscn" id="4_spike"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ground"]
 size = Vector2(1152, 64)
@@ -67,3 +68,6 @@ position = Vector2(704, 503)
 
 [node name="EnemyShooter" parent="." instance=ExtResource("3_enemy")]
 position = Vector2(810, 528)
+
+[node name="Spike" parent="." instance=ExtResource("4_spike")]
+position = Vector2(360, 536)

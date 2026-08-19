@@ -1,0 +1,16 @@
+[gd_scene format=3]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_spike"]
+size = Vector2(30, 20)
+
+[node name="Spike" type="Area2D" groups=["hazard"]]
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 6)
+shape = SubResource("RectangleShape2D_spike")
+
+[node name="Visual" type="Polygon2D" parent="."]
+color = Color(0.85, 0.2, 0.2, 1)
+polygon = PackedVector2Array(-16, 16, -8, -4, 0, 16, 8, -4, 16, 16)
