@@ -14,6 +14,7 @@ const ECHO_SCENE := preload("res://scenes/player/echo.tscn")
 enum State { IDLE, RUN, JUMP, FALL, CLIMB, ATTACK, HURT, DEAD }
 
 signal health_changed(new_health: int)
+signal echo_changed(is_active: bool)
 
 var ladders_in_range: Array[Area2D] = []
 var ladders_below_in_range: Array[Area2D] = []
@@ -185,17 +186,20 @@ func create_echo() -> void:
 	current_echo = ECHO_SCENE.instantiate()
 	current_echo.global_position = global_position
 	get_tree().current_scene.add_child(current_echo)
+	echo_changed.emit(true)
 
 
 func collapse_echo() -> void:
 	if current_echo == null or not is_instance_valid(current_echo):
 		current_echo = null
+		echo_changed.emit(false)
 		return
 
 	var target := current_echo.global_position
 	current_echo.queue_free()
 	current_echo = null
 	global_position = target
+	echo_changed.emit(false)
 
 
 func attack() -> void:

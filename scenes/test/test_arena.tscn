@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" path="res://scenes/hazards/spike.tscn" id="4_spike"]
 [ext_resource type="PackedScene" path="res://scenes/hazards/pit.tscn" id="5_pit"]
 [ext_resource type="PackedScene" path="res://scenes/common/floor_exit.tscn" id="6_exit"]
+[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="7_hud"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ground"]
 size = Vector2(1152, 64)
@@ -79,3 +80,5 @@ position = Vector2(576, 640)
 
 [node name="FloorExit" parent="." instance=ExtResource("6_exit")]
 position = Vector2(920, 360)
+
+[node name="HUD" parent="." instance=ExtResource("7_hud")]
