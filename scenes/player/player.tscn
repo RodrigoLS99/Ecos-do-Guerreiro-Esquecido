@@ -1,8 +1,11 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_script"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_player"]
+size = Vector2(32, 48)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ladder_detector"]
 size = Vector2(32, 48)
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
@@ -14,3 +17,12 @@ shape = SubResource("RectangleShape2D_player")
 [node name="Placeholder" type="Polygon2D" parent="."]
 polygon = PackedVector2Array(-16, -24, 16, -24, 16, 24, -16, 24)
 color = Color(0.2, 0.72, 0.92, 1)
+
+[node name="LadderDetector" type="Area2D" parent="."]
+monitoring = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LadderDetector"]
+shape = SubResource("RectangleShape2D_ladder_detector")
+
+[connection signal="area_entered" from="LadderDetector" to="." method="_on_ladder_detector_area_entered"]
+[connection signal="area_exited" from="LadderDetector" to="." method="_on_ladder_detector_area_exited"]
