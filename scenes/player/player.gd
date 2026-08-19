@@ -21,6 +21,8 @@ var ladders_below_in_range: Array[Area2D] = []
 var state: State = State.IDLE
 var drop_through_remaining := 0.0
 var current_echo: Node2D = null
+var can_create_echo := true
+var has_touched_ground_since_echo := true
 var attack_in_progress := false
 var facing_direction := 1
 var health := MAX_HEALTH
@@ -46,6 +48,8 @@ func _physics_process(delta: float) -> void:
 
 	_update_drop_through(delta)
 	_update_damage_timers(delta)
+	_update_echo_recharge()
+
 	if Input.is_action_just_pressed("echo_create"):
 		create_echo()
 	if Input.is_action_just_pressed("echo_collapse"):
@@ -92,6 +96,7 @@ func _physics_process(delta: float) -> void:
 	velocity.x = horizontal_direction * SPEED
 	move_and_slide()
 	_update_movement_state(horizontal_direction)
+	_update_echo_recharge()
 
 
 func _handle_climb(delta: float, horizontal_direction: float, vertical_direction: float) -> void:
@@ -200,7 +205,52 @@ func _update_damage_timers(delta: float) -> void:
 		hurt_remaining -= delta
 
 
+func _update_echo_recharge() -> void:
+	if state == State.CLIMB:
+		has_touched_ground_since_echo = true
+		can_create_echo = true
+		return
+
+	if is_on_floor():
+		if _is_standing_on_echo():
+			can_create_echo = false
+		else:
+			has_touched_ground_since_echo = true
+			can_create_echo = true
+	else:
+		can_create_echo = has_touched_ground_since_echo and (current_echo == null)
+
+
+func _is_standing_on_echo() -> bool:
+	if current_echo == null or not is_instance_valid(current_echo):
+		return false
+
+	var dx: float = abs(global_position.x - current_echo.global_position.x)
+	var dy: float = global_position.y - (current_echo.global_position.y - 48.0)
+	if dx <= 28.0 and abs(dy) <= 8.0:
+		return true
+
+	var floor_collider := $FloorDetector.get_collider() as Node
+	if floor_collider != null:
+		if floor_collider == current_echo or floor_collider.get_parent() == current_echo or floor_collider.is_in_group(&"echo"):
+			return true
+
+	for i in range(get_slide_collision_count()):
+		var collision := get_slide_collision(i)
+		var collider := collision.get_collider() as Node
+		if collider != null:
+			if collider == current_echo or collider.get_parent() == current_echo or collider.is_in_group(&"echo"):
+				return true
+	return false
+
+
 func create_echo() -> void:
+	if not can_create_echo or _is_standing_on_echo():
+		return
+
+	has_touched_ground_since_echo = false
+	can_create_echo = false
+
 	if current_echo != null and is_instance_valid(current_echo):
 		current_echo.queue_free()
 
@@ -220,6 +270,9 @@ func collapse_echo() -> void:
 	current_echo.queue_free()
 	current_echo = null
 	global_position = target
+	velocity = Vector2.ZERO
+	can_create_echo = false
+	has_touched_ground_since_echo = false
 	echo_changed.emit(false)
 
 
