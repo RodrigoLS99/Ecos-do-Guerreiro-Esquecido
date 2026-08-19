@@ -6,9 +6,14 @@ const GRAVITY := 900.0
 const CLIMB_SPEED := 100.0
 const ATTACK_DURATION := 0.25
 const ATTACK_HITBOX_WINDOW := 0.12
+const MAX_HEALTH := 3
+const INVINCIBILITY_TIME := 1.0
+const HURT_DURATION := 0.15
 const ECHO_SCENE := preload("res://scenes/player/echo.tscn")
 
-enum State { IDLE, RUN, JUMP, FALL, CLIMB, ATTACK }
+enum State { IDLE, RUN, JUMP, FALL, CLIMB, ATTACK, HURT, DEAD }
+
+signal health_changed(new_health: int)
 
 var ladders_in_range: Array[Area2D] = []
 var ladders_below_in_range: Array[Area2D] = []
@@ -16,10 +21,14 @@ var state: State = State.IDLE
 var drop_through_remaining := 0.0
 var current_echo: Node2D = null
 var attack_in_progress := false
+var health := MAX_HEALTH
+var invincibility_remaining := 0.0
+var hurt_remaining := 0.0
 
 
 func _physics_process(delta: float) -> void:
 	_update_drop_through(delta)
+	_update_damage_timers(delta)
 	if Input.is_action_just_pressed("echo_create"):
 		create_echo()
 	if Input.is_action_just_pressed("echo_collapse"):
@@ -27,6 +36,10 @@ func _physics_process(delta: float) -> void:
 
 	var horizontal_direction := Input.get_axis("ui_left", "ui_right")
 	var vertical_direction := Input.get_axis("ui_up", "ui_down")
+
+	if state == State.HURT:
+		_handle_hurt(delta)
+		return
 
 	if state == State.ATTACK:
 		_handle_attack(delta)
@@ -99,6 +112,16 @@ func _handle_attack(delta: float) -> void:
 	move_and_slide()
 
 
+func _handle_hurt(delta: float) -> void:
+	if not is_on_floor():
+		velocity.y += GRAVITY * delta
+	velocity.x = 0.0
+	move_and_slide()
+
+	if hurt_remaining <= 0.0:
+		_update_movement_state(0.0)
+
+
 func _on_ladder_detector_area_entered(area: Area2D) -> void:
 	if area.is_in_group(&"ladder") and not ladders_in_range.has(area):
 		ladders_in_range.append(area)
@@ -146,6 +169,15 @@ func _update_drop_through(delta: float) -> void:
 		$CollisionShape2D.set_deferred("disabled", false)
 
 
+func _update_damage_timers(delta: float) -> void:
+	if invincibility_remaining > 0.0:
+		invincibility_remaining -= delta
+		$Placeholder.modulate.a = 0.45 if invincibility_remaining > 0.0 else 1.0
+
+	if hurt_remaining > 0.0:
+		hurt_remaining -= delta
+
+
 func create_echo() -> void:
 	if current_echo != null and is_instance_valid(current_echo):
 		current_echo.queue_free()
@@ -191,3 +223,30 @@ func _on_attack_hitbox_body_entered(body: Node2D) -> void:
 func _on_attack_hitbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group(&"projectile") and area.has_method("destroy"):
 		area.destroy()
+
+
+func _on_hurtbox_body_entered(body: Node2D) -> void:
+	if body.is_in_group(&"enemy"):
+		take_damage(1)
+
+
+func _on_hurtbox_area_entered(area: Area2D) -> void:
+	if area.is_in_group(&"projectile"):
+		if area.has_method("destroy"):
+			area.destroy()
+		take_damage(1)
+
+
+func take_damage(amount: int) -> void:
+	if invincibility_remaining > 0.0 or state == State.DEAD:
+		return
+
+	health = max(health - amount, 0)
+	health_changed.emit(health)
+	invincibility_remaining = INVINCIBILITY_TIME
+	hurt_remaining = HURT_DURATION
+	state = State.HURT
+
+	if health <= 0:
+		state = State.DEAD
+		get_tree().reload_current_scene()

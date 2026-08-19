@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_script"]
 
@@ -13,6 +13,9 @@ size = Vector2(28, 20)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_attack"]
 size = Vector2(36, 28)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hurtbox"]
+size = Vector2(32, 48)
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_script")
@@ -52,9 +55,18 @@ collision_mask = 1
 shape = SubResource("RectangleShape2D_attack")
 disabled = true
 
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("RectangleShape2D_hurtbox")
+
 [connection signal="area_entered" from="LadderDetector" to="." method="_on_ladder_detector_area_entered"]
 [connection signal="area_exited" from="LadderDetector" to="." method="_on_ladder_detector_area_exited"]
 [connection signal="area_entered" from="LadderBelowDetector" to="." method="_on_ladder_below_detector_area_entered"]
 [connection signal="area_exited" from="LadderBelowDetector" to="." method="_on_ladder_below_detector_area_exited"]
 [connection signal="body_entered" from="AttackHitbox" to="." method="_on_attack_hitbox_body_entered"]
 [connection signal="area_entered" from="AttackHitbox" to="." method="_on_attack_hitbox_area_entered"]
+[connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
