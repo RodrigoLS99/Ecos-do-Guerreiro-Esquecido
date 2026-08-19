@@ -22,6 +22,7 @@ var state: State = State.IDLE
 var drop_through_remaining := 0.0
 var current_echo: Node2D = null
 var attack_in_progress := false
+var facing_direction := 1
 var health := MAX_HEALTH
 var invincibility_remaining := 0.0
 var hurt_remaining := 0.0
@@ -52,6 +53,11 @@ func _physics_process(delta: float) -> void:
 
 	var horizontal_direction := Input.get_axis("ui_left", "ui_right")
 	var vertical_direction := Input.get_axis("ui_up", "ui_down")
+
+	if horizontal_direction != 0.0:
+		facing_direction = int(sign(horizontal_direction))
+		$AttackHitbox.position.x = 34.0 * facing_direction
+		$AttackHitbox.scale.x = facing_direction
 
 	if state == State.HURT:
 		_handle_hurt(delta)
@@ -225,9 +231,13 @@ func attack() -> void:
 	state = State.ATTACK
 	velocity.x = 0.0
 	$AttackHitbox/CollisionShape2D.set_deferred("disabled", false)
+	if $AttackHitbox.has_node("Visual"):
+		$AttackHitbox/Visual.visible = true
 
 	await get_tree().create_timer(ATTACK_HITBOX_WINDOW).timeout
 	$AttackHitbox/CollisionShape2D.set_deferred("disabled", true)
+	if $AttackHitbox.has_node("Visual"):
+		$AttackHitbox/Visual.visible = false
 	await get_tree().create_timer(ATTACK_DURATION - ATTACK_HITBOX_WINDOW).timeout
 
 	attack_in_progress = false
@@ -240,8 +250,11 @@ func _on_attack_hitbox_body_entered(body: Node2D) -> void:
 
 
 func _on_attack_hitbox_area_entered(area: Area2D) -> void:
-	if area.is_in_group(&"projectile") and area.has_method("destroy"):
-		area.destroy()
+	if area.is_in_group(&"projectile"):
+		if area.has_method("deflect"):
+			area.deflect(facing_direction)
+		elif area.has_method("destroy"):
+			area.destroy()
 
 
 func _on_hurtbox_body_entered(body: Node2D) -> void:
@@ -257,6 +270,8 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 		return
 
 	if area.is_in_group(&"projectile"):
+		if area.get("is_deflected") == true:
+			return
 		if area.has_method("destroy"):
 			area.destroy()
 		take_damage(1)
