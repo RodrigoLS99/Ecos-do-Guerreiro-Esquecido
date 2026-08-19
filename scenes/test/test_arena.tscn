@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="1_player"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ground"]
+size = Vector2(1152, 64)
+
+[node name="TestArena" type="Node2D"]
+
+[node name="Background" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(0, 0, 1152, 0, 1152, 648, 0, 648)
+color = Color(0.055, 0.075, 0.13, 1)
+
+[node name="Ground" type="StaticBody2D" parent="."]
+position = Vector2(576, 584)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
+shape = SubResource("RectangleShape2D_ground")
+
+[node name="Visual" type="Polygon2D" parent="Ground"]
+polygon = PackedVector2Array(-576, -32, 576, -32, 576, 32, -576, 32)
+color = Color(0.18, 0.26, 0.37, 1)
+
+[node name="Player" parent="." instance=ExtResource("1_player")]
+position = Vector2(220, 528)
