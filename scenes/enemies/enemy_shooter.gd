@@ -7,6 +7,11 @@ const PROJECTILE_SCENE := preload("res://scenes/combat/projectile.tscn")
 var health := 2
 
 
+func _ready() -> void:
+	if has_node("ProjectileSpawn"):
+		$ProjectileSpawn.position.x = 24.0 * facing_direction
+
+
 func take_damage(amount: int) -> void:
 	health -= amount
 	if health <= 0:
