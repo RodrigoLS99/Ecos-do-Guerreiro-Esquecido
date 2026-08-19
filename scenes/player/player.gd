@@ -4,6 +4,7 @@ const SPEED := 160.0
 const JUMP_VELOCITY := -320.0
 const GRAVITY := 900.0
 const CLIMB_SPEED := 100.0
+const ECHO_SCENE := preload("res://scenes/player/echo.tscn")
 
 enum State { IDLE, RUN, JUMP, FALL, CLIMB }
 
@@ -11,10 +12,13 @@ var ladders_in_range: Array[Area2D] = []
 var ladders_below_in_range: Array[Area2D] = []
 var state: State = State.IDLE
 var drop_through_remaining := 0.0
+var current_echo: Node2D = null
 
 
 func _physics_process(delta: float) -> void:
 	_update_drop_through(delta)
+	if Input.is_action_just_pressed("echo_create"):
+		create_echo()
 
 	var horizontal_direction := Input.get_axis("ui_left", "ui_right")
 	var vertical_direction := Input.get_axis("ui_up", "ui_down")
@@ -120,3 +124,12 @@ func _update_drop_through(delta: float) -> void:
 	drop_through_remaining -= delta
 	if drop_through_remaining <= 0.0:
 		$CollisionShape2D.set_deferred("disabled", false)
+
+
+func create_echo() -> void:
+	if current_echo != null and is_instance_valid(current_echo):
+		current_echo.queue_free()
+
+	current_echo = ECHO_SCENE.instantiate()
+	current_echo.global_position = global_position
+	get_tree().current_scene.add_child(current_echo)
