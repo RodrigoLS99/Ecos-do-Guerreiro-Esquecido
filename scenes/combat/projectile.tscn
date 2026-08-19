@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scenes/combat/projectile.gd" id="1_script"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_projectile"]
+radius = 7.0
+
+[node name="Projectile" type="Area2D" groups=["projectile"]]
+script = ExtResource("1_script")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_projectile")
+
+[node name="Placeholder" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-7, 0, 0, -7, 7, 0, 0, 7)
+color = Color(1, 0.68, 0.2, 1)
