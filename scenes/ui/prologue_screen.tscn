@@ -1,0 +1,98 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scenes/ui/prologue_screen.gd" id="1_script"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_story_panel"]
+bg_color = Color(0.06, 0.08, 0.14, 0.94)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.95, 0.85, 0.35, 0.9)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0, 0, 0, 0.6)
+shadow_size = 16
+
+[node name="PrologueScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.04, 0.055, 0.09, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="CenterContainer"]
+custom_minimum_size = Vector2(740, 480)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_story_panel")
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 36
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 36
+theme_override_constants/margin_bottom = 30
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/Panel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="Header" type="Label" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.85, 0.35, 1)
+theme_override_font_sizes/font_size = 28
+text = "✦ A Crônica do Guerreiro Esquecido ✦"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="StoryLabel" type="Label" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.88, 0.92, 0.96, 0.95)
+theme_override_constants/line_spacing = 8
+theme_override_font_sizes/font_size = 16
+text = "Há eras, o reino prosperava sob o brilho da Relíquia dos Ecos, guardada pela Princesa nas alturas do Templo Sagrado.
+
+Porém, uma névoa espectral emergiu dos abismos, apagando as memórias de todos os povos e condenando a terra ao esquecimento.
+
+A Princesa e a sagrada Relíquia foram aprisionadas no topo da torre por forças ancestrais corrompidas.
+
+Você, o Guerreiro Esquecido, desperta. Domine os ecos do seu passado, desbrave as armadilhas dos cinco andares, recupere o artefato e liberte a Princesa!"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="ContinueButton" type="Button" parent="CenterContainer/Panel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(240, 48)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 20
+text = "Começar Jornada"
+
+[connection signal="pressed" from="CenterContainer/Panel/MarginContainer/VBoxContainer/ContinueButton" to="." method="_on_continue_button_pressed"]

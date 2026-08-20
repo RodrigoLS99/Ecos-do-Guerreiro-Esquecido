@@ -1,0 +1,121 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scenes/ui/pause_menu.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://scenes/ui/options_menu.tscn" id="2_options"]
+[ext_resource type="PackedScene" path="res://scenes/ui/help_dialog.tscn" id="3_help"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.06, 0.08, 0.14, 0.96)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.95, 0.85, 0.35, 0.9)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0, 0, 0, 0.6)
+shadow_size = 16
+
+[node name="PauseMenu" type="CanvasLayer"]
+process_mode = 3
+layer = 50
+script = ExtResource("1_script")
+
+[node name="MenuRoot" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DimBackground" type="ColorRect" parent="MenuRoot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.6)
+
+[node name="Panel" type="PanelContainer" parent="MenuRoot"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -180.0
+offset_top = -210.0
+offset_right = 180.0
+offset_bottom = 210.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="MarginContainer" type="MarginContainer" parent="MenuRoot/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MenuRoot/Panel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="Title" type="Label" parent="MenuRoot/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.85, 0.35, 1)
+theme_override_font_sizes/font_size = 26
+text = "✦ Jogo Pausado ✦"
+horizontal_alignment = 1
+
+[node name="ControlSpacer" type="Control" parent="MenuRoot/Panel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+
+[node name="ResumeButton" type="Button" parent="MenuRoot/Panel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 44)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Continuar"
+
+[node name="OptionsButton" type="Button" parent="MenuRoot/Panel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 44)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Opções"
+
+[node name="HelpButton" type="Button" parent="MenuRoot/Panel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 44)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Ajuda / Controles"
+
+[node name="RestartFloorButton" type="Button" parent="MenuRoot/Panel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 44)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Reiniciar Andar"
+
+[node name="MainMenuButton" type="Button" parent="MenuRoot/Panel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 44)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Menu Principal"
+
+[node name="OptionsMenu" parent="." instance=ExtResource("2_options")]
+visible = false
+
+[node name="HelpDialog" parent="." instance=ExtResource("3_help")]
+visible = false
+
+[connection signal="pressed" from="MenuRoot/Panel/MarginContainer/VBoxContainer/ResumeButton" to="." method="_on_resume_button_pressed"]
+[connection signal="pressed" from="MenuRoot/Panel/MarginContainer/VBoxContainer/OptionsButton" to="." method="_on_options_button_pressed"]
+[connection signal="pressed" from="MenuRoot/Panel/MarginContainer/VBoxContainer/HelpButton" to="." method="_on_help_button_pressed"]
+[connection signal="pressed" from="MenuRoot/Panel/MarginContainer/VBoxContainer/RestartFloorButton" to="." method="_on_restart_floor_button_pressed"]
+[connection signal="pressed" from="MenuRoot/Panel/MarginContainer/VBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]

@@ -40,9 +40,6 @@ func _ready() -> void:
 		var ev_esc := InputEventKey.new()
 		ev_esc.physical_keycode = KEY_ESCAPE
 		InputMap.action_add_event("pause", ev_esc)
-		var ev_p := InputEventKey.new()
-		ev_p.physical_keycode = KEY_P
-		InputMap.action_add_event("pause", ev_p)
 
 	load_settings()
 	apply_audio_volume()
@@ -89,7 +86,7 @@ func rebind_action_key(action_name: String, new_keycode: Key) -> void:
 	# Verifica se a tecla nova já pertence a outra ação configurável
 	var conflicting_action := ""
 	for act in DEFAULT_KEYS:
-		if act != action_name and act != "pause":
+		if act != action_name:
 			if get_action_keycode(act) == new_keycode:
 				conflicting_action = act
 				break
@@ -116,11 +113,6 @@ func _set_raw_action_key(action_name: String, keycode: Key) -> void:
 	var new_event := InputEventKey.new()
 	new_event.physical_keycode = keycode
 	InputMap.action_add_event(action_name, new_event)
-
-	if action_name == "pause" and keycode != KEY_P:
-		var ev_p := InputEventKey.new()
-		ev_p.physical_keycode = KEY_P
-		InputMap.action_add_event("pause", ev_p)
 
 
 func get_action_keycode(action_name: String) -> Key:

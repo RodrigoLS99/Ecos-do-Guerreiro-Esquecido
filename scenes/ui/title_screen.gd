@@ -5,7 +5,11 @@ extends Control
 
 
 func _on_play_button_pressed() -> void:
-	GameState.start_game()
+	var prologue_path := "res://scenes/ui/prologue_screen.tscn"
+	if ResourceLoader.exists(prologue_path):
+		get_tree().change_scene_to_file(prologue_path)
+	else:
+		GameState.start_game()
 
 
 func _on_options_button_pressed() -> void:

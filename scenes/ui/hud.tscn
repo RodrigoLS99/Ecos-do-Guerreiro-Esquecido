@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://scenes/ui/hud.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://scenes/ui/pause_menu.tscn" id="2_pause"]
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_script")
@@ -44,3 +45,5 @@ modulate = Color(1, 1, 1, 0.25)
 custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
 color = Color(0.2, 0.72, 0.92, 1)
+
+[node name="PauseMenu" parent="." instance=ExtResource("2_pause")]
