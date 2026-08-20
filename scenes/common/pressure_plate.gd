@@ -14,6 +14,8 @@ func _ready() -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group(&"player") and not is_pressed:
 		is_pressed = true
+		if AudioManager:
+			AudioManager.play_sfx("plate_pressed")
 		$Visual.color = Color(0.2, 0.9, 0.5, 1.0)
 		if not open_target.is_empty():
 			var gate_to_open = get_node_or_null(open_target)

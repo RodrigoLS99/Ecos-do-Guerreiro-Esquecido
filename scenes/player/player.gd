@@ -28,6 +28,7 @@ var facing_direction := 1
 var health := MAX_HEALTH
 var invincibility_remaining := 0.0
 var hurt_remaining := 0.0
+var step_timer := 0.0
 
 
 func _ready() -> void:
@@ -92,11 +93,25 @@ func _physics_process(delta: float) -> void:
 		velocity.y += GRAVITY * delta
 	elif Input.is_action_just_pressed("jump"):
 		velocity.y = JUMP_VELOCITY
+		if AudioManager:
+			AudioManager.play_sfx("jump")
 
 	velocity.x = horizontal_direction * SPEED
 	move_and_slide()
 	_update_movement_state(horizontal_direction)
+	_update_footsteps(delta, horizontal_direction)
 	_update_echo_recharge()
+
+
+func _update_footsteps(delta: float, horizontal_direction: float) -> void:
+	if is_on_floor() and horizontal_direction != 0.0 and state == State.RUN:
+		step_timer -= delta
+		if step_timer <= 0.0:
+			step_timer = 0.3
+			if AudioManager:
+				AudioManager.play_sfx("step", 0.35, randf_range(0.95, 1.05))
+	else:
+		step_timer = 0.12
 
 
 func _handle_climb(_delta: float, horizontal_direction: float, vertical_direction: float) -> void:
@@ -109,6 +124,8 @@ func _handle_climb(_delta: float, horizontal_direction: float, vertical_directio
 		state = State.JUMP
 		velocity.x = horizontal_direction * SPEED
 		velocity.y = JUMP_VELOCITY
+		if AudioManager:
+			AudioManager.play_sfx("jump")
 		move_and_slide()
 		return
 
@@ -265,6 +282,8 @@ func create_echo() -> void:
 	current_echo = ECHO_SCENE.instantiate()
 	current_echo.global_position = global_position
 	get_tree().current_scene.add_child(current_echo)
+	if AudioManager:
+		AudioManager.play_sfx("echo_create")
 	echo_changed.emit(true)
 
 
@@ -281,6 +300,8 @@ func collapse_echo() -> void:
 	velocity = Vector2.ZERO
 	can_create_echo = false
 	has_touched_ground_since_echo = false
+	if AudioManager:
+		AudioManager.play_sfx("echo_teleport")
 	echo_changed.emit(false)
 
 
@@ -291,6 +312,8 @@ func attack() -> void:
 	attack_in_progress = true
 	state = State.ATTACK
 	velocity.x = 0.0
+	if AudioManager:
+		AudioManager.play_sfx("attack")
 	$AttackHitbox/CollisionShape2D.set_deferred("disabled", false)
 	if $AttackHitbox.has_node("Visual"):
 		$AttackHitbox/Visual.visible = true
@@ -343,6 +366,8 @@ func die_instant() -> void:
 		return
 
 	state = State.DEAD
+	if AudioManager:
+		AudioManager.play_sfx("death")
 	GameState.respawn_current_floor()
 
 
@@ -355,6 +380,8 @@ func take_damage(amount: int) -> void:
 	invincibility_remaining = INVINCIBILITY_TIME
 	hurt_remaining = HURT_DURATION
 	state = State.HURT
+	if AudioManager:
+		AudioManager.play_sfx("hurt")
 
 	if health <= 0:
 		die_instant()

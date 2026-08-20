@@ -31,6 +31,8 @@ func _on_body_entered(body: Node2D) -> void:
 		return
 	if body.is_in_group(&"player"):
 		is_rescued = true
+		if AudioManager:
+			AudioManager.play_sfx("princess_rescue")
 		rescued.emit()
 		
 		# Delight animation / hearts

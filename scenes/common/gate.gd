@@ -21,6 +21,8 @@ func open(instant := false) -> void:
 		if instant:
 			visual.color = open_color
 		else:
+			if AudioManager:
+				AudioManager.play_sfx("gate_open")
 			var tw := create_tween()
 			tw.tween_property(visual, "color", open_color, 0.3)
 

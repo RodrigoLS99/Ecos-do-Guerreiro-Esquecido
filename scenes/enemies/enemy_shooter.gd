@@ -49,6 +49,8 @@ func _update_facing(new_dir: int) -> void:
 func take_damage(amount: int) -> void:
 	health -= amount
 	_update_health_display(true)
+	if AudioManager:
+		AudioManager.play_sfx("hit_enemy")
 
 	flash_timer = 0.12
 	if visuals != null:
@@ -96,4 +98,6 @@ func _on_shoot_timer_timeout() -> void:
 	var projectile := PROJECTILE_SCENE.instantiate()
 	projectile.global_position = $ProjectileSpawn.global_position
 	projectile.direction = facing_direction
+	if AudioManager:
+		AudioManager.play_sfx("projectile_shoot")
 	get_tree().current_scene.add_child(projectile)

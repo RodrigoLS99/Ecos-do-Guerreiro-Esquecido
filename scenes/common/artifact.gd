@@ -33,6 +33,8 @@ func _on_body_entered(body: Node2D) -> void:
 		return
 	if body.is_in_group(&"player"):
 		is_collected = true
+		if AudioManager:
+			AudioManager.play_sfx("artifact_collect")
 		collected.emit()
 		
 		# Collection animation

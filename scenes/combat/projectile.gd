@@ -22,6 +22,8 @@ func _physics_process(delta: float) -> void:
 func deflect(new_direction: int) -> void:
 	is_deflected = true
 	direction = new_direction
+	if AudioManager:
+		AudioManager.play_sfx("projectile_deflect")
 	if has_node("Placeholder"):
 		$Placeholder.color = Color(0.2, 0.9, 1.0, 1.0)
 
