@@ -76,6 +76,13 @@ size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 18
 text = "Ajuda / Controles"
 
+[node name="QuitButton" type="Button" parent="CenterContainer/VBoxContainer/ButtonsContainer"]
+custom_minimum_size = Vector2(220, 44)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 18
+text = "Sair"
+
 [node name="OptionsMenu" parent="." instance=ExtResource("3_options")]
 visible = false
 layout_mode = 1
@@ -87,3 +94,4 @@ layout_mode = 1
 [connection signal="pressed" from="CenterContainer/VBoxContainer/ButtonsContainer/PlayButton" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/ButtonsContainer/OptionsButton" to="." method="_on_options_button_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/ButtonsContainer/HelpButton" to="." method="_on_help_button_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/ButtonsContainer/QuitButton" to="." method="_on_quit_button_pressed"]
