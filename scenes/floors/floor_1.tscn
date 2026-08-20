@@ -265,9 +265,9 @@ position = Vector2(80, 550)
 
 [node name="Tutorial_Movement" parent="." instance=ExtResource("7_tut")]
 position = Vector2(80, 550)
-message = "✦ Use [A / D] para andar e [Espaço] para pular ✦"
+message = "✦ Use [{ui_left} / {ui_right}] para andar e [{jump}] para pular ✦"
 auto_trigger_on_start = true
 
 [node name="Tutorial_Ladder" parent="." instance=ExtResource("7_tut")]
 position = Vector2(180, 550)
-message = "✦ Pressione [W / S] para subir e descer escadas ✦"
+message = "✦ Pressione [{ui_up} / {ui_down}] para subir e descer escadas ✦"

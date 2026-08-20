@@ -96,12 +96,12 @@ func _set_btn_text(btn: Button, action_name: String) -> void:
 func _connect_button_signals() -> void:
 	if btn_left: btn_left.pressed.connect(func(): start_listening("ui_left", "Mover Esquerda"))
 	if btn_right: btn_right.pressed.connect(func(): start_listening("ui_right", "Mover Direita"))
-	if btn_up: btn_up.pressed.connect(func(): start_listening("ui_up", "Subir / Escada"))
-	if btn_down: btn_down.pressed.connect(func(): start_listening("ui_down", "Descer / Agachar"))
+	if btn_up: btn_up.pressed.connect(func(): start_listening("ui_up", "Subir Escada"))
+	if btn_down: btn_down.pressed.connect(func(): start_listening("ui_down", "Descer Escada"))
 	if btn_jump: btn_jump.pressed.connect(func(): start_listening("jump", "Pular"))
 	if btn_attack: btn_attack.pressed.connect(func(): start_listening("attack", "Atacar / Rebater"))
 	if btn_echo_create: btn_echo_create.pressed.connect(func(): start_listening("echo_create", "Invocar Eco"))
-	if btn_echo_teleport: btn_echo_teleport.pressed.connect(func(): start_listening("echo_collapse", "Teletransportar"))
+	if btn_echo_teleport: btn_echo_teleport.pressed.connect(func(): start_listening("echo_collapse", "Colapsar Eco / Teleportar"))
 	if btn_pause: btn_pause.pressed.connect(func(): start_listening("pause", "Pausar Jogo"))
 
 

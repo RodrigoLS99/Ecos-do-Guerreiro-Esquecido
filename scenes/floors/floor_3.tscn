@@ -263,5 +263,5 @@ position = Vector2(80, 550)
 
 [node name="Tutorial_Deflection" parent="." instance=ExtResource("7_tut")]
 position = Vector2(80, 550)
-message = "✦ Pressione [X] para atacar e rebater projéteis com a espada ✦"
+message = "✦ Pressione [{attack}] para atacar e rebater projéteis com a espada ✦"
 auto_trigger_on_start = true

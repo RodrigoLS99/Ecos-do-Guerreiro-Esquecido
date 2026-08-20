@@ -20,12 +20,12 @@ const DEFAULT_KEYS := {
 const ACTION_LABELS := {
 	"ui_left": "Mover para Esquerda",
 	"ui_right": "Mover para Direita",
-	"ui_up": "Subir / Escada",
-	"ui_down": "Descer / Agachar",
+	"ui_up": "Subir Escada",
+	"ui_down": "Descer Escada",
 	"jump": "Pular",
 	"attack": "Atacar / Rebater",
 	"echo_create": "Invocar Eco",
-	"echo_collapse": "Teletransportar / Colapsar",
+	"echo_collapse": "Colapsar Eco / Teleportar",
 	"pause": "Pausar Jogo",
 }
 
