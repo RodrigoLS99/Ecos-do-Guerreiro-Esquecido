@@ -99,7 +99,7 @@ func _physics_process(delta: float) -> void:
 	_update_echo_recharge()
 
 
-func _handle_climb(delta: float, horizontal_direction: float, vertical_direction: float) -> void:
+func _handle_climb(_delta: float, horizontal_direction: float, vertical_direction: float) -> void:
 	if ladders_in_range.is_empty() and ladders_below_in_range.is_empty():
 		state = State.FALL
 		velocity.y = 0.0

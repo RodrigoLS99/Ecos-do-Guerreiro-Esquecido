@@ -14,12 +14,14 @@ var flash_timer := 0.0
 
 @onready var visuals: Node2D = $Visuals if has_node("Visuals") else null
 @onready var health_bar: Node2D = $HealthBar if has_node("HealthBar") else null
+@onready var pip_1: Polygon2D = $HealthBar/Pip1 if has_node("HealthBar/Pip1") else null
+@onready var pip_2: Polygon2D = $HealthBar/Pip2 if has_node("HealthBar/Pip2") else null
 
 
 func _ready() -> void:
 	health = max_health
 	_update_facing(facing_direction)
-	_update_health_display()
+	_update_health_display(false)
 
 
 func _physics_process(delta: float) -> void:
@@ -46,7 +48,7 @@ func _update_facing(new_dir: int) -> void:
 
 func take_damage(amount: int) -> void:
 	health -= amount
-	_update_health_display()
+	_update_health_display(true)
 
 	flash_timer = 0.12
 	if visuals != null:
@@ -64,13 +66,30 @@ func take_damage(amount: int) -> void:
 		queue_free()
 
 
-func _update_health_display() -> void:
-	if health_bar == null:
+func _update_health_display(animate: bool = true) -> void:
+	_set_pip_state(pip_1, health >= 1, animate)
+	_set_pip_state(pip_2, health >= 2, animate)
+
+
+func _set_pip_state(pip: Polygon2D, is_active: bool, animate: bool) -> void:
+	if pip == null:
 		return
-	if health_bar.has_node("Heart1"):
-		health_bar.get_node("Heart1").visible = health >= 1
-	if health_bar.has_node("Heart2"):
-		health_bar.get_node("Heart2").visible = health >= 2
+	if not animate:
+		pip.visible = is_active
+		pip.scale = Vector2.ONE
+		pip.modulate.a = 1.0 if is_active else 0.0
+		return
+
+	if is_active:
+		pip.visible = true
+		pip.scale = Vector2.ONE
+		pip.modulate.a = 1.0
+	else:
+		if pip.visible:
+			var tw := create_tween().set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+			tw.parallel().tween_property(pip, "scale", Vector2(1.5, 1.5), 0.18)
+			tw.parallel().tween_property(pip, "modulate:a", 0.0, 0.18)
+			tw.chain().tween_callback(func(): pip.visible = false)
 
 
 func _on_shoot_timer_timeout() -> void:
