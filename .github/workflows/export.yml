@@ -8,6 +8,9 @@ on:
     branches: [ main, master ]
   workflow_dispatch:
 
+env:
+  GODOT_VERSION: "4.7.2"
+
 jobs:
   export:
     name: Exportar Godot 4
@@ -20,19 +23,22 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Exportar com Godot 4
-        uses: firebelley/godot-export@v6.0.0
+        id: export
+        uses: firebelley/godot-export@v8.0.0
         with:
-          godot_executable_download_url: https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_linux.x86_64.zip
-          godot_export_templates_download_url: https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_export_templates.tpz
+          godot_executable_download_url: https://github.com/godotengine/godot/releases/download/${{ env.GODOT_VERSION }}-stable/Godot_v${{ env.GODOT_VERSION }}-stable_linux.x86_64.zip
+          godot_export_templates_download_url: https://github.com/godotengine/godot/releases/download/${{ env.GODOT_VERSION }}-stable/Godot_v${{ env.GODOT_VERSION }}-stable_export_templates.tpz
           relative_project_path: ./
-          archive_output: true
+          archive_output: false
+          cache: true
 
       - name: Upload dos Artefatos de Build
         uses: actions/upload-artifact@v4
         with:
           name: Ecos-do-Guerreiro-Esquecido-Builds
           path: |
-            /home/runner/.local/share/godot/builds/**
+            ${{ steps.export.outputs.build_directory }}/**/*.x86_64
+            ${{ steps.export.outputs.build_directory }}/**/*.exe
           if-no-files-found: warn
 
       - name: Criar Release no GitHub (Tags apenas)
@@ -40,6 +46,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            /home/runner/.local/share/godot/builds/**/*.zip
+            ${{ steps.export.outputs.build_directory }}/**/*.x86_64
+            ${{ steps.export.outputs.build_directory }}/**/*.exe
           draft: false
           prerelease: false
