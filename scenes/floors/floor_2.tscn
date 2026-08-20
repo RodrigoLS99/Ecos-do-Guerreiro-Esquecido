@@ -70,19 +70,22 @@ polygon = PackedVector2Array(-600, -32, 600, -32, 600, 32, -600, 32)
 [node name="Spikes" type="Node2D" parent="." unique_id=33050994]
 
 [node name="Spike1" parent="Spikes" unique_id=1730282045 instance=ExtResource("5_spike")]
-position = Vector2(615, 584)
+position = Vector2(616, 584)
 
 [node name="Spike2" parent="Spikes" unique_id=1489584457 instance=ExtResource("5_spike")]
-position = Vector2(645, 584)
+position = Vector2(646, 584)
 
 [node name="Spike3" parent="Spikes" unique_id=918122086 instance=ExtResource("5_spike")]
-position = Vector2(675, 584)
+position = Vector2(676, 584)
 
 [node name="Spike4" parent="Spikes" unique_id=729777491 instance=ExtResource("5_spike")]
-position = Vector2(705, 584)
+position = Vector2(706, 584)
 
 [node name="Spike5" parent="Spikes" unique_id=1377147957 instance=ExtResource("5_spike")]
-position = Vector2(735, 584)
+position = Vector2(736, 584)
+
+[node name="Spike34" parent="Spikes" unique_id=42837265 instance=ExtResource("5_spike")]
+position = Vector2(766, 584)
 
 [node name="Spike6" parent="Spikes" unique_id=1816237603 instance=ExtResource("5_spike")]
 position = Vector2(965, 584)

@@ -11,6 +11,9 @@ const INVINCIBILITY_TIME := 1.0
 const HURT_DURATION := 0.15
 const ECHO_SCENE := preload("res://scenes/player/echo.tscn")
 
+const COYOTE_TIME := 0.05
+const JUMP_BUFFER_TIME := 0.08
+
 enum State { IDLE, RUN, JUMP, FALL, CLIMB, ATTACK, HURT, DEAD }
 
 signal health_changed(new_health: int)
@@ -29,6 +32,8 @@ var health := MAX_HEALTH
 var invincibility_remaining := 0.0
 var hurt_remaining := 0.0
 var step_timer := 0.0
+var coyote_timer := 0.0
+var jump_buffer_timer := 0.0
 
 
 func _ready() -> void:
@@ -50,6 +55,19 @@ func _physics_process(delta: float) -> void:
 	_update_drop_through(delta)
 	_update_damage_timers(delta)
 	_update_echo_recharge()
+
+	# Atualização de Coyote Time e Jump Buffer calibrados com precisão
+	if is_on_floor():
+		coyote_timer = COYOTE_TIME
+	else:
+		coyote_timer -= delta
+		if velocity.y < 0.0:
+			coyote_timer = 0.0
+
+	if Input.is_action_just_pressed("jump"):
+		jump_buffer_timer = JUMP_BUFFER_TIME
+	elif jump_buffer_timer > 0.0:
+		jump_buffer_timer -= delta
 
 	if Input.is_action_just_pressed("echo_create"):
 		create_echo()
@@ -89,12 +107,20 @@ func _physics_process(delta: float) -> void:
 		_handle_climb(delta, horizontal_direction, vertical_direction)
 		return
 
-	if not is_on_floor():
-		velocity.y += GRAVITY * delta
-	elif Input.is_action_just_pressed("jump"):
+	# Execução de Pulo Responsivo
+	if jump_buffer_timer > 0.0 and coyote_timer > 0.0:
 		velocity.y = JUMP_VELOCITY
+		coyote_timer = 0.0
+		jump_buffer_timer = 0.0
 		if AudioManager:
 			AudioManager.play_sfx("jump")
+
+	# Pulo variável (cortar impulso vertical ao soltar o botão de pulo)
+	if Input.is_action_just_released("jump") and velocity.y < -100.0:
+		velocity.y = -100.0
+
+	if not is_on_floor():
+		velocity.y += GRAVITY * delta
 
 	velocity.x = horizontal_direction * SPEED
 	move_and_slide()
@@ -124,6 +150,8 @@ func _handle_climb(_delta: float, horizontal_direction: float, vertical_directio
 		state = State.JUMP
 		velocity.x = horizontal_direction * SPEED
 		velocity.y = JUMP_VELOCITY
+		coyote_timer = 0.0
+		jump_buffer_timer = 0.0
 		if AudioManager:
 			AudioManager.play_sfx("jump")
 		move_and_slide()
