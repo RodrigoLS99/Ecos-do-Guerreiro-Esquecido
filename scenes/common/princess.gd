@@ -6,8 +6,10 @@ var is_rescued := false
 var start_pos: Vector2
 var time_passed := 0.0
 
-@onready var crown: Polygon2D = $Visual/Crown if has_node("Visual/Crown") else null
-@onready var aura: Polygon2D = $Visual/Aura if has_node("Visual/Aura") else null
+@onready var sprite_slot: Sprite2D = $Visual/SpriteSlot if has_node("Visual/SpriteSlot") else null
+@onready var procedural_visual: Node2D = $Visual/Procedural if has_node("Visual/Procedural") else null
+@onready var crown: Polygon2D = $Visual/Procedural/Crown if has_node("Visual/Procedural/Crown") else null
+@onready var aura: Polygon2D = $Visual/Procedural/Aura if has_node("Visual/Procedural/Aura") else null
 @onready var heart_bubble: Node2D = $HeartBubble if has_node("HeartBubble") else null
 
 
@@ -16,6 +18,15 @@ func _ready() -> void:
 	body_entered.connect(_on_body_entered)
 	if heart_bubble:
 		heart_bubble.visible = false
+	if sprite_slot != null and sprite_slot.texture != null:
+		sprite_slot.visible = true
+		if procedural_visual != null:
+			procedural_visual.visible = false
+	else:
+		if sprite_slot != null:
+			sprite_slot.visible = false
+		if procedural_visual != null:
+			procedural_visual.visible = true
 
 
 func _process(delta: float) -> void:

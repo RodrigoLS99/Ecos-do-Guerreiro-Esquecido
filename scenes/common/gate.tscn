@@ -11,6 +11,11 @@ script = ExtResource("1_script")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_gate")
 
-[node name="Visual" type="Polygon2D" parent="."]
+[node name="Visual" type="Node2D" parent="."]
+
+[node name="SpriteSlot" type="Sprite2D" parent="Visual"]
+visible = false
+
+[node name="Procedural" type="Polygon2D" parent="Visual"]
 color = Color(0.95, 0.25, 0.25, 0.9)
 polygon = PackedVector2Array(-10, -48, 10, -48, 10, 48, -10, 48)

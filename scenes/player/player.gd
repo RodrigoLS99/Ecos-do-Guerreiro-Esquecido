@@ -35,8 +35,13 @@ var step_timer := 0.0
 var coyote_timer := 0.0
 var jump_buffer_timer := 0.0
 
+@onready var visual_root: Node2D = $Visual if has_node("Visual") else null
+@onready var sprite_slot: Sprite2D = $Visual/SpriteSlot if has_node("Visual/SpriteSlot") else null
+@onready var procedural_visual: Node2D = $Visual/Procedural if has_node("Visual/Procedural") else null
+
 
 func _ready() -> void:
+	_setup_visual_slots()
 	var camera := get_node_or_null("Camera2D") as Camera2D
 	if camera != null:
 		camera.limit_left = 0
@@ -45,6 +50,18 @@ func _ready() -> void:
 		var limit_marker := get_tree().current_scene.get_node_or_null("CameraLimitRight")
 		if limit_marker != null:
 			camera.limit_right = int(limit_marker.global_position.x)
+
+
+func _setup_visual_slots() -> void:
+	if sprite_slot != null and sprite_slot.texture != null:
+		sprite_slot.visible = true
+		if procedural_visual != null:
+			procedural_visual.visible = false
+	else:
+		if sprite_slot != null:
+			sprite_slot.visible = false
+		if procedural_visual != null:
+			procedural_visual.visible = true
 
 
 func _physics_process(delta: float) -> void:
@@ -81,6 +98,8 @@ func _physics_process(delta: float) -> void:
 		facing_direction = int(sign(horizontal_direction))
 		$AttackHitbox.position.x = 34.0 * facing_direction
 		$AttackHitbox.scale.x = facing_direction
+		if visual_root != null:
+			visual_root.scale.x = facing_direction
 
 	if state == State.HURT:
 		_handle_hurt(delta)
@@ -252,7 +271,15 @@ func _update_drop_through(delta: float) -> void:
 func _update_damage_timers(delta: float) -> void:
 	if invincibility_remaining > 0.0:
 		invincibility_remaining -= delta
-		$Placeholder.modulate.a = 0.45 if invincibility_remaining > 0.0 else 1.0
+		if visual_root != null:
+			visual_root.modulate.a = 0.45 if invincibility_remaining > 0.0 else 1.0
+		elif has_node("Placeholder"):
+			$Placeholder.modulate.a = 0.45 if invincibility_remaining > 0.0 else 1.0
+	else:
+		if visual_root != null:
+			visual_root.modulate.a = 1.0
+		elif has_node("Placeholder"):
+			$Placeholder.modulate.a = 1.0
 
 	if hurt_remaining > 0.0:
 		hurt_remaining -= delta

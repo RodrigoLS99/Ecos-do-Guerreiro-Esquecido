@@ -97,6 +97,7 @@ polygon = PackedVector2Array(-220, -32, 220, -32, 220, 32, -220, 32)
 position = Vector2(323, 560)
 
 [node name="Ladder_Chamber" parent="." unique_id=1956765985 instance=ExtResource("3_ladder")]
+z_index = 1
 position = Vector2(360, 532)
 
 [node name="Plat_AnteSala" type="StaticBody2D" parent="." unique_id=1123818720 groups=["drop_through_platform"]]
@@ -252,6 +253,7 @@ color = Color(0.16, 0.22, 0.3, 1)
 polygon = PackedVector2Array(-125, -32, 125, -32, 125, 32, -125, 32)
 
 [node name="Ladder_Snipe" parent="." unique_id=996110048 instance=ExtResource("3_ladder")]
+z_index = 1
 position = Vector2(1196, 532)
 
 [node name="Plat_Snipe" type="StaticBody2D" parent="." unique_id=1604142462 groups=["drop_through_platform"]]
@@ -363,6 +365,7 @@ color = Color(0.16, 0.22, 0.3, 1)
 polygon = PackedVector2Array(-410, -32, 410, -32, 410, 32, -410, 32)
 
 [node name="Ladder4_A" parent="." unique_id=1887376694 instance=ExtResource("3_ladder")]
+z_index = 1
 position = Vector2(1945, 428)
 
 [node name="Platform4_Balcony" type="StaticBody2D" parent="." unique_id=463899684 groups=["drop_through_platform"]]
@@ -446,6 +449,7 @@ color = Color(0.24, 0.34, 0.44, 1)
 polygon = PackedVector2Array(-70, -12, 70, -12, 70, 12, -70, 12)
 
 [node name="Ladder4_B" parent="." unique_id=2071092078 instance=ExtResource("3_ladder")]
+z_index = 1
 position = Vector2(2814, 324)
 
 [node name="Platform4_Tier1" type="StaticBody2D" parent="." unique_id=864976655 groups=["drop_through_platform"]]
@@ -460,6 +464,7 @@ color = Color(0.24, 0.34, 0.44, 1)
 polygon = PackedVector2Array(-70, -12, 70, -12, 70, 12, -70, 12)
 
 [node name="Ladder4_C" parent="." unique_id=1424957763 instance=ExtResource("3_ladder")]
+z_index = 1
 position = Vector2(2706, 220)
 
 [node name="Platform4_Tier2" type="StaticBody2D" parent="." unique_id=2011426606 groups=["drop_through_platform"]]
@@ -474,6 +479,7 @@ color = Color(0.24, 0.34, 0.44, 1)
 polygon = PackedVector2Array(-70, -12, 70, -12, 70, 12, -70, 12)
 
 [node name="Ladder4_D" parent="." unique_id=1776792446 instance=ExtResource("3_ladder")]
+z_index = 1
 position = Vector2(2814, 116)
 
 [node name="Platform4_Shrine" type="StaticBody2D" parent="." unique_id=962656121 groups=["drop_through_platform"]]

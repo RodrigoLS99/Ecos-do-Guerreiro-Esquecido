@@ -13,15 +13,30 @@ var health := 2
 var flash_timer := 0.0
 
 @onready var visuals: Node2D = $Visuals if has_node("Visuals") else null
+@onready var sprite_slot: Sprite2D = $Visuals/SpriteSlot if has_node("Visuals/SpriteSlot") else null
+@onready var procedural_visual: Node2D = $Visuals/Procedural if has_node("Visuals/Procedural") else null
 @onready var health_bar: Node2D = $HealthBar if has_node("HealthBar") else null
 @onready var pip_1: Polygon2D = $HealthBar/Pip1 if has_node("HealthBar/Pip1") else null
 @onready var pip_2: Polygon2D = $HealthBar/Pip2 if has_node("HealthBar/Pip2") else null
 
 
 func _ready() -> void:
+	_setup_visual_slots()
 	health = max_health
 	_update_facing(facing_direction)
 	_update_health_display(false)
+
+
+func _setup_visual_slots() -> void:
+	if sprite_slot != null and sprite_slot.texture != null:
+		sprite_slot.visible = true
+		if procedural_visual != null:
+			procedural_visual.visible = false
+	else:
+		if sprite_slot != null:
+			sprite_slot.visible = false
+		if procedural_visual != null:
+			procedural_visual.visible = true
 
 
 func _physics_process(delta: float) -> void:
