@@ -112,6 +112,14 @@ func _handle_climb(delta: float, horizontal_direction: float, vertical_direction
 		move_and_slide()
 		return
 
+	# Sair da escada andando para os lados
+	if horizontal_direction != 0.0 and vertical_direction == 0.0:
+		state = State.RUN if is_on_floor() else State.FALL
+		velocity.x = horizontal_direction * SPEED
+		velocity.y = 0.0
+		move_and_slide()
+		return
+
 	var ladder := _get_active_ladder(vertical_direction)
 	if ladder == null:
 		state = State.FALL
