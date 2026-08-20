@@ -5,6 +5,9 @@ const PROJECTILE_SCENE := preload("res://scenes/combat/projectile.tscn")
 @export var facing_direction := -1
 @export var auto_face_player := true
 @export var max_health := 2
+@export var defeat_target: NodePath
+
+signal defeated
 
 var health := 2
 var flash_timer := 0.0
@@ -50,6 +53,14 @@ func take_damage(amount: int) -> void:
 		visuals.modulate = Color(2.5, 0.4, 0.4, 1.0)
 
 	if health <= 0:
+		defeated.emit()
+		if not defeat_target.is_empty():
+			var target := get_node_or_null(defeat_target)
+			if target != null:
+				if target.has_method("activate"):
+					target.activate()
+				elif target.has_method("open"):
+					target.open()
 		queue_free()
 
 

@@ -1,6 +1,8 @@
 extends StaticBody2D
 
 @export var is_closed_by_default := true
+@export var closed_color := Color(0.95, 0.25, 0.25, 0.9)
+@export var open_color := Color(0.25, 0.95, 0.45, 0.12)
 
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
 @onready var visual: Polygon2D = $Visual
@@ -8,16 +10,26 @@ extends StaticBody2D
 
 func _ready() -> void:
 	if is_closed_by_default:
-		close()
+		close(true)
 	else:
-		open()
+		open(true)
 
 
-func open() -> void:
+func open(instant := false) -> void:
 	collision_shape.set_deferred("disabled", true)
-	visual.modulate.a = 0.15
+	if visual:
+		if instant:
+			visual.color = open_color
+		else:
+			var tw := create_tween()
+			tw.tween_property(visual, "color", open_color, 0.3)
 
 
-func close() -> void:
+func close(instant := false) -> void:
 	collision_shape.set_deferred("disabled", false)
-	visual.modulate.a = 1.0
+	if visual:
+		if instant:
+			visual.color = closed_color
+		else:
+			var tw := create_tween()
+			tw.tween_property(visual, "color", closed_color, 0.3)

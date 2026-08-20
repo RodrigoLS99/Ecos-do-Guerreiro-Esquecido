@@ -42,7 +42,7 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if (global_position.y > 700.0 or global_position.y < -20.0) and state != State.DEAD:
+	if (global_position.y > 700.0 or global_position.y < -300.0) and state != State.DEAD:
 		die_instant()
 		return
 

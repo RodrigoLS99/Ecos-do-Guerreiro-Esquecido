@@ -4,226 +4,264 @@
 [ext_resource type="PackedScene" path="res://scenes/enemies/enemy_shooter.tscn" id="2_enemy"]
 [ext_resource type="PackedScene" path="res://scenes/common/ladder_zone.tscn" id="3_ladder"]
 [ext_resource type="PackedScene" path="res://scenes/common/floor_exit.tscn" id="4_exit"]
-[ext_resource type="PackedScene" path="res://scenes/hazards/pit.tscn" id="5_pit"]
-[ext_resource type="PackedScene" path="res://scenes/hazards/spike.tscn" id="6_spike"]
-[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="7_hud"]
+[ext_resource type="PackedScene" path="res://scenes/hazards/spike.tscn" id="5_spike"]
+[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="6_hud"]
+[ext_resource type="PackedScene" path="res://scenes/ui/tutorial_trigger.tscn" id="7_tut"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wall"]
 size = Vector2(32, 648)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ground_600"]
+size = Vector2(600, 64)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ground_500"]
-size = Vector2(500, 64)
+size = Vector2(453, 64)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ground_300"]
-size = Vector2(300, 64)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_plat_120"]
+size = Vector2(120, 24)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_plat_220"]
-size = Vector2(220, 24)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_plat_350"]
+size = Vector2(342, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ground_360"]
+size = Vector2(360, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_plat_160"]
+size = Vector2(160, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_plat_340"]
+size = Vector2(346, 24)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_plat_200"]
-size = Vector2(200, 24)
+size = Vector2(196, 24)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_plat_180"]
-size = Vector2(180, 24)
+[node name="Floor3" type="Node2D" unique_id=827257099]
 
-[node name="Floor3" type="Node2D"]
+[node name="Background" type="Polygon2D" parent="." unique_id=849018196]
+color = Color(0.06, 0.04, 0.08, 1)
+polygon = PackedVector2Array(-400, -300, 2800, -300, 2800, 648, -400, 648)
 
-[node name="Background" type="Polygon2D" parent="."]
-color = Color(0.08, 0.05, 0.09, 1)
-polygon = PackedVector2Array(-400, 0, 2800, 0, 2800, 648, -400, 648)
-
-[node name="CameraLimitRight" type="Marker2D" parent="."]
+[node name="CameraLimitRight" type="Marker2D" parent="." unique_id=701264793]
 position = Vector2(2400, 0)
 
-[node name="LeftWall" type="StaticBody2D" parent="."]
+[node name="LeftWall" type="StaticBody2D" parent="." unique_id=1402892296]
 position = Vector2(-16, 324)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall" unique_id=1619811674]
 shape = SubResource("RectangleShape2D_wall")
 
-[node name="RightWall" type="StaticBody2D" parent="."]
+[node name="RightWall" type="StaticBody2D" parent="." unique_id=144192197]
 position = Vector2(2416, 324)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall" unique_id=790082657]
 shape = SubResource("RectangleShape2D_wall")
 
-[node name="Pit" parent="." instance=ExtResource("5_pit")]
-position = Vector2(1200, 0)
+[node name="Ground1" type="StaticBody2D" parent="." unique_id=61690788]
+position = Vector2(300, 616)
 
-[node name="Ground1" type="StaticBody2D" parent="."]
-position = Vector2(250, 616)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground1" unique_id=982779363]
+shape = SubResource("RectangleShape2D_ground_600")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground1"]
-shape = SubResource("RectangleShape2D_ground_500")
+[node name="Visual" type="Polygon2D" parent="Ground1" unique_id=2080330167]
+color = Color(0.22, 0.16, 0.24, 1)
+polygon = PackedVector2Array(-300, -32, 300, -32, 300, 32, -300, 32)
 
-[node name="Visual" type="Polygon2D" parent="Ground1"]
-color = Color(0.24, 0.18, 0.28, 1)
-polygon = PackedVector2Array(-250, -32, 250, -32, 250, 32, -250, 32)
-
-[node name="EnemyShooter1" parent="." instance=ExtResource("2_enemy")]
+[node name="EnemyShooter1" parent="." unique_id=1897596918 instance=ExtResource("2_enemy")]
 position = Vector2(480, 560)
 
-[node name="Ground2" type="StaticBody2D" parent="."]
-position = Vector2(850, 616)
+[node name="Ground2" type="StaticBody2D" parent="." unique_id=465935754]
+position = Vector2(950, 616)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground2"]
-shape = SubResource("RectangleShape2D_ground_300")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground2" unique_id=1852643037]
+position = Vector2(-23.5, 0)
+shape = SubResource("RectangleShape2D_ground_500")
 
-[node name="Visual" type="Polygon2D" parent="Ground2"]
-color = Color(0.24, 0.18, 0.28, 1)
-polygon = PackedVector2Array(-150, -32, 150, -32, 150, 32, -150, 32)
+[node name="Visual" type="Polygon2D" parent="Ground2" unique_id=470772973]
+position = Vector2(-24.5, 0)
+scale = Vector2(0.902, 1)
+color = Color(0.22, 0.16, 0.24, 1)
+polygon = PackedVector2Array(-250, -32, 250, -32, 250, 32, -250, 32)
 
-[node name="Spike1" parent="." instance=ExtResource("6_spike")]
-position = Vector2(780, 584)
+[node name="Platform2_Step" type="StaticBody2D" parent="." unique_id=816632169 groups=["drop_through_platform"]]
+position = Vector2(780, 492)
 
-[node name="Spike2" parent="." instance=ExtResource("6_spike")]
-position = Vector2(860, 584)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform2_Step" unique_id=574270762]
+shape = SubResource("RectangleShape2D_plat_120")
+one_way_collision = true
 
-[node name="PlatformA" type="StaticBody2D" parent="." groups=["drop_through_platform"]]
-position = Vector2(750, 492)
+[node name="Visual" type="Polygon2D" parent="Platform2_Step" unique_id=1453144889]
+color = Color(0.34, 0.24, 0.38, 1)
+polygon = PackedVector2Array(-60, -12, 60, -12, 60, 12, -60, 12)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlatformA"]
+[node name="Ladder2_Lower" parent="." unique_id=1386214457 instance=ExtResource("3_ladder")]
+position = Vector2(760, 532)
+
+[node name="Platform2_Mezzanine" type="StaticBody2D" parent="." unique_id=1184113194 groups=["drop_through_platform"]]
+position = Vector2(975, 388)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform2_Mezzanine" unique_id=438080321]
+position = Vector2(4, 0)
+shape = SubResource("RectangleShape2D_plat_350")
+one_way_collision = true
+
+[node name="Visual" type="Polygon2D" parent="Platform2_Mezzanine" unique_id=1841366269]
+position = Vector2(4, 0)
+scale = Vector2(0.9771429, 1)
+color = Color(0.34, 0.24, 0.38, 1)
+polygon = PackedVector2Array(-175, -12, 175, -12, 175, 12, -175, 12, -175, -0.4097786)
+
+[node name="Ladder2_Upper" parent="." unique_id=78450732 instance=ExtResource("3_ladder")]
+position = Vector2(824, 428)
+
+[node name="EnemyShooter2" parent="." unique_id=1373595195 instance=ExtResource("2_enemy")]
+position = Vector2(1050, 352)
+
+[node name="Ground_Pit3" type="StaticBody2D" parent="." unique_id=1986322355]
+position = Vector2(1400, 616)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground_Pit3" unique_id=1387143969]
+shape = SubResource("RectangleShape2D_ground_360")
+
+[node name="Visual" type="Polygon2D" parent="Ground_Pit3" unique_id=1400001071]
+color = Color(0.22, 0.16, 0.24, 1)
+polygon = PackedVector2Array(-180, -32, 180, -32, 180, 32, -180, 32)
+
+[node name="Spikes" type="Node2D" parent="." unique_id=2053521877]
+
+[node name="Spike1" parent="Spikes" unique_id=1870197438 instance=ExtResource("5_spike")]
+position = Vector2(1260, 584)
+
+[node name="Spike2" parent="Spikes" unique_id=423788048 instance=ExtResource("5_spike")]
+position = Vector2(1300, 584)
+
+[node name="Spike3" parent="Spikes" unique_id=27493756 instance=ExtResource("5_spike")]
+position = Vector2(1340, 584)
+
+[node name="Spike4" parent="Spikes" unique_id=498737660 instance=ExtResource("5_spike")]
+position = Vector2(1380, 584)
+
+[node name="Spike5" parent="Spikes" unique_id=1143658983 instance=ExtResource("5_spike")]
+position = Vector2(1420, 584)
+
+[node name="Spike6" parent="Spikes" unique_id=1309970381 instance=ExtResource("5_spike")]
+position = Vector2(1460, 584)
+
+[node name="Spike7" parent="Spikes" unique_id=472944665 instance=ExtResource("5_spike")]
+position = Vector2(1500, 584)
+
+[node name="Spike8" parent="Spikes" unique_id=657180281 instance=ExtResource("5_spike")]
+position = Vector2(1540, 584)
+
+[node name="Platform3_Mid" type="StaticBody2D" parent="." unique_id=929951131 groups=["drop_through_platform"]]
+position = Vector2(1330, 388)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform3_Mid" unique_id=1102654786]
+shape = SubResource("RectangleShape2D_plat_160")
+one_way_collision = true
+
+[node name="Visual" type="Polygon2D" parent="Platform3_Mid" unique_id=1192663873]
+color = Color(0.34, 0.24, 0.38, 1)
+polygon = PackedVector2Array(-80, -12, 80, -12, 80, 12, -80, 12)
+
+[node name="Platform3_Landing" type="StaticBody2D" parent="." unique_id=354308591 groups=["drop_through_platform"]]
+position = Vector2(1680, 388)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform3_Landing" unique_id=1362971753]
+position = Vector2(3, 0)
+shape = SubResource("RectangleShape2D_plat_340")
+one_way_collision = true
+
+[node name="Visual" type="Polygon2D" parent="Platform3_Landing" unique_id=1905840607]
+position = Vector2(3.0000277, 0)
+scale = Vector2(1.0176471, 1)
+color = Color(0.34, 0.24, 0.38, 1)
+polygon = PackedVector2Array(-170, -12, 170, -12, 170, 12, -170, 12)
+
+[node name="EnemyShooter3" parent="." unique_id=1344549606 instance=ExtResource("2_enemy")]
+position = Vector2(1750, 352)
+
+[node name="Platform4A" type="StaticBody2D" parent="." unique_id=564829797 groups=["drop_through_platform"]]
+position = Vector2(1920, 284)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform4A" unique_id=1055059929]
+position = Vector2(2, 0)
 shape = SubResource("RectangleShape2D_plat_200")
 one_way_collision = true
 
-[node name="Visual" type="Polygon2D" parent="PlatformA"]
-color = Color(0.38, 0.26, 0.42, 1)
-polygon = PackedVector2Array(-100, -12, 100, -12, 100, 12, -100, 12)
+[node name="Visual" type="Polygon2D" parent="Platform4A" unique_id=38629287]
+position = Vector2(2, 0)
+scale = Vector2(0.98, 1)
+color = Color(0.34, 0.24, 0.38, 1)
+polygon = PackedVector2Array(-100, -12, 100, -12, 100, 12, -100, 12, -100, -0.18515015)
 
-[node name="LadderA" parent="." instance=ExtResource("3_ladder")]
-position = Vector2(680, 532)
+[node name="Ladder4A" parent="." unique_id=1818534900 instance=ExtResource("3_ladder")]
+position = Vector2(1840, 324)
 
-[node name="PlatformB" type="StaticBody2D" parent="." groups=["drop_through_platform"]]
-position = Vector2(1050, 492)
+[node name="Platform4_Guard" type="StaticBody2D" parent="." unique_id=1342689456 groups=["drop_through_platform"]]
+position = Vector2(2250, 284)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlatformB"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform4_Guard" unique_id=28132036]
+shape = SubResource("RectangleShape2D_plat_160")
+one_way_collision = true
+
+[node name="Visual" type="Polygon2D" parent="Platform4_Guard" unique_id=1372853684]
+color = Color(0.34, 0.24, 0.38, 1)
+polygon = PackedVector2Array(-80, -12, 80, -12, 80, 12, -80, 12)
+
+[node name="EnemyShooter4" parent="." unique_id=321322019 instance=ExtResource("2_enemy")]
+position = Vector2(2250, 248)
+
+[node name="Platform4B" type="StaticBody2D" parent="." unique_id=775562121 groups=["drop_through_platform"]]
+position = Vector2(1920, 180)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform4B" unique_id=1527008125]
 shape = SubResource("RectangleShape2D_plat_200")
 one_way_collision = true
 
-[node name="Visual" type="Polygon2D" parent="PlatformB"]
-color = Color(0.38, 0.26, 0.42, 1)
+[node name="Visual" type="Polygon2D" parent="Platform4B" unique_id=404810931]
+color = Color(0.34, 0.24, 0.38, 1)
 polygon = PackedVector2Array(-100, -12, 100, -12, 100, 12, -100, 12)
 
-[node name="EnemyShooter2" parent="." instance=ExtResource("2_enemy")]
-position = Vector2(1100, 456)
+[node name="Ladder4B" parent="." unique_id=1305357263 instance=ExtResource("3_ladder")]
+position = Vector2(1920, 220)
 
-[node name="Ground3" type="StaticBody2D" parent="."]
-position = Vector2(1300, 616)
+[node name="Platform4C" type="StaticBody2D" parent="." unique_id=364188867 groups=["drop_through_platform"]]
+position = Vector2(2050, 76)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground3"]
-shape = SubResource("RectangleShape2D_ground_300")
-
-[node name="Visual" type="Polygon2D" parent="Ground3"]
-color = Color(0.24, 0.18, 0.28, 1)
-polygon = PackedVector2Array(-150, -32, 150, -32, 150, 32, -150, 32)
-
-[node name="PlatformC" type="StaticBody2D" parent="." groups=["drop_through_platform"]]
-position = Vector2(1350, 492)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlatformC"]
-shape = SubResource("RectangleShape2D_plat_180")
-one_way_collision = true
-
-[node name="Visual" type="Polygon2D" parent="PlatformC"]
-color = Color(0.38, 0.26, 0.42, 1)
-polygon = PackedVector2Array(-90, -12, 90, -12, 90, 12, -90, 12)
-
-[node name="LadderB" parent="." instance=ExtResource("3_ladder")]
-position = Vector2(1280, 532)
-
-[node name="Spike3" parent="." instance=ExtResource("6_spike")]
-position = Vector2(1390, 480)
-
-[node name="PlatformD" type="StaticBody2D" parent="." groups=["drop_through_platform"]]
-position = Vector2(1580, 388)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlatformD"]
-shape = SubResource("RectangleShape2D_plat_220")
-one_way_collision = true
-
-[node name="Visual" type="Polygon2D" parent="PlatformD"]
-color = Color(0.38, 0.26, 0.42, 1)
-polygon = PackedVector2Array(-110, -12, 110, -12, 110, 12, -110, 12)
-
-[node name="LadderC" parent="." instance=ExtResource("3_ladder")]
-position = Vector2(1500, 428)
-
-[node name="EnemyShooter3" parent="." instance=ExtResource("2_enemy")]
-position = Vector2(1640, 352)
-
-[node name="Ground4" type="StaticBody2D" parent="."]
-position = Vector2(1800, 616)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground4"]
-shape = SubResource("RectangleShape2D_ground_300")
-
-[node name="Visual" type="Polygon2D" parent="Ground4"]
-color = Color(0.24, 0.18, 0.28, 1)
-polygon = PackedVector2Array(-150, -32, 150, -32, 150, 32, -150, 32)
-
-[node name="PlatformE" type="StaticBody2D" parent="." groups=["drop_through_platform"]]
-position = Vector2(1850, 492)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlatformE"]
-shape = SubResource("RectangleShape2D_plat_180")
-one_way_collision = true
-
-[node name="Visual" type="Polygon2D" parent="PlatformE"]
-color = Color(0.38, 0.26, 0.42, 1)
-polygon = PackedVector2Array(-90, -12, 90, -12, 90, 12, -90, 12)
-
-[node name="LadderD" parent="." instance=ExtResource("3_ladder")]
-position = Vector2(1800, 532)
-
-[node name="PlatformF" type="StaticBody2D" parent="." groups=["drop_through_platform"]]
-position = Vector2(2050, 388)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlatformF"]
-shape = SubResource("RectangleShape2D_plat_180")
-one_way_collision = true
-
-[node name="Visual" type="Polygon2D" parent="PlatformF"]
-color = Color(0.38, 0.26, 0.42, 1)
-polygon = PackedVector2Array(-90, -12, 90, -12, 90, 12, -90, 12)
-
-[node name="LadderE" parent="." instance=ExtResource("3_ladder")]
-position = Vector2(1980, 428)
-
-[node name="PlatformG" type="StaticBody2D" parent="." groups=["drop_through_platform"]]
-position = Vector2(2200, 284)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlatformG"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform4C" unique_id=1408046090]
 shape = SubResource("RectangleShape2D_plat_200")
 one_way_collision = true
 
-[node name="Visual" type="Polygon2D" parent="PlatformG"]
-color = Color(0.38, 0.26, 0.42, 1)
+[node name="Visual" type="Polygon2D" parent="Platform4C" unique_id=838425008]
+color = Color(0.34, 0.24, 0.38, 1)
 polygon = PackedVector2Array(-100, -12, 100, -12, 100, 12, -100, 12)
 
-[node name="LadderF" parent="." instance=ExtResource("3_ladder")]
-position = Vector2(2130, 324)
+[node name="Ladder4C" parent="." unique_id=608232574 instance=ExtResource("3_ladder")]
+position = Vector2(1990, 116)
 
-[node name="EnemyShooter4" parent="." instance=ExtResource("2_enemy")]
-position = Vector2(2260, 248)
+[node name="Platform4D" type="StaticBody2D" parent="." unique_id=927700593 groups=["drop_through_platform"]]
+position = Vector2(2050, -28)
 
-[node name="PlatformH" type="StaticBody2D" parent="." groups=["drop_through_platform"]]
-position = Vector2(2200, 180)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlatformH"]
-shape = SubResource("RectangleShape2D_plat_180")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform4D" unique_id=1670885543]
+shape = SubResource("RectangleShape2D_plat_200")
 one_way_collision = true
 
-[node name="Visual" type="Polygon2D" parent="PlatformH"]
-color = Color(0.38, 0.26, 0.42, 1)
-polygon = PackedVector2Array(-90, -12, 90, -12, 90, 12, -90, 12)
+[node name="Visual" type="Polygon2D" parent="Platform4D" unique_id=83412344]
+color = Color(0.34, 0.24, 0.38, 1)
+polygon = PackedVector2Array(-100, -12, 100, -12, 100, 12, -100, 12)
 
-[node name="LadderG" parent="." instance=ExtResource("3_ladder")]
-position = Vector2(2150, 220)
+[node name="LadderExit" parent="." unique_id=666119192 instance=ExtResource("3_ladder")]
+position = Vector2(2050, 12)
 
-[node name="FloorExit" parent="." instance=ExtResource("4_exit")]
-position = Vector2(2250, 136)
+[node name="FloorExit" parent="." unique_id=1808358178 instance=ExtResource("4_exit")]
+position = Vector2(2051, -75)
 
-[node name="Player" parent="." instance=ExtResource("1_player")]
+[node name="Player" parent="." unique_id=1410334762 instance=ExtResource("1_player")]
 position = Vector2(80, 550)
 
-[node name="HUD" parent="." instance=ExtResource("7_hud")]
+[node name="HUD" parent="." unique_id=1626947815 instance=ExtResource("6_hud")]
+
+[node name="Tutorial_Deflection" parent="." instance=ExtResource("7_tut")]
+position = Vector2(80, 550)
+message = "✦ Pressione [X] para atacar e rebater projéteis com a espada ✦"
+auto_trigger_on_start = true

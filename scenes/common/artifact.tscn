@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scenes/common/artifact.gd" id="1_script"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_artifact"]
+radius = 24.0
+
+[node name="Artifact" type="Area2D"]
+collision_layer = 1
+collision_mask = 1
+script = ExtResource("1_script")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_artifact")
+
+[node name="Visual" type="Node2D" parent="."]
+
+[node name="Aura" type="Polygon2D" parent="Visual"]
+color = Color(0.95, 0.85, 0.35, 0.4)
+polygon = PackedVector2Array(-24, 0, -17, -17, 0, -24, 17, -17, 24, 0, 17, 17, 0, 24, -17, 17)
+
+[node name="Core" type="Polygon2D" parent="Visual"]
+color = Color(1, 0.95, 0.6, 1)
+polygon = PackedVector2Array(-10, 0, 0, -16, 10, 0, 0, 16)
+
+[node name="Gem" type="Polygon2D" parent="Visual"]
+color = Color(0.3, 0.9, 1, 1)
+polygon = PackedVector2Array(-6, 0, 0, -8, 6, 0, 0, 8)
