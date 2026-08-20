@@ -1,0 +1,206 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scenes/ui/help_dialog.gd" id="1_script"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_modal"]
+bg_color = Color(0.06, 0.08, 0.14, 0.96)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.95, 0.85, 0.35, 0.9)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0, 0, 0, 0.6)
+shadow_size = 16
+
+[node name="HelpDialog" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="DimBackground" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.5)
+
+[node name="Panel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -340.0
+offset_top = -240.0
+offset_right = 340.0
+offset_bottom = 240.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_modal")
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Title" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.85, 0.35, 1)
+theme_override_font_sizes/font_size = 24
+text = "✦ Como Jogar & Controles ✦"
+horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 320)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 14
+
+[node name="ControlsHeader" type="Label" parent="Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.35, 0.8, 1, 1)
+theme_override_font_sizes/font_size = 18
+text = "Comandos de Ação"
+
+[node name="ControlsGrid" type="GridContainer" parent="Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 24
+theme_override_constants/v_separation = 8
+columns = 2
+
+[node name="Lbl1" type="Label" parent="Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/ControlsGrid"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.9, 0.95, 0.9)
+text = "Mover Esquerda / Direita:"
+
+[node name="LblMove" type="Label" parent="Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/ControlsGrid"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.95, 0.4, 1)
+text = "A / D"
+
+[node name="Lbl2" type="Label" parent="Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/ControlsGrid"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.9, 0.95, 0.9)
+text = "Pular:"
+
+[node name="LblJump" type="Label" parent="Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/ControlsGrid"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.95, 0.4, 1)
+text = "Espaço"
+
+[node name="Lbl3" type="Label" parent="Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/ControlsGrid"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.9, 0.95, 0.9)
+text = "Subir / Descer Escadas:"
+
+[node name="LblLadder" type="Label" parent="Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/ControlsGrid"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.95, 0.4, 1)
+text = "W / S"
+
+[node name="Lbl4" type="Label" parent="Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/ControlsGrid"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.9, 0.95, 0.9)
+text = "Atacar / Rebater Projétil:"
+
+[node name="LblAttack" type="Label" parent="Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/ControlsGrid"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.95, 0.4, 1)
+text = "X"
+
+[node name="Lbl5" type="Label" parent="Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/ControlsGrid"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.9, 0.95, 0.9)
+text = "Invocar Eco (Plataforma):"
+
+[node name="LblEchoCreate" type="Label" parent="Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/ControlsGrid"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.95, 0.4, 1)
+text = "C"
+
+[node name="Lbl6" type="Label" parent="Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/ControlsGrid"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.9, 0.95, 0.9)
+text = "Colapsar / Teletransporte:"
+
+[node name="LblEchoTeleport" type="Label" parent="Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/ControlsGrid"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.95, 0.4, 1)
+text = "V"
+
+[node name="Lbl7" type="Label" parent="Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/ControlsGrid"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.9, 0.95, 0.9)
+text = "Pausar Jogo:"
+
+[node name="LblPause" type="Label" parent="Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/ControlsGrid"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.95, 0.4, 1)
+text = "ESC"
+
+[node name="HSeparator" type="HSeparator" parent="Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="LoreHeader" type="Label" parent="Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.35, 0.8, 1, 1)
+theme_override_font_sizes/font_size = 18
+text = "Mecânicas Ancestrais"
+
+[node name="LoreText1" type="Label" parent="Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.85, 0.9, 0.9)
+theme_override_font_sizes/font_size = 14
+text = "• Eco como Plataforma: Invoque o eco para criar uma plataforma sólida temporária e apoiar seus pés para alcançar novos caminhos."
+autowrap_mode = 2
+
+[node name="LoreText2" type="Label" parent="Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.85, 0.9, 0.9)
+theme_override_font_sizes/font_size = 14
+text = "• Teletransporte: Ao colapsar o eco, você se teletransporta instantaneamente para onde ele estava posicionado, atravessando armadilhas e portões."
+autowrap_mode = 2
+
+[node name="LoreText3" type="Label" parent="Panel/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.85, 0.9, 0.9)
+theme_override_font_sizes/font_size = 14
+text = "• Deflexão com a Espada: Acerte tiros inimigos com o golpe de espada para rebatê-los e destruir inimigos à distância."
+autowrap_mode = 2
+
+[node name="CloseButton" type="Button" parent="Panel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(160, 42)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 16
+text = "Fechar"
+
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/CloseButton" to="." method="_on_close_button_pressed"]

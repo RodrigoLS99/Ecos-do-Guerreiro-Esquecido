@@ -21,6 +21,7 @@ config/features=PackedStringArray("4.7")
 [autoload]
 
 GameState="*res://autoload/game_state.gd"
+SettingsManager="*res://autoload/settings_manager.gd"
 
 [display]
 
