@@ -71,7 +71,7 @@ func _setup_visual_slots() -> void:
 			procedural_visual.visible = true
 
 
-func _update_animation() -> void:
+func _update_animation(vertical_direction: float = 0.0) -> void:
 	if sprite_slot == null or not (sprite_slot is AnimatedSprite2D):
 		return
 	var anim_sprite := sprite_slot as AnimatedSprite2D
@@ -93,7 +93,13 @@ func _update_animation() -> void:
 				anim_sprite.play(&"fall")
 		State.CLIMB:
 			if anim_sprite.animation != &"climb":
-				anim_sprite.play(&"climb")
+				anim_sprite.animation = &"climb"
+			if vertical_direction < 0.0:
+				anim_sprite.play(&"climb", 1.0)
+			elif vertical_direction > 0.0:
+				anim_sprite.play(&"climb", -1.0)
+			else:
+				anim_sprite.pause()
 		State.ATTACK:
 			anim_sprite.play(&"attack")
 		State.HURT:
@@ -114,7 +120,6 @@ func _physics_process(delta: float) -> void:
 		die_instant()
 		return
 
-	_update_drop_through(delta)
 	_update_damage_timers(delta)
 	_update_echo_recharge()
 
@@ -166,8 +171,17 @@ func _physics_process(delta: float) -> void:
 	var can_climb_down := not ladders_below_in_range.is_empty() and vertical_direction > 0.0 and _can_drop_through()
 	if can_climb_up or can_climb_down:
 		if can_climb_down:
-			_start_drop_through()
+			var target_ladder := ladders_below_in_range[0]
+			var ladder_top: float = target_ladder.global_position.y - 52.0
+			if target_ladder.has_node("CollisionShape2D") and target_ladder.get_node("CollisionShape2D").shape is RectangleShape2D:
+				var shape := target_ladder.get_node("CollisionShape2D").shape as RectangleShape2D
+				ladder_top = target_ladder.global_position.y - (shape.size.y * 0.5)
+
+			global_position.x = target_ladder.global_position.x
+			global_position.y = ladder_top + 28.0
+
 		state = State.CLIMB
+		velocity = Vector2.ZERO
 		_handle_climb(delta, horizontal_direction, vertical_direction)
 		return
 
@@ -208,6 +222,7 @@ func _handle_climb(_delta: float, horizontal_direction: float, vertical_directio
 	if ladders_in_range.is_empty() and ladders_below_in_range.is_empty():
 		state = State.FALL
 		velocity.y = 0.0
+		_update_animation()
 		return
 
 	if Input.is_action_just_pressed("jump"):
@@ -219,6 +234,7 @@ func _handle_climb(_delta: float, horizontal_direction: float, vertical_directio
 		if AudioManager:
 			AudioManager.play_sfx("jump")
 		move_and_slide()
+		_update_animation()
 		return
 
 	# Sair da escada andando para os lados
@@ -227,18 +243,41 @@ func _handle_climb(_delta: float, horizontal_direction: float, vertical_directio
 		velocity.x = horizontal_direction * SPEED
 		velocity.y = 0.0
 		move_and_slide()
+		_update_animation()
 		return
 
 	var ladder := _get_active_ladder(vertical_direction)
 	if ladder == null:
-		state = State.FALL
+		state = State.IDLE if is_on_floor() else State.FALL
+		_update_animation()
+		return
+
+	# Checagem de topo da escada / plataforma
+	var ladder_top: float = ladder.global_position.y - 52.0
+	if ladder.has_node("CollisionShape2D") and ladder.get_node("CollisionShape2D").shape is RectangleShape2D:
+		var shape := ladder.get_node("CollisionShape2D").shape as RectangleShape2D
+		ladder_top = ladder.global_position.y - (shape.size.y * 0.5)
+
+	# Se subindo e atingir o topo da escada, sobe e se posiciona em cima da plataforma
+	if vertical_direction < 0.0 and global_position.y <= (ladder_top + 18.0):
+		global_position.y = ladder_top - 24.0
+		velocity = Vector2.ZERO
+		state = State.IDLE
+		_update_animation(0.0)
 		return
 
 	global_position.x = ladder.global_position.x
 	velocity.x = 0.0
-	velocity.y = CLIMB_SPEED if drop_through_remaining > 0.0 and vertical_direction == 0.0 else vertical_direction * CLIMB_SPEED
+	velocity.y = vertical_direction * CLIMB_SPEED
 	move_and_slide()
-	_update_animation()
+
+	if vertical_direction > 0.0 and is_on_floor():
+		state = State.IDLE
+		velocity = Vector2.ZERO
+		_update_animation(0.0)
+		return
+
+	_update_animation(vertical_direction)
 
 
 func _update_movement_state(horizontal_direction: float) -> void:
@@ -299,20 +338,6 @@ func _get_active_ladder(vertical_direction: float) -> Area2D:
 func _can_drop_through() -> bool:
 	var floor_body := $FloorDetector.get_collider() as Node2D
 	return floor_body != null and floor_body.is_in_group(&"drop_through_platform")
-
-
-func _start_drop_through() -> void:
-	drop_through_remaining = 0.7
-	$CollisionShape2D.set_deferred("disabled", true)
-
-
-func _update_drop_through(delta: float) -> void:
-	if drop_through_remaining <= 0.0:
-		return
-
-	drop_through_remaining -= delta
-	if drop_through_remaining <= 0.0:
-		$CollisionShape2D.set_deferred("disabled", false)
 
 
 func _update_damage_timers(delta: float) -> void:
