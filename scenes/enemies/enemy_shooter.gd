@@ -82,7 +82,7 @@ func take_damage(amount: int) -> void:
 	health -= amount
 	_update_health_display(true)
 	if AudioManager:
-		AudioManager.play_sfx("hit_enemy")
+		AudioManager.play_sfx_at_position("hit_enemy", global_position, 600.0)
 
 	flash_timer = 0.12
 	if visuals != null:
@@ -174,5 +174,5 @@ func _spawn_projectile() -> void:
 	projectile.global_position = spawn_pos
 	projectile.direction = facing_direction
 	if AudioManager:
-		AudioManager.play_sfx("projectile_shoot")
+		AudioManager.play_sfx_at_position("projectile_shoot", global_position, 550.0)
 	get_tree().current_scene.add_child(projectile)

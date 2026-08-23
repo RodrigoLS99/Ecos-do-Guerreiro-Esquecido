@@ -79,7 +79,7 @@ func open(instant := false) -> void:
 			open_passage.modulate.a = 1.0
 	else:
 		if AudioManager:
-			AudioManager.play_sfx("gate_open")
+			AudioManager.play_sfx_at_position("gate_open", global_position, 650.0)
 
 		_set_runes_color(COLOR_RUNE_UNLOCKED)
 

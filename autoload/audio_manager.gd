@@ -107,6 +107,28 @@ func play_sfx(sound_name: String, volume_scale: float = 1.0, pitch_scale: float 
 	player.play()
 
 
+func play_sfx_at_position(sound_name: String, source_pos: Vector2, max_dist: float = 600.0, volume_scale: float = 1.0, pitch_scale: float = 1.0) -> void:
+	var listener_pos := Vector2.ZERO
+	var player = get_tree().get_first_node_in_group(&"player")
+	if player != null and is_instance_valid(player):
+		listener_pos = player.global_position
+	else:
+		var cam = get_viewport().get_camera_2d()
+		if cam != null:
+			listener_pos = cam.global_position
+
+	var dist := listener_pos.distance_to(source_pos)
+	if dist > max_dist:
+		return
+
+	var att := clampf(1.0 - (dist / max_dist), 0.0, 1.0)
+	att = pow(att, 1.5)
+	if att < 0.05:
+		return
+
+	play_sfx(sound_name, volume_scale * att, pitch_scale)
+
+
 func _pregenerate_sounds() -> void:
 	_sfx_cache["jump"] = _gen_jump()
 	_sfx_cache["step"] = _gen_step()
@@ -118,6 +140,7 @@ func _pregenerate_sounds() -> void:
 	_sfx_cache["echo_teleport"] = _gen_echo_teleport()
 	_sfx_cache["projectile_shoot"] = _gen_shoot()
 	_sfx_cache["projectile_deflect"] = _gen_deflect()
+	_sfx_cache["projectile_parry"] = _sfx_cache["projectile_deflect"]
 	_sfx_cache["gate_open"] = _gen_gate()
 	_sfx_cache["plate_pressed"] = _gen_plate()
 	_sfx_cache["artifact_collect"] = _gen_artifact()
