@@ -8,8 +8,10 @@
 [ext_resource type="PackedScene" path="res://scenes/common/pressure_plate.tscn" id="6_plate"]
 [ext_resource type="PackedScene" path="res://scenes/common/damage_zone.tscn" id="7_dmg"]
 [ext_resource type="PackedScene" path="res://scenes/hazards/spike.tscn" id="8_spike"]
-[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="9_hud"]
-[ext_resource type="PackedScene" path="res://scenes/common/bridge_platform.tscn" id="10_bridge"]
+[ext_resource type="PackedScene" path="res://scenes/common/torch.tscn" id="9_torch"]
+[ext_resource type="PackedScene" path="res://scenes/common/arcane_rune.tscn" id="10_rune"]
+[ext_resource type="PackedScene" path="res://scenes/common/bridge_platform.tscn" id="11_bridge"]
+[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="12_hud"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wall"]
 size = Vector2(32, 648)
@@ -65,8 +67,124 @@ size = Vector2(24, 280)
 [node name="Floor4" type="Node2D" unique_id=1549428528]
 
 [node name="Background" type="Polygon2D" parent="." unique_id=361748905]
-color = Color(0.04, 0.06, 0.1, 1)
+z_index = -3
+color = Color(0.025, 0.015, 0.045, 1)
 polygon = PackedVector2Array(-400, -400, 3200, -400, 3200, 648, -400, 648)
+
+[node name="DungeonAtmosphere" type="Node2D" parent="." unique_id=2073500745]
+z_index = -2
+
+[node name="Pillar1" type="Polygon2D" parent="DungeonAtmosphere" unique_id=233382531]
+color = Color(0.055, 0.038, 0.08, 0.95)
+polygon = PackedVector2Array(250, 648, 310, 648, 310, 150, 330, 120, 230, 120, 250, 150)
+
+[node name="Pillar2" type="Polygon2D" parent="DungeonAtmosphere" unique_id=204497637]
+color = Color(0.055, 0.038, 0.08, 0.95)
+polygon = PackedVector2Array(880, 648, 940, 648, 940, 180, 960, 150, 860, 150, 880, 180)
+
+[node name="Pillar3" type="Polygon2D" parent="DungeonAtmosphere" unique_id=1271830251]
+color = Color(0.055, 0.038, 0.08, 0.95)
+polygon = PackedVector2Array(1510, 648, 1570, 648, 1570, 150, 1590, 120, 1490, 120, 1510, 150)
+
+[node name="Pillar4" type="Polygon2D" parent="DungeonAtmosphere" unique_id=1594268940]
+color = Color(0.055, 0.038, 0.08, 0.95)
+polygon = PackedVector2Array(2020, 648, 2080, 648, 2080, 120, 2100, 90, 2000, 90, 2020, 120)
+
+[node name="Pillar5" type="Polygon2D" parent="DungeonAtmosphere" unique_id=770936479]
+color = Color(0.055, 0.038, 0.08, 0.95)
+polygon = PackedVector2Array(2730, 648, 2790, 648, 2790, 100, 2810, 70, 2710, 70, 2730, 100)
+
+[node name="Torch1" parent="DungeonAtmosphere" unique_id=949109490 instance=ExtResource("9_torch")]
+position = Vector2(280, 340)
+glow_color = Color(0.85, 0.15, 0.4, 0.24)
+flame_outer_color = Color(0.95, 0.15, 0.35, 0.95)
+flame_inner_color = Color(1, 0.65, 0.75, 0.98)
+
+[node name="Torch2" parent="DungeonAtmosphere" unique_id=1311888860 instance=ExtResource("9_torch")]
+position = Vector2(910, 260)
+glow_color = Color(0.85, 0.15, 0.4, 0.24)
+flame_outer_color = Color(0.95, 0.15, 0.35, 0.95)
+flame_inner_color = Color(1, 0.65, 0.75, 0.98)
+
+[node name="Torch3" parent="DungeonAtmosphere" unique_id=504572001 instance=ExtResource("9_torch")]
+position = Vector2(1540, 240)
+glow_color = Color(0.85, 0.15, 0.4, 0.24)
+flame_outer_color = Color(0.95, 0.15, 0.35, 0.95)
+flame_inner_color = Color(1, 0.65, 0.75, 0.98)
+
+[node name="Torch4" parent="DungeonAtmosphere" unique_id=1066872209 instance=ExtResource("9_torch")]
+position = Vector2(2050, 200)
+glow_color = Color(0.85, 0.15, 0.4, 0.24)
+flame_outer_color = Color(0.95, 0.15, 0.35, 0.95)
+flame_inner_color = Color(1, 0.65, 0.75, 0.98)
+
+[node name="Torch5" parent="DungeonAtmosphere" unique_id=1859336358 instance=ExtResource("9_torch")]
+position = Vector2(2760, 140)
+glow_color = Color(0.85, 0.15, 0.4, 0.24)
+flame_outer_color = Color(0.95, 0.15, 0.35, 0.95)
+flame_inner_color = Color(1, 0.65, 0.75, 0.98)
+
+[node name="EntryLadder" type="Node2D" parent="." unique_id=1343958712]
+z_index = 1
+position = Vector2(18, 584)
+
+[node name="HatchAperture" type="Polygon2D" parent="EntryLadder" unique_id=1061377052]
+color = Color(0.03, 0.02, 0.05, 1)
+polygon = PackedVector2Array(-22, 0, 22, 0, 22, 64, -22, 64)
+
+[node name="HatchFrameLeft" type="Polygon2D" parent="EntryLadder" unique_id=164033405]
+color = Color(0.18, 0.15, 0.26, 1)
+polygon = PackedVector2Array(-26, 0, -22, 0, -22, 64, -26, 64)
+
+[node name="HatchFrameRight" type="Polygon2D" parent="EntryLadder" unique_id=877312321]
+color = Color(0.18, 0.15, 0.26, 1)
+polygon = PackedVector2Array(22, 0, 26, 0, 26, 64, 22, 64)
+
+[node name="LadderRailsL" type="Polygon2D" parent="EntryLadder" unique_id=91892472]
+color = Color(0.2, 0.12, 0.1, 1)
+polygon = PackedVector2Array(-16, 0, -12, 0, -12, 64, -16, 64)
+
+[node name="LadderRailsR" type="Polygon2D" parent="EntryLadder" unique_id=1406611729]
+color = Color(0.2, 0.12, 0.1, 1)
+polygon = PackedVector2Array(12, 0, 16, 0, 16, 64, 12, 64)
+
+[node name="Rung1" type="Polygon2D" parent="EntryLadder" unique_id=500134992]
+color = Color(0.4, 0.25, 0.16, 1)
+polygon = PackedVector2Array(-13, 20, 13, 20, 13, 25, -13, 25)
+
+[node name="Rung2" type="Polygon2D" parent="EntryLadder" unique_id=1502137882]
+color = Color(0.4, 0.25, 0.16, 1)
+polygon = PackedVector2Array(-13, 38, 13, 38, 13, 43, -13, 43)
+
+[node name="Rung3" type="Polygon2D" parent="EntryLadder" unique_id=757532530]
+color = Color(0.4, 0.25, 0.16, 1)
+polygon = PackedVector2Array(-13, 54, 13, 54, 13, 59, -13, 59)
+
+[node name="TrapdoorWood" type="Polygon2D" parent="EntryLadder" unique_id=1062365315]
+color = Color(0.24, 0.14, 0.1, 0.95)
+polygon = PackedVector2Array(-21, 0, 21, 0, 21, 15, -21, 15)
+
+[node name="TrapdoorIronHinge1" type="Polygon2D" parent="EntryLadder" unique_id=1320238318]
+color = Color(0.16, 0.14, 0.2, 1)
+polygon = PackedVector2Array(-18, 0, -13, 0, -13, 15, -18, 15)
+
+[node name="TrapdoorIronHinge2" type="Polygon2D" parent="EntryLadder" unique_id=263620858]
+color = Color(0.16, 0.14, 0.2, 1)
+polygon = PackedVector2Array(13, 0, 18, 0, 18, 15, 13, 15)
+
+[node name="TrapdoorIronBar" type="Polygon2D" parent="EntryLadder" unique_id=745323124]
+color = Color(0.22, 0.18, 0.28, 1)
+polygon = PackedVector2Array(-21, 5, 21, 5, 21, 9, -21, 9)
+
+[node name="LockPadlock" type="Polygon2D" parent="EntryLadder" unique_id=1844415979]
+position = Vector2(0, 7)
+color = Color(0.8, 0.65, 0.22, 1)
+polygon = PackedVector2Array(-4, -2, 4, -2, 5, 5, -5, 5)
+
+[node name="LockShackle" type="Polygon2D" parent="EntryLadder" unique_id=1970044959]
+position = Vector2(0, 7)
+color = Color(0.36, 0.34, 0.42, 1)
+polygon = PackedVector2Array(-3, -5, 3, -5, 3, -2, 1.5, -2, 1.5, -3.5, -1.5, -3.5, -1.5, -2, -3, -2)
 
 [node name="CameraLimitRight" type="Marker2D" parent="." unique_id=851347171]
 position = Vector2(2880, 0)
@@ -77,11 +195,31 @@ position = Vector2(-16, 324)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall" unique_id=1579464638]
 shape = SubResource("RectangleShape2D_wall")
 
+[node name="Visual" type="Node2D" parent="LeftWall" unique_id=833228052]
+
+[node name="Body" type="Polygon2D" parent="LeftWall/Visual" unique_id=1799627124]
+color = Color(0.09, 0.07, 0.13, 1)
+polygon = PackedVector2Array(-16, -324, 16, -324, 16, 324, -16, 324)
+
+[node name="RightBorder" type="Polygon2D" parent="LeftWall/Visual" unique_id=685696462]
+color = Color(0.18, 0.15, 0.26, 1)
+polygon = PackedVector2Array(13, -324, 16, -324, 16, 324, 13, 324)
+
 [node name="RightWall" type="StaticBody2D" parent="." unique_id=283688946]
 position = Vector2(2896, 324)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall" unique_id=1062028904]
 shape = SubResource("RectangleShape2D_wall")
+
+[node name="Visual" type="Node2D" parent="RightWall" unique_id=535790537]
+
+[node name="Body" type="Polygon2D" parent="RightWall/Visual" unique_id=2142257587]
+color = Color(0.09, 0.07, 0.13, 1)
+polygon = PackedVector2Array(-16, -324, 16, -324, 16, 324, -16, 324)
+
+[node name="LeftBorder" type="Polygon2D" parent="RightWall/Visual" unique_id=1593409834]
+color = Color(0.18, 0.15, 0.26, 1)
+polygon = PackedVector2Array(-16, -324, -13, -324, -13, 324, -16, 324)
 
 [node name="Ground1" type="StaticBody2D" parent="." unique_id=282744917]
 position = Vector2(220, 616)
@@ -89,15 +227,48 @@ position = Vector2(220, 616)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ground1" unique_id=2125762066]
 shape = SubResource("RectangleShape2D_ground_440")
 
-[node name="Visual" type="Polygon2D" parent="Ground1" unique_id=732770615]
-color = Color(0.16, 0.22, 0.3, 1)
+[node name="Visual" type="Node2D" parent="Ground1" unique_id=732770615]
+
+[node name="Body" type="Polygon2D" parent="Ground1/Visual" unique_id=1423017274]
+color = Color(0.1, 0.08, 0.15, 1)
 polygon = PackedVector2Array(-220, -32, 220, -32, 220, 32, -220, 32)
+
+[node name="Block1" type="Polygon2D" parent="Ground1/Visual" unique_id=1990915247]
+color = Color(0.13, 0.1, 0.19, 1)
+polygon = PackedVector2Array(-218, -30, -112, -30, -112, 30, -218, 30)
+
+[node name="Block2" type="Polygon2D" parent="Ground1/Visual" unique_id=2111966729]
+color = Color(0.12, 0.09, 0.18, 1)
+polygon = PackedVector2Array(-108, -30, -2, -30, -2, 30, -108, 30)
+
+[node name="Block3" type="Polygon2D" parent="Ground1/Visual" unique_id=1259443962]
+color = Color(0.13, 0.1, 0.19, 1)
+polygon = PackedVector2Array(2, -30, 108, -30, 108, 30, 2, 30)
+
+[node name="Block4" type="Polygon2D" parent="Ground1/Visual" unique_id=340927250]
+color = Color(0.12, 0.09, 0.18, 1)
+polygon = PackedVector2Array(112, -30, 218, -30, 218, 30, 112, 30)
+
+[node name="TopRim" type="Polygon2D" parent="Ground1/Visual" unique_id=1311730642]
+color = Color(0.2, 0.16, 0.28, 1)
+polygon = PackedVector2Array(-220, -32, 220, -32, 220, -25, -220, -25)
+
+[node name="TopLight" type="Polygon2D" parent="Ground1/Visual" unique_id=644359136]
+color = Color(0.32, 0.26, 0.44, 1)
+polygon = PackedVector2Array(-220, -32, 220, -32, 220, -30, -220, -30)
+
+[node name="Moss1" type="Polygon2D" parent="Ground1/Visual" unique_id=1241418115]
+color = Color(0.2, 0.28, 0.14, 0.95)
+polygon = PackedVector2Array(-205, -33, -115, -33, -110, -26, -155, -24, -210, -26)
+
+[node name="Moss2" type="Polygon2D" parent="Ground1/Visual" unique_id=667199414]
+color = Color(0.2, 0.28, 0.14, 0.95)
+polygon = PackedVector2Array(55, -33, 165, -33, 170, -26, 115, -24, 50, -27)
 
 [node name="EnemyShooter1" parent="." unique_id=946315537 instance=ExtResource("2_enemy")]
 position = Vector2(323, 560)
 
 [node name="Ladder_Chamber" parent="." unique_id=1956765985 instance=ExtResource("3_ladder")]
-z_index = 1
 position = Vector2(360, 532)
 
 [node name="Plat_AnteSala" type="StaticBody2D" parent="." unique_id=1123818720 groups=["drop_through_platform"]]
@@ -108,11 +279,28 @@ position = Vector2(32, 0)
 shape = SubResource("RectangleShape2D_plat_160")
 one_way_collision = true
 
-[node name="Visual" type="Polygon2D" parent="Plat_AnteSala" unique_id=125625030]
+[node name="Visual" type="Node2D" parent="Plat_AnteSala" unique_id=125625030]
 position = Vector2(31.999994, 0)
 scale = Vector2(0.6, 1)
-color = Color(0.24, 0.34, 0.44, 1)
-polygon = PackedVector2Array(-80, -12, 80, -12, 80, 12, -80, 12)
+
+[node name="Slab" type="Polygon2D" parent="Plat_AnteSala/Visual" unique_id=924717806]
+color = Color(0.16, 0.13, 0.23, 1)
+polygon = PackedVector2Array(-80, -12, 80, -12, 73, -3, 76, 7, 67, 12, -67, 12, -75, 2, -70, -7)
+
+[node name="TopStone" type="Polygon2D" parent="Plat_AnteSala/Visual" unique_id=248838583]
+color = Color(0.25, 0.2, 0.34, 1)
+polygon = PackedVector2Array(-80, -12, 80, -12, 80, -6, -80, -6)
+
+[node name="TopRimLight" type="Polygon2D" parent="Plat_AnteSala/Visual" unique_id=734129220]
+color = Color(0.38, 0.3, 0.5, 1)
+polygon = PackedVector2Array(-80, -12, 80, -12, 80, -10, -80, -10)
+
+[node name="UnderCrystals" parent="Plat_AnteSala/Visual" unique_id=1249287077 instance=ExtResource("10_rune")]
+position = Vector2(0, 11)
+
+[node name="MossPatch" type="Polygon2D" parent="Plat_AnteSala/Visual" unique_id=638916410]
+color = Color(0.2, 0.28, 0.14, 0.95)
+polygon = PackedVector2Array(-65, -13, 25, -13, 30, -5, -5, -3, -70, -6)
 
 [node name="Gate_Lower" parent="." unique_id=500834790 instance=ExtResource("5_gate")]
 position = Vector2(450, 536)
@@ -123,9 +311,15 @@ position = Vector2(540, 492)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Chamber_Floor" unique_id=624789817]
 shape = SubResource("RectangleShape2D_chamber_floor")
 
-[node name="Visual" type="Polygon2D" parent="Chamber_Floor" unique_id=826300884]
-color = Color(0.12, 0.16, 0.22, 1)
+[node name="Visual" type="Node2D" parent="Chamber_Floor" unique_id=826300884]
+
+[node name="Body" type="Polygon2D" parent="Chamber_Floor/Visual" unique_id=1984267586]
+color = Color(0.1, 0.08, 0.15, 1)
 polygon = PackedVector2Array(-100, -12, 100, -12, 100, 12, -100, 12)
+
+[node name="TopRim" type="Polygon2D" parent="Chamber_Floor/Visual" unique_id=210484189]
+color = Color(0.2, 0.16, 0.28, 1)
+polygon = PackedVector2Array(-100, -12, 100, -12, 100, -6, -100, -6)
 
 [node name="Chamber_Ceiling" type="StaticBody2D" parent="." unique_id=465705563]
 position = Vector2(540, 160)
@@ -134,9 +328,9 @@ position = Vector2(540, 160)
 shape = SubResource("RectangleShape2D_chamber_ceiling")
 
 [node name="Visual" type="Polygon2D" parent="Chamber_Ceiling" unique_id=545351737]
-position = Vector2(0, 31.5)
-scale = Vector2(1, 1.196875)
-color = Color(0.1, 0.14, 0.2, 1)
+position = Vector2(-2.0000029, 31.5)
+scale = Vector2(1.02, 1.196875)
+color = Color(0.09, 0.07, 0.14, 1)
 polygon = PackedVector2Array(-100, -160, 100, -160, 100, 160, -100, 160)
 
 [node name="Chamber_Ceiling2" type="StaticBody2D" parent="." unique_id=299249707]
@@ -149,7 +343,7 @@ shape = SubResource("RectangleShape2D_chamber_ceiling")
 [node name="Visual" type="Polygon2D" parent="Chamber_Ceiling2" unique_id=1557927613]
 position = Vector2(801, -127.24999)
 scale = Vector2(1, 1.2203124)
-color = Color(0.1, 0.14, 0.2, 1)
+color = Color(0.09, 0.07, 0.14, 1)
 polygon = PackedVector2Array(-100, -160, 100, -160, -18, 23.812012, -100, 160)
 
 [node name="Chamber_WallRight" type="StaticBody2D" parent="." unique_id=729258689]
@@ -159,7 +353,7 @@ position = Vector2(630, 404)
 shape = SubResource("RectangleShape2D_chamber_wall_right")
 
 [node name="Visual" type="Polygon2D" parent="Chamber_WallRight" unique_id=814439606]
-color = Color(0.1, 0.14, 0.2, 1)
+color = Color(0.09, 0.07, 0.14, 1)
 polygon = PackedVector2Array(-10, -100, 10, -100, 10, 100, -10, 100)
 
 [node name="Chamber_WallLeft" type="StaticBody2D" parent="." unique_id=348733852]
@@ -169,7 +363,7 @@ position = Vector2(450, 303)
 shape = SubResource("RectangleShape2D_chamber_wall_left")
 
 [node name="Visual" type="Polygon2D" parent="Chamber_WallLeft" unique_id=1027537240]
-color = Color(0.1, 0.14, 0.2, 1)
+color = Color(0.09, 0.07, 0.14, 1)
 polygon = PackedVector2Array(-10, -80, 10, -80, 10, 80, -10, 80)
 
 [node name="Gate_Upper" parent="." unique_id=1001654666 instance=ExtResource("5_gate")]
@@ -191,9 +385,23 @@ position = Vector2(595, 616)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ground2" unique_id=1937772144]
 shape = SubResource("RectangleShape2D_ground_310")
 
-[node name="Visual" type="Polygon2D" parent="Ground2" unique_id=1187735157]
-color = Color(0.16, 0.22, 0.3, 1)
+[node name="Visual" type="Node2D" parent="Ground2" unique_id=1187735157]
+
+[node name="Body" type="Polygon2D" parent="Ground2/Visual" unique_id=908905876]
+color = Color(0.1, 0.08, 0.15, 1)
 polygon = PackedVector2Array(-155, -32, 155, -32, 155, 32, -155, 32)
+
+[node name="TopRim" type="Polygon2D" parent="Ground2/Visual" unique_id=1697230226]
+color = Color(0.2, 0.16, 0.28, 1)
+polygon = PackedVector2Array(-155, -32, 155, -32, 155, -25, -155, -25)
+
+[node name="TopLight" type="Polygon2D" parent="Ground2/Visual" unique_id=1176664289]
+color = Color(0.32, 0.26, 0.44, 1)
+polygon = PackedVector2Array(-155, -32, 155, -32, 155, -30, -155, -30)
+
+[node name="Moss1" type="Polygon2D" parent="Ground2/Visual" unique_id=699587962]
+color = Color(0.2, 0.28, 0.14, 0.95)
+polygon = PackedVector2Array(-140, -33, -30, -33, -25, -26, -80, -24, -145, -26)
 
 [node name="Ground_Pit1" type="StaticBody2D" parent="." unique_id=367101970]
 position = Vector2(900, 616)
@@ -201,8 +409,10 @@ position = Vector2(900, 616)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ground_Pit1" unique_id=665090367]
 shape = SubResource("RectangleShape2D_ground_300")
 
-[node name="Visual" type="Polygon2D" parent="Ground_Pit1" unique_id=8903736]
-color = Color(0.1, 0.14, 0.2, 1)
+[node name="Visual" type="Node2D" parent="Ground_Pit1" unique_id=8903736]
+
+[node name="Body" type="Polygon2D" parent="Ground_Pit1/Visual" unique_id=1178624372]
+color = Color(0.08, 0.06, 0.12, 1)
 polygon = PackedVector2Array(-150, -32, 150, -32, 150, 32, -150, 32)
 
 [node name="Spikes1" type="Node2D" parent="." unique_id=915758452]
@@ -238,9 +448,30 @@ position = Vector2(900, 492)
 shape = SubResource("RectangleShape2D_plat_140")
 one_way_collision = true
 
-[node name="Visual" type="Polygon2D" parent="Plat_EchoJump" unique_id=1976303588]
-color = Color(0.24, 0.34, 0.44, 1)
-polygon = PackedVector2Array(-70, -12, 70, -12, 70, 12, -70, 12)
+[node name="Visual" type="Node2D" parent="Plat_EchoJump" unique_id=1976303588]
+
+[node name="Slab" type="Polygon2D" parent="Plat_EchoJump/Visual" unique_id=1440602688]
+color = Color(0.16, 0.13, 0.23, 1)
+polygon = PackedVector2Array(-70, -12, 70, -12, 64, -3, 67, 7, 58, 12, -58, 12, -66, 2, -61, -7)
+
+[node name="TopStone" type="Polygon2D" parent="Plat_EchoJump/Visual" unique_id=350916711]
+color = Color(0.25, 0.2, 0.34, 1)
+polygon = PackedVector2Array(-70, -12, 70, -12, 70, -6, -70, -6)
+
+[node name="TopRimLight" type="Polygon2D" parent="Plat_EchoJump/Visual" unique_id=1575739887]
+color = Color(0.38, 0.3, 0.5, 1)
+polygon = PackedVector2Array(-70, -12, 70, -12, 70, -10, -70, -10)
+
+[node name="UnderCrystals" parent="Plat_EchoJump/Visual" unique_id=1150923898 instance=ExtResource("10_rune")]
+position = Vector2(0, 11)
+
+[node name="Crack1" type="Polygon2D" parent="Plat_EchoJump/Visual" unique_id=675404213]
+color = Color(0.08, 0.06, 0.12, 1)
+polygon = PackedVector2Array(-15, -12, -10, -4, -14, 6, -9, 12, -12, 12, -17, 6, -12, -4, -17, -12)
+
+[node name="MossPatch" type="Polygon2D" parent="Plat_EchoJump/Visual" unique_id=243314984]
+color = Color(0.2, 0.28, 0.14, 0.95)
+polygon = PackedVector2Array(-60, -13, 15, -13, 20, -5, -15, -3, -65, -6)
 
 [node name="Ground3" type="StaticBody2D" parent="." unique_id=1352485561]
 position = Vector2(1175, 616)
@@ -248,12 +479,25 @@ position = Vector2(1175, 616)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ground3" unique_id=214782568]
 shape = SubResource("RectangleShape2D_ground_250")
 
-[node name="Visual" type="Polygon2D" parent="Ground3" unique_id=1739882908]
-color = Color(0.16, 0.22, 0.3, 1)
+[node name="Visual" type="Node2D" parent="Ground3" unique_id=1739882908]
+
+[node name="Body" type="Polygon2D" parent="Ground3/Visual" unique_id=1606687952]
+color = Color(0.1, 0.08, 0.15, 1)
 polygon = PackedVector2Array(-125, -32, 125, -32, 125, 32, -125, 32)
 
+[node name="TopRim" type="Polygon2D" parent="Ground3/Visual" unique_id=103308277]
+color = Color(0.2, 0.16, 0.28, 1)
+polygon = PackedVector2Array(-125, -32, 125, -32, 125, -25, -125, -25)
+
+[node name="TopLight" type="Polygon2D" parent="Ground3/Visual" unique_id=349643186]
+color = Color(0.32, 0.26, 0.44, 1)
+polygon = PackedVector2Array(-125, -32, 125, -32, 125, -30, -125, -30)
+
+[node name="Moss1" type="Polygon2D" parent="Ground3/Visual" unique_id=1826962876]
+color = Color(0.2, 0.28, 0.14, 0.95)
+polygon = PackedVector2Array(-110, -33, 10, -33, 15, -26, -40, -24, -115, -26)
+
 [node name="Ladder_Snipe" parent="." unique_id=996110048 instance=ExtResource("3_ladder")]
-z_index = 1
 position = Vector2(1196, 532)
 
 [node name="Plat_Snipe" type="StaticBody2D" parent="." unique_id=1604142462 groups=["drop_through_platform"]]
@@ -263,9 +507,26 @@ position = Vector2(1250, 492)
 shape = SubResource("RectangleShape2D_plat_140")
 one_way_collision = true
 
-[node name="Visual" type="Polygon2D" parent="Plat_Snipe" unique_id=9863414]
-color = Color(0.24, 0.34, 0.44, 1)
-polygon = PackedVector2Array(-70, -12, 70, -12, 70, 12, -70, 12)
+[node name="Visual" type="Node2D" parent="Plat_Snipe" unique_id=9863414]
+
+[node name="Slab" type="Polygon2D" parent="Plat_Snipe/Visual" unique_id=1632438362]
+color = Color(0.16, 0.13, 0.23, 1)
+polygon = PackedVector2Array(-70, -12, 70, -12, 64, -3, 67, 7, 58, 12, -58, 12, -66, 2, -61, -7)
+
+[node name="TopStone" type="Polygon2D" parent="Plat_Snipe/Visual" unique_id=118752386]
+color = Color(0.25, 0.2, 0.34, 1)
+polygon = PackedVector2Array(-70, -12, 70, -12, 70, -6, -70, -6)
+
+[node name="TopRimLight" type="Polygon2D" parent="Plat_Snipe/Visual" unique_id=1255486511]
+color = Color(0.38, 0.3, 0.5, 1)
+polygon = PackedVector2Array(-70, -12, 70, -12, 70, -10, -70, -10)
+
+[node name="UnderCrystals" parent="Plat_Snipe/Visual" unique_id=1226698928 instance=ExtResource("10_rune")]
+position = Vector2(10, 11)
+
+[node name="MossPatch" type="Polygon2D" parent="Plat_Snipe/Visual" unique_id=1651655817]
+color = Color(0.2, 0.28, 0.14, 0.95)
+polygon = PackedVector2Array(-55, -13, 20, -13, 25, -5, -10, -3, -60, -6)
 
 [node name="Ground_Pit2" type="StaticBody2D" parent="." unique_id=1503083996]
 position = Vector2(1540, 616)
@@ -273,8 +534,10 @@ position = Vector2(1540, 616)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ground_Pit2" unique_id=1162861004]
 shape = SubResource("RectangleShape2D_ground_480")
 
-[node name="Visual" type="Polygon2D" parent="Ground_Pit2" unique_id=1577041398]
-color = Color(0.1, 0.14, 0.2, 1)
+[node name="Visual" type="Node2D" parent="Ground_Pit2" unique_id=1577041398]
+
+[node name="Body" type="Polygon2D" parent="Ground_Pit2/Visual" unique_id=991091300]
+color = Color(0.08, 0.06, 0.12, 1)
 polygon = PackedVector2Array(-240, -32, 240, -32, 240, 32, -240, 32)
 
 [node name="Spikes2" type="Node2D" parent="." unique_id=292767124]
@@ -322,9 +585,26 @@ position = Vector2(1450, 492)
 shape = SubResource("RectangleShape2D_plat_120")
 one_way_collision = true
 
-[node name="Visual" type="Polygon2D" parent="Platform3_A" unique_id=1106308633]
-color = Color(0.24, 0.34, 0.44, 1)
-polygon = PackedVector2Array(-60, -12, 60, -12, 60, 12, -60, 12)
+[node name="Visual" type="Node2D" parent="Platform3_A" unique_id=1106308633]
+
+[node name="Slab" type="Polygon2D" parent="Platform3_A/Visual" unique_id=267695562]
+color = Color(0.16, 0.13, 0.23, 1)
+polygon = PackedVector2Array(-60, -12, 60, -12, 54, -3, 58, 7, 50, 12, -50, 12, -58, 2, -53, -7)
+
+[node name="TopStone" type="Polygon2D" parent="Platform3_A/Visual" unique_id=913628015]
+color = Color(0.25, 0.2, 0.34, 1)
+polygon = PackedVector2Array(-60, -12, 60, -12, 60, -6, -60, -6)
+
+[node name="TopRimLight" type="Polygon2D" parent="Platform3_A/Visual" unique_id=2087519047]
+color = Color(0.38, 0.3, 0.5, 1)
+polygon = PackedVector2Array(-60, -12, 60, -12, 60, -10, -60, -10)
+
+[node name="UnderCrystals" parent="Platform3_A/Visual" unique_id=992029972 instance=ExtResource("10_rune")]
+position = Vector2(-10, 11)
+
+[node name="MossPatch" type="Polygon2D" parent="Platform3_A/Visual" unique_id=1257244497]
+color = Color(0.2, 0.28, 0.14, 0.95)
+polygon = PackedVector2Array(-50, -13, 25, -13, 30, -5, -10, -3, -55, -6)
 
 [node name="Platform3_B" type="StaticBody2D" parent="." unique_id=1633892176 groups=["drop_through_platform"]]
 position = Vector2(1630, 492)
@@ -333,9 +613,26 @@ position = Vector2(1630, 492)
 shape = SubResource("RectangleShape2D_plat_120")
 one_way_collision = true
 
-[node name="Visual" type="Polygon2D" parent="Platform3_B" unique_id=155329878]
-color = Color(0.24, 0.34, 0.44, 1)
-polygon = PackedVector2Array(-60, -12, 60, -12, 60, 12, -60, 12)
+[node name="Visual" type="Node2D" parent="Platform3_B" unique_id=155329878]
+
+[node name="Slab" type="Polygon2D" parent="Platform3_B/Visual" unique_id=968730071]
+color = Color(0.16, 0.13, 0.23, 1)
+polygon = PackedVector2Array(-60, -12, 60, -12, 54, -3, 58, 7, 50, 12, -50, 12, -58, 2, -53, -7)
+
+[node name="TopStone" type="Polygon2D" parent="Platform3_B/Visual" unique_id=587285278]
+color = Color(0.25, 0.2, 0.34, 1)
+polygon = PackedVector2Array(-60, -12, 60, -12, 60, -6, -60, -6)
+
+[node name="TopRimLight" type="Polygon2D" parent="Platform3_B/Visual" unique_id=2041648572]
+color = Color(0.38, 0.3, 0.5, 1)
+polygon = PackedVector2Array(-60, -12, 60, -12, 60, -10, -60, -10)
+
+[node name="UnderCrystals" parent="Platform3_B/Visual" unique_id=1792282065 instance=ExtResource("10_rune")]
+position = Vector2(10, 11)
+
+[node name="MossPatch" type="Polygon2D" parent="Platform3_B/Visual" unique_id=2141275049]
+color = Color(0.2, 0.28, 0.14, 0.95)
+polygon = PackedVector2Array(-45, -13, 35, -13, 40, -5, 0, -3, -50, -6)
 
 [node name="Platform3_TowerLanding" type="StaticBody2D" parent="." unique_id=157139848 groups=["drop_through_platform"]]
 position = Vector2(1871, 492)
@@ -344,9 +641,34 @@ position = Vector2(1871, 492)
 shape = SubResource("RectangleShape2D_plat_180")
 one_way_collision = true
 
-[node name="Visual" type="Polygon2D" parent="Platform3_TowerLanding" unique_id=2131480524]
-color = Color(0.24, 0.34, 0.44, 1)
-polygon = PackedVector2Array(-90, -12, 90, -12, 90, 12, -90, 12)
+[node name="Visual" type="Node2D" parent="Platform3_TowerLanding" unique_id=2131480524]
+
+[node name="Slab" type="Polygon2D" parent="Platform3_TowerLanding/Visual" unique_id=2037576430]
+color = Color(0.16, 0.13, 0.23, 1)
+polygon = PackedVector2Array(-90, -12, 90, -12, 83, -3, 86, 7, 77, 12, -77, 12, -85, 2, -80, -7)
+
+[node name="TopStone" type="Polygon2D" parent="Platform3_TowerLanding/Visual" unique_id=895803908]
+color = Color(0.25, 0.2, 0.34, 1)
+polygon = PackedVector2Array(-90, -12, 90, -12, 90, -6, -90, -6)
+
+[node name="TopRimLight" type="Polygon2D" parent="Platform3_TowerLanding/Visual" unique_id=1066770635]
+color = Color(0.38, 0.3, 0.5, 1)
+polygon = PackedVector2Array(-90, -12, 90, -12, 90, -10, -90, -10)
+
+[node name="UnderCrystals" parent="Platform3_TowerLanding/Visual" unique_id=794408904 instance=ExtResource("10_rune")]
+position = Vector2(-20, 11)
+
+[node name="Crack1" type="Polygon2D" parent="Platform3_TowerLanding/Visual" unique_id=692090597]
+color = Color(0.08, 0.06, 0.12, 1)
+polygon = PackedVector2Array(20, -12, 25, -4, 21, 5, 26, 12, 23, 12, 18, 5, 22, -4, 17, -12)
+
+[node name="MossLeft" type="Polygon2D" parent="Platform3_TowerLanding/Visual" unique_id=588293841]
+color = Color(0.2, 0.28, 0.14, 0.95)
+polygon = PackedVector2Array(-85, -13, -20, -13, -15, -5, -45, -3, -90, -6)
+
+[node name="MossRight" type="Polygon2D" parent="Platform3_TowerLanding/Visual" unique_id=1851652213]
+color = Color(0.2, 0.28, 0.14, 0.95)
+polygon = PackedVector2Array(30, -13, 85, -13, 88, -5, 60, -4, 25, -7)
 
 [node name="EnemyShooter2" parent="." unique_id=1497628295 instance=ExtResource("2_enemy")]
 position = Vector2(1797, 455)
@@ -358,14 +680,31 @@ position = Vector2(2200, 616)
 position = Vector2(-226, 0)
 shape = SubResource("RectangleShape2D_ground_820")
 
-[node name="Visual" type="Polygon2D" parent="Ground4" unique_id=1179866845]
+[node name="Visual" type="Node2D" parent="Ground4" unique_id=1179866845]
 position = Vector2(-226, 0)
 scale = Vector2(0.47317073, 1)
-color = Color(0.16, 0.22, 0.3, 1)
+
+[node name="Body" type="Polygon2D" parent="Ground4/Visual" unique_id=1759779309]
+color = Color(0.1, 0.08, 0.15, 1)
 polygon = PackedVector2Array(-410, -32, 410, -32, 410, 32, -410, 32)
 
+[node name="TopRim" type="Polygon2D" parent="Ground4/Visual" unique_id=99113271]
+color = Color(0.2, 0.16, 0.28, 1)
+polygon = PackedVector2Array(-410, -32, 410, -32, 410, -25, -410, -25)
+
+[node name="TopLight" type="Polygon2D" parent="Ground4/Visual" unique_id=2035963172]
+color = Color(0.32, 0.26, 0.44, 1)
+polygon = PackedVector2Array(-410, -32, 410, -32, 410, -30, -410, -30)
+
+[node name="Moss1" type="Polygon2D" parent="Ground4/Visual" unique_id=1030277977]
+color = Color(0.2, 0.28, 0.14, 0.95)
+polygon = PackedVector2Array(-380, -33, -240, -33, -235, -26, -300, -24, -385, -26)
+
+[node name="Moss2" type="Polygon2D" parent="Ground4/Visual" unique_id=1968253198]
+color = Color(0.2, 0.28, 0.14, 0.95)
+polygon = PackedVector2Array(150, -33, 330, -33, 335, -26, 250, -24, 140, -27)
+
 [node name="Ladder4_A" parent="." unique_id=1887376694 instance=ExtResource("3_ladder")]
-z_index = 1
 position = Vector2(1945, 428)
 
 [node name="Platform4_Balcony" type="StaticBody2D" parent="." unique_id=463899684 groups=["drop_through_platform"]]
@@ -375,11 +714,36 @@ position = Vector2(2049, 388)
 shape = SubResource("RectangleShape2D_plat_240")
 one_way_collision = true
 
-[node name="Visual" type="Polygon2D" parent="Platform4_Balcony" unique_id=1247471861]
-color = Color(0.24, 0.34, 0.44, 1)
-polygon = PackedVector2Array(-120, -12, 120, -12, 120, 12, -120, 12)
+[node name="Visual" type="Node2D" parent="Platform4_Balcony" unique_id=1247471861]
 
-[node name="MovingBridge" parent="." unique_id=961481453 instance=ExtResource("10_bridge")]
+[node name="Slab" type="Polygon2D" parent="Platform4_Balcony/Visual" unique_id=1829005915]
+color = Color(0.16, 0.13, 0.23, 1)
+polygon = PackedVector2Array(-120, -12, 120, -12, 112, -3, 115, 7, 106, 12, 15, 13, -40, 11, -110, 12, -117, 2, -112, -7)
+
+[node name="TopStone" type="Polygon2D" parent="Platform4_Balcony/Visual" unique_id=800290606]
+color = Color(0.25, 0.2, 0.34, 1)
+polygon = PackedVector2Array(-120, -12, 120, -12, 120, -6, -120, -6)
+
+[node name="TopRimLight" type="Polygon2D" parent="Platform4_Balcony/Visual" unique_id=1332201277]
+color = Color(0.38, 0.3, 0.5, 1)
+polygon = PackedVector2Array(-120, -12, 120, -12, 120, -10, -120, -10)
+
+[node name="UnderCrystals" parent="Platform4_Balcony/Visual" unique_id=2060845025 instance=ExtResource("10_rune")]
+position = Vector2(-20, 11)
+
+[node name="Crack1" type="Polygon2D" parent="Platform4_Balcony/Visual" unique_id=434370669]
+color = Color(0.08, 0.06, 0.12, 1)
+polygon = PackedVector2Array(-35, -12, -30, -4, -34, 6, -29, 12, -32, 12, -37, 6, -32, -4, -37, -12)
+
+[node name="MossLeft" type="Polygon2D" parent="Platform4_Balcony/Visual" unique_id=1176076314]
+color = Color(0.2, 0.28, 0.14, 0.95)
+polygon = PackedVector2Array(-110, -13, -35, -13, -30, -5, -65, -3, -115, -6)
+
+[node name="MossRight" type="Polygon2D" parent="Platform4_Balcony/Visual" unique_id=1806574235]
+color = Color(0.2, 0.28, 0.14, 0.95)
+polygon = PackedVector2Array(25, -13, 110, -13, 115, -5, 75, -4, 20, -7)
+
+[node name="MovingBridge" parent="." unique_id=961481453 instance=ExtResource("11_bridge")]
 position = Vector2(2254, 388)
 target_offset = Vector2(100, 0)
 
@@ -390,9 +754,26 @@ position = Vector2(2618, 388)
 shape = SubResource("RectangleShape2D_plat_140")
 one_way_collision = true
 
-[node name="Visual" type="Polygon2D" parent="Platform4_TowerGuard" unique_id=960411938]
-color = Color(0.24, 0.34, 0.44, 1)
-polygon = PackedVector2Array(-70, -12, 70, -12, 70, 12, -70, 12)
+[node name="Visual" type="Node2D" parent="Platform4_TowerGuard" unique_id=960411938]
+
+[node name="Slab" type="Polygon2D" parent="Platform4_TowerGuard/Visual" unique_id=1957475803]
+color = Color(0.16, 0.13, 0.23, 1)
+polygon = PackedVector2Array(-70, -12, 70, -12, 64, -3, 67, 7, 58, 12, -58, 12, -66, 2, -61, -7)
+
+[node name="TopStone" type="Polygon2D" parent="Platform4_TowerGuard/Visual" unique_id=2023428132]
+color = Color(0.25, 0.2, 0.34, 1)
+polygon = PackedVector2Array(-70, -12, 70, -12, 70, -6, -70, -6)
+
+[node name="TopRimLight" type="Polygon2D" parent="Platform4_TowerGuard/Visual" unique_id=501119064]
+color = Color(0.38, 0.3, 0.5, 1)
+polygon = PackedVector2Array(-70, -12, 70, -12, 70, -10, -70, -10)
+
+[node name="UnderCrystals" parent="Platform4_TowerGuard/Visual" unique_id=2113002733 instance=ExtResource("10_rune")]
+position = Vector2(10, 11)
+
+[node name="MossPatch" type="Polygon2D" parent="Platform4_TowerGuard/Visual" unique_id=498097772]
+color = Color(0.2, 0.28, 0.14, 0.95)
+polygon = PackedVector2Array(-60, -13, 15, -13, 20, -5, -10, -3, -65, -6)
 
 [node name="EnemyShooter3" parent="." unique_id=691559234 instance=ExtResource("2_enemy")]
 position = Vector2(2565, 352)
@@ -405,9 +786,26 @@ position = Vector2(2550, 284)
 shape = SubResource("RectangleShape2D_plat_140")
 one_way_collision = true
 
-[node name="Visual" type="Polygon2D" parent="Platform4_Mid" unique_id=1802024738]
-color = Color(0.24, 0.34, 0.44, 1)
-polygon = PackedVector2Array(-70, -12, 70, -12, 70, 12, -70, 12)
+[node name="Visual" type="Node2D" parent="Platform4_Mid" unique_id=1802024738]
+
+[node name="Slab" type="Polygon2D" parent="Platform4_Mid/Visual" unique_id=989726325]
+color = Color(0.16, 0.13, 0.23, 1)
+polygon = PackedVector2Array(-70, -12, 70, -12, 64, -3, 67, 7, 58, 12, -58, 12, -66, 2, -61, -7)
+
+[node name="TopStone" type="Polygon2D" parent="Platform4_Mid/Visual" unique_id=1362950776]
+color = Color(0.25, 0.2, 0.34, 1)
+polygon = PackedVector2Array(-70, -12, 70, -12, 70, -6, -70, -6)
+
+[node name="TopRimLight" type="Polygon2D" parent="Platform4_Mid/Visual" unique_id=2054295122]
+color = Color(0.38, 0.3, 0.5, 1)
+polygon = PackedVector2Array(-70, -12, 70, -12, 70, -10, -70, -10)
+
+[node name="UnderCrystals" parent="Platform4_Mid/Visual" unique_id=1191650564 instance=ExtResource("10_rune")]
+position = Vector2(-15, 11)
+
+[node name="MossPatch" type="Polygon2D" parent="Platform4_Mid/Visual" unique_id=2128417433]
+color = Color(0.2, 0.28, 0.14, 0.95)
+polygon = PackedVector2Array(-55, -13, 20, -13, 25, -5, -10, -3, -60, -6)
 
 [node name="Plat_SacredAlcove" type="StaticBody2D" parent="." unique_id=411692032 groups=["drop_through_platform"]]
 position = Vector2(2380, 180)
@@ -416,9 +814,26 @@ position = Vector2(2380, 180)
 shape = SubResource("RectangleShape2D_plat_120")
 one_way_collision = true
 
-[node name="Visual" type="Polygon2D" parent="Plat_SacredAlcove" unique_id=1305416593]
-color = Color(0.24, 0.34, 0.44, 1)
-polygon = PackedVector2Array(-60, -12, 60, -12, 60, 12, -60, 12)
+[node name="Visual" type="Node2D" parent="Plat_SacredAlcove" unique_id=1305416593]
+
+[node name="Slab" type="Polygon2D" parent="Plat_SacredAlcove/Visual" unique_id=1639509478]
+color = Color(0.16, 0.13, 0.23, 1)
+polygon = PackedVector2Array(-60, -12, 60, -12, 54, -3, 58, 7, 50, 12, -50, 12, -58, 2, -53, -7)
+
+[node name="TopStone" type="Polygon2D" parent="Plat_SacredAlcove/Visual" unique_id=1384163670]
+color = Color(0.25, 0.2, 0.34, 1)
+polygon = PackedVector2Array(-60, -12, 60, -12, 60, -6, -60, -6)
+
+[node name="TopRimLight" type="Polygon2D" parent="Plat_SacredAlcove/Visual" unique_id=316529540]
+color = Color(0.38, 0.3, 0.5, 1)
+polygon = PackedVector2Array(-60, -12, 60, -12, 60, -10, -60, -10)
+
+[node name="UnderCrystals" parent="Plat_SacredAlcove/Visual" unique_id=439506400 instance=ExtResource("10_rune")]
+position = Vector2(0, 11)
+
+[node name="MossPatch" type="Polygon2D" parent="Plat_SacredAlcove/Visual" unique_id=169673796]
+color = Color(0.2, 0.28, 0.14, 0.95)
+polygon = PackedVector2Array(-50, -13, 30, -13, 35, -5, -10, -3, -55, -6)
 
 [node name="PressurePlate_Tower" parent="." unique_id=758528348 instance=ExtResource("6_plate")]
 position = Vector2(2380, 168)
@@ -431,7 +846,7 @@ position = Vector2(2678, 140)
 shape = SubResource("RectangleShape2D_tower_wall")
 
 [node name="Visual" type="Polygon2D" parent="Tower_Wall" unique_id=405649237]
-color = Color(0.1, 0.14, 0.2, 1)
+color = Color(0.09, 0.07, 0.14, 1)
 polygon = PackedVector2Array(-12, -140, 12, -140, 12, 140, -12, 140)
 
 [node name="Gate_Tower" parent="." unique_id=1747531946 instance=ExtResource("5_gate")]
@@ -444,12 +859,28 @@ position = Vector2(2760, 388)
 shape = SubResource("RectangleShape2D_plat_140")
 one_way_collision = true
 
-[node name="Visual" type="Polygon2D" parent="Platform4_Base" unique_id=363126743]
-color = Color(0.24, 0.34, 0.44, 1)
-polygon = PackedVector2Array(-70, -12, 70, -12, 70, 12, -70, 12)
+[node name="Visual" type="Node2D" parent="Platform4_Base" unique_id=363126743]
+
+[node name="Slab" type="Polygon2D" parent="Platform4_Base/Visual" unique_id=716672460]
+color = Color(0.16, 0.13, 0.23, 1)
+polygon = PackedVector2Array(-70, -12, 70, -12, 64, -3, 67, 7, 58, 12, -58, 12, -66, 2, -61, -7)
+
+[node name="TopStone" type="Polygon2D" parent="Platform4_Base/Visual" unique_id=1022455820]
+color = Color(0.25, 0.2, 0.34, 1)
+polygon = PackedVector2Array(-70, -12, 70, -12, 70, -6, -70, -6)
+
+[node name="TopRimLight" type="Polygon2D" parent="Platform4_Base/Visual" unique_id=1936154969]
+color = Color(0.38, 0.3, 0.5, 1)
+polygon = PackedVector2Array(-70, -12, 70, -12, 70, -10, -70, -10)
+
+[node name="UnderCrystals" parent="Platform4_Base/Visual" unique_id=435267357 instance=ExtResource("10_rune")]
+position = Vector2(10, 11)
+
+[node name="MossPatch" type="Polygon2D" parent="Platform4_Base/Visual" unique_id=966221292]
+color = Color(0.2, 0.28, 0.14, 0.95)
+polygon = PackedVector2Array(-55, -13, 20, -13, 25, -5, -10, -3, -60, -6)
 
 [node name="Ladder4_B" parent="." unique_id=2071092078 instance=ExtResource("3_ladder")]
-z_index = 1
 position = Vector2(2814, 324)
 
 [node name="Platform4_Tier1" type="StaticBody2D" parent="." unique_id=864976655 groups=["drop_through_platform"]]
@@ -459,12 +890,28 @@ position = Vector2(2760, 284)
 shape = SubResource("RectangleShape2D_plat_140")
 one_way_collision = true
 
-[node name="Visual" type="Polygon2D" parent="Platform4_Tier1" unique_id=1965675117]
-color = Color(0.24, 0.34, 0.44, 1)
-polygon = PackedVector2Array(-70, -12, 70, -12, 70, 12, -70, 12)
+[node name="Visual" type="Node2D" parent="Platform4_Tier1" unique_id=1965675117]
+
+[node name="Slab" type="Polygon2D" parent="Platform4_Tier1/Visual" unique_id=674734474]
+color = Color(0.16, 0.13, 0.23, 1)
+polygon = PackedVector2Array(-70, -12, 70, -12, 64, -3, 67, 7, 58, 12, -58, 12, -66, 2, -61, -7)
+
+[node name="TopStone" type="Polygon2D" parent="Platform4_Tier1/Visual" unique_id=1032066109]
+color = Color(0.25, 0.2, 0.34, 1)
+polygon = PackedVector2Array(-70, -12, 70, -12, 70, -6, -70, -6)
+
+[node name="TopRimLight" type="Polygon2D" parent="Platform4_Tier1/Visual" unique_id=741920883]
+color = Color(0.38, 0.3, 0.5, 1)
+polygon = PackedVector2Array(-70, -12, 70, -12, 70, -10, -70, -10)
+
+[node name="UnderCrystals" parent="Platform4_Tier1/Visual" unique_id=1280317023 instance=ExtResource("10_rune")]
+position = Vector2(-15, 11)
+
+[node name="MossPatch" type="Polygon2D" parent="Platform4_Tier1/Visual" unique_id=1519969523]
+color = Color(0.2, 0.28, 0.14, 0.95)
+polygon = PackedVector2Array(-60, -13, 15, -13, 20, -5, -10, -3, -65, -6)
 
 [node name="Ladder4_C" parent="." unique_id=1424957763 instance=ExtResource("3_ladder")]
-z_index = 1
 position = Vector2(2706, 220)
 
 [node name="Platform4_Tier2" type="StaticBody2D" parent="." unique_id=2011426606 groups=["drop_through_platform"]]
@@ -474,12 +921,28 @@ position = Vector2(2760, 180)
 shape = SubResource("RectangleShape2D_plat_140")
 one_way_collision = true
 
-[node name="Visual" type="Polygon2D" parent="Platform4_Tier2" unique_id=328439647]
-color = Color(0.24, 0.34, 0.44, 1)
-polygon = PackedVector2Array(-70, -12, 70, -12, 70, 12, -70, 12)
+[node name="Visual" type="Node2D" parent="Platform4_Tier2" unique_id=328439647]
+
+[node name="Slab" type="Polygon2D" parent="Platform4_Tier2/Visual" unique_id=1711162354]
+color = Color(0.16, 0.13, 0.23, 1)
+polygon = PackedVector2Array(-70, -12, 70, -12, 64, -3, 67, 7, 58, 12, -58, 12, -66, 2, -61, -7)
+
+[node name="TopStone" type="Polygon2D" parent="Platform4_Tier2/Visual" unique_id=638698308]
+color = Color(0.25, 0.2, 0.34, 1)
+polygon = PackedVector2Array(-70, -12, 70, -12, 70, -6, -70, -6)
+
+[node name="TopRimLight" type="Polygon2D" parent="Platform4_Tier2/Visual" unique_id=1357332722]
+color = Color(0.38, 0.3, 0.5, 1)
+polygon = PackedVector2Array(-70, -12, 70, -12, 70, -10, -70, -10)
+
+[node name="UnderCrystals" parent="Platform4_Tier2/Visual" unique_id=960817646 instance=ExtResource("10_rune")]
+position = Vector2(10, 11)
+
+[node name="MossPatch" type="Polygon2D" parent="Platform4_Tier2/Visual" unique_id=1174698077]
+color = Color(0.2, 0.28, 0.14, 0.95)
+polygon = PackedVector2Array(-55, -13, 20, -13, 25, -5, -10, -3, -60, -6)
 
 [node name="Ladder4_D" parent="." unique_id=1776792446 instance=ExtResource("3_ladder")]
-z_index = 1
 position = Vector2(2814, 116)
 
 [node name="Platform4_Shrine" type="StaticBody2D" parent="." unique_id=962656121 groups=["drop_through_platform"]]
@@ -489,9 +952,26 @@ position = Vector2(2760, 76)
 shape = SubResource("RectangleShape2D_plat_140")
 one_way_collision = true
 
-[node name="Visual" type="Polygon2D" parent="Platform4_Shrine" unique_id=1829069854]
-color = Color(0.24, 0.34, 0.44, 1)
-polygon = PackedVector2Array(-70, -12, 70, -12, 70, 12, -70, 12)
+[node name="Visual" type="Node2D" parent="Platform4_Shrine" unique_id=1829069854]
+
+[node name="Slab" type="Polygon2D" parent="Platform4_Shrine/Visual" unique_id=120760481]
+color = Color(0.16, 0.13, 0.23, 1)
+polygon = PackedVector2Array(-70, -12, 70, -12, 64, -3, 67, 7, 58, 12, -58, 12, -66, 2, -61, -7)
+
+[node name="TopStone" type="Polygon2D" parent="Platform4_Shrine/Visual" unique_id=1073012644]
+color = Color(0.25, 0.2, 0.34, 1)
+polygon = PackedVector2Array(-70, -12, 70, -12, 70, -6, -70, -6)
+
+[node name="TopRimLight" type="Polygon2D" parent="Platform4_Shrine/Visual" unique_id=1384564496]
+color = Color(0.38, 0.3, 0.5, 1)
+polygon = PackedVector2Array(-70, -12, 70, -12, 70, -10, -70, -10)
+
+[node name="UnderCrystals" parent="Platform4_Shrine/Visual" unique_id=1584954848 instance=ExtResource("10_rune")]
+position = Vector2(-10, 11)
+
+[node name="MossPatch" type="Polygon2D" parent="Platform4_Shrine/Visual" unique_id=907023064]
+color = Color(0.2, 0.28, 0.14, 0.95)
+polygon = PackedVector2Array(-60, -13, 15, -13, 20, -5, -10, -3, -65, -6)
 
 [node name="Platform4_Roof" type="StaticBody2D" parent="." unique_id=579524979 groups=["drop_through_platform"]]
 position = Vector2(2760, -28)
@@ -500,9 +980,26 @@ position = Vector2(2760, -28)
 shape = SubResource("RectangleShape2D_plat_140")
 one_way_collision = true
 
-[node name="Visual" type="Polygon2D" parent="Platform4_Roof" unique_id=821149577]
-color = Color(0.24, 0.34, 0.44, 1)
-polygon = PackedVector2Array(-70, -12, 70, -12, 70, 12, -70, 12)
+[node name="Visual" type="Node2D" parent="Platform4_Roof" unique_id=821149577]
+
+[node name="Slab" type="Polygon2D" parent="Platform4_Roof/Visual" unique_id=374051939]
+color = Color(0.16, 0.13, 0.23, 1)
+polygon = PackedVector2Array(-70, -12, 70, -12, 64, -3, 67, 7, 58, 12, -58, 12, -66, 2, -61, -7)
+
+[node name="TopStone" type="Polygon2D" parent="Platform4_Roof/Visual" unique_id=769187352]
+color = Color(0.25, 0.2, 0.34, 1)
+polygon = PackedVector2Array(-70, -12, 70, -12, 70, -6, -70, -6)
+
+[node name="TopRimLight" type="Polygon2D" parent="Platform4_Roof/Visual" unique_id=664609998]
+color = Color(0.38, 0.3, 0.5, 1)
+polygon = PackedVector2Array(-70, -12, 70, -12, 70, -10, -70, -10)
+
+[node name="UnderCrystals" parent="Platform4_Roof/Visual" unique_id=1924852163 instance=ExtResource("10_rune")]
+position = Vector2(10, 11)
+
+[node name="MossPatch" type="Polygon2D" parent="Platform4_Roof/Visual" unique_id=1465370875]
+color = Color(0.2, 0.28, 0.14, 0.95)
+polygon = PackedVector2Array(-55, -13, 20, -13, 25, -5, -10, -3, -60, -6)
 
 [node name="Ladder_Exit" parent="." unique_id=913118309 instance=ExtResource("3_ladder")]
 position = Vector2(2760, 12)
@@ -513,4 +1010,4 @@ position = Vector2(2760, -75)
 [node name="Player" parent="." unique_id=1245292230 instance=ExtResource("1_player")]
 position = Vector2(18, 559)
 
-[node name="HUD" parent="." unique_id=1241145000 instance=ExtResource("9_hud")]
+[node name="HUD" parent="." unique_id=1241145000 instance=ExtResource("12_hud")]
