@@ -7,7 +7,7 @@
 size = Vector2(32, 48)
 
 [node name="Echo" type="Node2D" groups=["echo"]]
-z_index = 5
+z_index = 4
 script = ExtResource("1_script")
 
 [node name="Visual" type="Node2D" parent="."]
