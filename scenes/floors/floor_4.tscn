@@ -511,6 +511,6 @@ position = Vector2(2760, 12)
 position = Vector2(2760, -75)
 
 [node name="Player" parent="." unique_id=1245292230 instance=ExtResource("1_player")]
-position = Vector2(2027, 275)
+position = Vector2(18, 559)
 
 [node name="HUD" parent="." unique_id=1241145000 instance=ExtResource("9_hud")]

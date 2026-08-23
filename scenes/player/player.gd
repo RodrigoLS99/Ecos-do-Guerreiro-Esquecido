@@ -141,7 +141,7 @@ func _physics_process(delta: float) -> void:
 
 	if horizontal_direction != 0.0:
 		facing_direction = int(sign(horizontal_direction))
-		$AttackHitbox.position.x = 34.0 * facing_direction
+		$AttackHitbox.position.x = 24.0 * facing_direction
 		$AttackHitbox.scale.x = facing_direction
 		if visual_root != null:
 			visual_root.scale.x = facing_direction
@@ -371,6 +371,37 @@ func _is_standing_on_echo() -> bool:
 	return false
 
 
+func _spawn_magic_burst_fx(pos: Vector2, color: Color) -> void:
+	var fx := Node2D.new()
+	fx.global_position = pos
+	fx.z_index = 6
+
+	var ring := Polygon2D.new()
+	ring.color = color
+	ring.polygon = PackedVector2Array([
+		Vector2(-16, 0), Vector2(-11, -11), Vector2(0, -16), Vector2(11, -11),
+		Vector2(16, 0), Vector2(11, 11), Vector2(0, 16), Vector2(-11, 11)
+	])
+	fx.add_child(ring)
+
+	var star := Polygon2D.new()
+	star.color = Color(1.0, 1.0, 1.0, 0.9)
+	star.polygon = PackedVector2Array([
+		Vector2(0, -14), Vector2(4, -4), Vector2(14, 0), Vector2(4, 4),
+		Vector2(0, 14), Vector2(-4, 4), Vector2(-14, 0), Vector2(-4, -4)
+	])
+	fx.add_child(star)
+
+	get_tree().current_scene.add_child(fx)
+
+	var tw := fx.create_tween().set_parallel(true).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tw.tween_property(ring, "scale", Vector2(2.2, 2.2), 0.25)
+	tw.tween_property(ring, "modulate:a", 0.0, 0.25)
+	tw.tween_property(star, "scale", Vector2(1.8, 1.8), 0.22)
+	tw.tween_property(star, "modulate:a", 0.0, 0.22)
+	tw.chain().tween_callback(fx.queue_free)
+
+
 func create_echo() -> void:
 	if not can_create_echo or _is_standing_on_echo():
 		return
@@ -384,6 +415,7 @@ func create_echo() -> void:
 	current_echo = ECHO_SCENE.instantiate()
 	current_echo.global_position = global_position
 	get_tree().current_scene.add_child(current_echo)
+	_spawn_magic_burst_fx(global_position, Color(0.25, 0.9, 0.95, 0.8))
 	if AudioManager:
 		AudioManager.play_sfx("echo_create")
 	echo_changed.emit(true)
@@ -395,7 +427,12 @@ func collapse_echo() -> void:
 		echo_changed.emit(false)
 		return
 
+	var origin := global_position
 	var target := current_echo.global_position
+
+	_spawn_magic_burst_fx(origin, Color(0.3, 0.75, 0.95, 0.75))
+	_spawn_magic_burst_fx(target, Color(0.4, 0.98, 1.0, 0.9))
+
 	current_echo.queue_free()
 	current_echo = null
 	global_position = target
@@ -418,13 +455,9 @@ func attack() -> void:
 	if AudioManager:
 		AudioManager.play_sfx("attack")
 	$AttackHitbox/CollisionShape2D.set_deferred("disabled", false)
-	if $AttackHitbox.has_node("Visual"):
-		$AttackHitbox/Visual.visible = true
 
 	await get_tree().create_timer(ATTACK_HITBOX_WINDOW).timeout
 	$AttackHitbox/CollisionShape2D.set_deferred("disabled", true)
-	if $AttackHitbox.has_node("Visual"):
-		$AttackHitbox/Visual.visible = false
 	await get_tree().create_timer(ATTACK_DURATION - ATTACK_HITBOX_WINDOW).timeout
 
 	attack_in_progress = false
