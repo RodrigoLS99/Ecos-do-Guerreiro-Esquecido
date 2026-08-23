@@ -1,0 +1,39 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/art/sprites/enemies/arrow_deflected_01.png" id="1_kefcr"]
+[ext_resource type="Texture2D" path="res://assets/art/sprites/enemies/arrow_deflected_02.png" id="2_lp5t1"]
+[ext_resource type="Texture2D" path="res://assets/art/sprites/enemies/arrow_deflected_03.png" id="3_rxvk5"]
+[ext_resource type="Texture2D" path="res://assets/art/sprites/enemies/arrow_normal_01.png" id="4_3bvni"]
+[ext_resource type="Texture2D" path="res://assets/art/sprites/enemies/arrow_normal_02.png" id="5_pw8r5"]
+[ext_resource type="Texture2D" path="res://assets/art/sprites/enemies/arrow_normal_03.png" id="6_lfjei"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_kefcr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_lp5t1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_rxvk5")
+}],
+"loop": 1,
+"name": &"deflected",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_3bvni")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_pw8r5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_lfjei")
+}],
+"loop": 1,
+"name": &"normal",
+"speed": 10.0
+}]

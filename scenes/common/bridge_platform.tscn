@@ -12,6 +12,179 @@ script = ExtResource("1_script")
 shape = SubResource("RectangleShape2D_platform")
 one_way_collision = true
 
-[node name="Visual" type="Polygon2D" parent="."]
-color = Color(0.22, 0.28, 0.36, 0.5)
-polygon = PackedVector2Array(-80, -12, 80, -12, 80, 12, -80, 12)
+[node name="Visual" type="Node2D" parent="."]
+
+[node name="EtherealUnderglow" type="Polygon2D" parent="Visual"]
+color = Color(0.15, 0.85, 0.95, 0.18)
+polygon = PackedVector2Array(-84, -14, 84, -14, 80, 22, 0, 30, -80, 22)
+
+[node name="StoneBase" type="Polygon2D" parent="Visual"]
+color = Color(0.14, 0.12, 0.18, 1)
+polygon = PackedVector2Array(-80, -12, 80, -12, 76, 12, 45, 16, 30, 22, 15, 14, -10, 20, -35, 14, -55, 22, -76, 12)
+
+[node name="Slabs" type="Node2D" parent="Visual"]
+
+[node name="Slab1" type="Polygon2D" parent="Visual/Slabs"]
+color = Color(0.22, 0.2, 0.28, 1)
+polygon = PackedVector2Array(-78, -12, -48, -12, -49, 10, -56, 18, -75, 10)
+
+[node name="Slab1Top" type="Polygon2D" parent="Visual/Slabs/Slab1"]
+color = Color(0.34, 0.3, 0.42, 1)
+polygon = PackedVector2Array(-78, -12, -48, -12, -48, -9, -78, -9)
+
+[node name="Slab2" type="Polygon2D" parent="Visual/Slabs"]
+color = Color(0.24, 0.22, 0.31, 1)
+polygon = PackedVector2Array(-46, -12, -18, -12, -19, 10, -35, 14, -45, 10)
+
+[node name="Slab2Top" type="Polygon2D" parent="Visual/Slabs/Slab2"]
+color = Color(0.36, 0.32, 0.45, 1)
+polygon = PackedVector2Array(-46, -12, -18, -12, -18, -9, -46, -9)
+
+[node name="Slab3" type="Polygon2D" parent="Visual/Slabs"]
+color = Color(0.26, 0.23, 0.33, 1)
+polygon = PackedVector2Array(-16, -12, 16, -12, 15, 10, 0, 18, -10, 16, -15, 10)
+
+[node name="Slab3Top" type="Polygon2D" parent="Visual/Slabs/Slab3"]
+color = Color(0.38, 0.34, 0.48, 1)
+polygon = PackedVector2Array(-16, -12, 16, -12, 16, -9, -16, -9)
+
+[node name="Slab4" type="Polygon2D" parent="Visual/Slabs"]
+color = Color(0.24, 0.22, 0.31, 1)
+polygon = PackedVector2Array(18, -12, 46, -12, 45, 10, 30, 18, 19, 10)
+
+[node name="Slab4Top" type="Polygon2D" parent="Visual/Slabs/Slab4"]
+color = Color(0.36, 0.32, 0.45, 1)
+polygon = PackedVector2Array(18, -12, 46, -12, 46, -9, 18, -9)
+
+[node name="Slab5" type="Polygon2D" parent="Visual/Slabs"]
+color = Color(0.22, 0.2, 0.28, 1)
+polygon = PackedVector2Array(48, -12, 78, -12, 75, 10, 60, 14, 49, 10)
+
+[node name="Slab5Top" type="Polygon2D" parent="Visual/Slabs/Slab5"]
+color = Color(0.34, 0.3, 0.42, 1)
+polygon = PackedVector2Array(48, -12, 78, -12, 78, -9, 48, -9)
+
+[node name="Cracks" type="Node2D" parent="Visual"]
+
+[node name="C1" type="Polygon2D" parent="Visual/Cracks"]
+color = Color(0.12, 0.1, 0.16, 0.8)
+polygon = PackedVector2Array(-36, -9, -34, -4, -38, 3, -37, 3, -33, -4, -35, -9)
+
+[node name="C2" type="Polygon2D" parent="Visual/Cracks"]
+color = Color(0.12, 0.1, 0.16, 0.8)
+polygon = PackedVector2Array(28, -9, 31, -2, 29, 6, 30, 6, 32, -2, 29, -9)
+
+[node name="EndBracketLeft" type="Polygon2D" parent="Visual"]
+color = Color(0.42, 0.38, 0.5, 1)
+polygon = PackedVector2Array(-80, -12, -76, -12, -74, 12, -76, 12, -80, 10)
+
+[node name="EndBracketRight" type="Polygon2D" parent="Visual"]
+color = Color(0.42, 0.38, 0.5, 1)
+polygon = PackedVector2Array(76, -12, 80, -12, 80, 10, 76, 12, 74, 12)
+
+[node name="ManaVein" type="Polygon2D" parent="Visual"]
+color = Color(0.25, 0.95, 0.85, 0.6)
+polygon = PackedVector2Array(-72, 0, 72, 0, 72, 2, -72, 2)
+
+[node name="Crystals" type="Node2D" parent="Visual"]
+
+[node name="C1" type="Node2D" parent="Visual/Crystals"]
+position = Vector2(-63, 1)
+
+[node name="Gem" type="Polygon2D" parent="Visual/Crystals/C1"]
+color = Color(0.25, 0.92, 0.95, 0.95)
+polygon = PackedVector2Array(0, -5, 4, 0, 0, 5, -4, 0)
+
+[node name="Core" type="Polygon2D" parent="Visual/Crystals/C1"]
+color = Color(1, 0.95, 0.8, 1)
+polygon = PackedVector2Array(0, -2, 2, 0, 0, 2, -2, 0)
+
+[node name="C2" type="Node2D" parent="Visual/Crystals"]
+position = Vector2(-32, 1)
+
+[node name="Gem" type="Polygon2D" parent="Visual/Crystals/C2"]
+color = Color(0.25, 0.92, 0.95, 0.95)
+polygon = PackedVector2Array(0, -4, 3.5, 0, 0, 4, -3.5, 0)
+
+[node name="Core" type="Polygon2D" parent="Visual/Crystals/C2"]
+color = Color(1, 0.95, 0.8, 1)
+polygon = PackedVector2Array(0, -2, 1.5, 0, 0, 2, -1.5, 0)
+
+[node name="C3" type="Node2D" parent="Visual/Crystals"]
+position = Vector2(0, 1)
+
+[node name="Gem" type="Polygon2D" parent="Visual/Crystals/C3"]
+color = Color(1, 0.85, 0.4, 0.95)
+polygon = PackedVector2Array(0, -7, 6, 0, 0, 7, -6, 0)
+
+[node name="Core" type="Polygon2D" parent="Visual/Crystals/C3"]
+color = Color(1, 0.98, 0.9, 1)
+polygon = PackedVector2Array(0, -3, 3, 0, 0, 3, -3, 0)
+
+[node name="C4" type="Node2D" parent="Visual/Crystals"]
+position = Vector2(32, 1)
+
+[node name="Gem" type="Polygon2D" parent="Visual/Crystals/C4"]
+color = Color(0.25, 0.92, 0.95, 0.95)
+polygon = PackedVector2Array(0, -4, 3.5, 0, 0, 4, -3.5, 0)
+
+[node name="Core" type="Polygon2D" parent="Visual/Crystals/C4"]
+color = Color(1, 0.95, 0.8, 1)
+polygon = PackedVector2Array(0, -2, 1.5, 0, 0, 2, -1.5, 0)
+
+[node name="C5" type="Node2D" parent="Visual/Crystals"]
+position = Vector2(63, 1)
+
+[node name="Gem" type="Polygon2D" parent="Visual/Crystals/C5"]
+color = Color(0.25, 0.92, 0.95, 0.95)
+polygon = PackedVector2Array(0, -5, 4, 0, 0, 5, -4, 0)
+
+[node name="Core" type="Polygon2D" parent="Visual/Crystals/C5"]
+color = Color(1, 0.95, 0.8, 1)
+polygon = PackedVector2Array(0, -2, 2, 0, 0, 2, -2, 0)
+
+[node name="FloatingShards" type="Node2D" parent="Visual"]
+
+[node name="Shard1" type="Node2D" parent="Visual/FloatingShards"]
+position = Vector2(-52, 24)
+
+[node name="Rock" type="Polygon2D" parent="Visual/FloatingShards/Shard1"]
+color = Color(0.2, 0.18, 0.25, 1)
+polygon = PackedVector2Array(-4, -3, 3, -4, 5, 2, -2, 4)
+
+[node name="Crystal" type="Polygon2D" parent="Visual/FloatingShards/Shard1"]
+color = Color(0.3, 0.95, 0.9, 0.9)
+polygon = PackedVector2Array(0, -2, 2, 0, 0, 2, -2, 0)
+
+[node name="Shard2" type="Node2D" parent="Visual/FloatingShards"]
+position = Vector2(-20, 28)
+
+[node name="Rock" type="Polygon2D" parent="Visual/FloatingShards/Shard2"]
+color = Color(0.18, 0.16, 0.22, 1)
+polygon = PackedVector2Array(-3, -2, 2, -3, 3, 2, -1, 3)
+
+[node name="Crystal" type="Polygon2D" parent="Visual/FloatingShards/Shard2"]
+color = Color(0.3, 0.95, 0.9, 0.9)
+polygon = PackedVector2Array(0, -1.5, 1.5, 0, 0, 1.5, -1.5, 0)
+
+[node name="Shard3" type="Node2D" parent="Visual/FloatingShards"]
+position = Vector2(24, 27)
+
+[node name="Rock" type="Polygon2D" parent="Visual/FloatingShards/Shard3"]
+color = Color(0.2, 0.18, 0.25, 1)
+polygon = PackedVector2Array(-4, -2, 3, -3, 4, 3, -2, 3)
+
+[node name="Crystal" type="Polygon2D" parent="Visual/FloatingShards/Shard3"]
+color = Color(0.3, 0.95, 0.9, 0.9)
+polygon = PackedVector2Array(0, -2, 2, 0, 0, 2, -2, 0)
+
+[node name="Shard4" type="Node2D" parent="Visual/FloatingShards"]
+position = Vector2(56, 22)
+
+[node name="Rock" type="Polygon2D" parent="Visual/FloatingShards/Shard4"]
+color = Color(0.18, 0.16, 0.22, 1)
+polygon = PackedVector2Array(-3, -2, 2, -3, 3, 2, -1, 3)
+
+[node name="Crystal" type="Polygon2D" parent="Visual/FloatingShards/Shard4"]
+color = Color(0.3, 0.95, 0.9, 0.9)
+polygon = PackedVector2Array(0, -1.5, 1.5, 0, 0, 1.5, -1.5, 0)

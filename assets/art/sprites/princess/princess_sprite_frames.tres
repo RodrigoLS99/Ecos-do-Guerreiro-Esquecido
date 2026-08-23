@@ -1,0 +1,51 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/art/sprites/princess/captured_01.png" id="1_lefwp"]
+[ext_resource type="Texture2D" path="res://assets/art/sprites/princess/captured_02.png" id="2_i7xhs"]
+[ext_resource type="Texture2D" path="res://assets/art/sprites/princess/captured_03.png" id="3_h2j65"]
+[ext_resource type="Texture2D" path="res://assets/art/sprites/princess/captured_04.png" id="4_g4xvl"]
+[ext_resource type="Texture2D" path="res://assets/art/sprites/princess/rescued_01.png" id="5_ycfh2"]
+[ext_resource type="Texture2D" path="res://assets/art/sprites/princess/rescued_02.png" id="6_t6pyp"]
+[ext_resource type="Texture2D" path="res://assets/art/sprites/princess/rescued_03.png" id="7_kuyoo"]
+[ext_resource type="Texture2D" path="res://assets/art/sprites/princess/rescued_04.png" id="8_otumy"]
+[ext_resource type="Texture2D" path="res://assets/art/sprites/princess/rescued_05.png" id="9_va8ql"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_lefwp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_i7xhs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_h2j65")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_g4xvl")
+}],
+"loop": 1,
+"name": &"captured",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_ycfh2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_t6pyp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_kuyoo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_otumy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_va8ql")
+}],
+"loop": 1,
+"name": &"rescued",
+"speed": 6.0
+}]

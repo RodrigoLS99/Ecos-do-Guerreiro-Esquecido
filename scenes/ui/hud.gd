@@ -1,13 +1,14 @@
 extends CanvasLayer
 
-@onready var heart_fill_1: Control = %HeartFill1 if has_node("%HeartFill1") else null
-@onready var heart_fill_2: Control = %HeartFill2 if has_node("%HeartFill2") else null
-@onready var heart_fill_3: Control = %HeartFill3 if has_node("%HeartFill3") else null
-@onready var echo_gem_active: Control = %EchoGemActive if has_node("%EchoGemActive") else null
+@onready var heart_fill_1: Node2D = %HeartFill1 if has_node("%HeartFill1") else null
+@onready var heart_fill_2: Node2D = %HeartFill2 if has_node("%HeartFill2") else null
+@onready var heart_fill_3: Node2D = %HeartFill3 if has_node("%HeartFill3") else null
+@onready var echo_gem_active: Node2D = %EchoGemActive if has_node("%EchoGemActive") else null
 @onready var echo_status_label: Label = %EchoStatusLabel if has_node("%EchoStatusLabel") else null
 
 var player: Node2D = null
 var current_displayed_health := 3
+var time_passed := 0.0
 
 
 func _ready() -> void:
@@ -26,6 +27,14 @@ func _ready() -> void:
 		_update_echo(false)
 
 
+func _process(delta: float) -> void:
+	time_passed += delta
+	if echo_gem_active != null and echo_gem_active.visible:
+		# Spectral breathing pulse for active echo gem
+		var s = 1.0 + sin(time_passed * 3.5) * 0.08
+		echo_gem_active.scale = Vector2(s, s)
+
+
 func _on_health_changed(new_health: int) -> void:
 	_update_hearts(new_health, true)
 
@@ -41,16 +50,16 @@ func _update_hearts(target_health: int, animate: bool = true) -> void:
 	current_displayed_health = target_health
 
 
-func _set_heart_state(heart_fill: Control, is_full: bool, animate: bool) -> void:
+func _set_heart_state(heart_fill: Node2D, is_full: bool, animate: bool) -> void:
 	if heart_fill == null:
 		return
-	
+
 	if not animate:
 		heart_fill.visible = is_full
 		heart_fill.scale = Vector2.ONE
 		heart_fill.modulate.a = 1.0 if is_full else 0.0
 		return
-	
+
 	if is_full:
 		if not heart_fill.visible or heart_fill.modulate.a < 0.9:
 			var tw := create_tween().set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
@@ -69,18 +78,19 @@ func _set_heart_state(heart_fill: Control, is_full: bool, animate: bool) -> void
 
 func _update_echo(is_placed: bool) -> void:
 	if echo_gem_active:
-		var tw := create_tween().set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 		if is_placed:
-			# Eco está ativo no mundo (pronto para teletransporte)
+			# Eco ativo no mundo (aceso e radiante)
 			echo_gem_active.visible = true
+			var tw := create_tween().set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 			tw.tween_property(echo_gem_active, "modulate:a", 1.0, 0.2)
 			if echo_status_label:
 				echo_status_label.text = "ATIVO"
 				echo_status_label.set("theme_override_colors/font_color", Color(0.3, 0.95, 1.0, 1.0))
 		else:
-			# Eco pronto para ser invocado
-			echo_gem_active.visible = true
-			tw.tween_property(echo_gem_active, "modulate:a", 0.45, 0.2)
+			# Eco pronto (apagado, soquete escuro)
+			var tw := create_tween().set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+			tw.tween_property(echo_gem_active, "modulate:a", 0.0, 0.2)
+			tw.chain().tween_callback(func(): echo_gem_active.visible = false)
 			if echo_status_label:
 				echo_status_label.text = "PRONTO"
-				echo_status_label.set("theme_override_colors/font_color", Color(0.8, 0.9, 1.0, 0.7))
+				echo_status_label.set("theme_override_colors/font_color", Color(0.6, 0.7, 0.8, 0.65))

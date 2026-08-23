@@ -36,7 +36,7 @@ var coyote_timer := 0.0
 var jump_buffer_timer := 0.0
 
 @onready var visual_root: Node2D = $Visual if has_node("Visual") else null
-@onready var sprite_slot: Sprite2D = $Visual/SpriteSlot if has_node("Visual/SpriteSlot") else null
+@onready var sprite_slot: Node2D = $Visual/SpriteSlot if has_node("Visual/SpriteSlot") else null
 @onready var procedural_visual: Node2D = $Visual/Procedural if has_node("Visual/Procedural") else null
 
 
@@ -53,7 +53,14 @@ func _ready() -> void:
 
 
 func _setup_visual_slots() -> void:
-	if sprite_slot != null and sprite_slot.texture != null:
+	var has_sprite := false
+	if sprite_slot != null:
+		if sprite_slot is AnimatedSprite2D and (sprite_slot as AnimatedSprite2D).sprite_frames != null:
+			has_sprite = true
+		elif sprite_slot is Sprite2D and (sprite_slot as Sprite2D).texture != null:
+			has_sprite = true
+
+	if has_sprite:
 		sprite_slot.visible = true
 		if procedural_visual != null:
 			procedural_visual.visible = false
@@ -64,7 +71,45 @@ func _setup_visual_slots() -> void:
 			procedural_visual.visible = true
 
 
+func _update_animation() -> void:
+	if sprite_slot == null or not (sprite_slot is AnimatedSprite2D):
+		return
+	var anim_sprite := sprite_slot as AnimatedSprite2D
+	if anim_sprite.sprite_frames == null:
+		return
+
+	match state:
+		State.IDLE:
+			if anim_sprite.animation != &"idle":
+				anim_sprite.play(&"idle")
+		State.RUN:
+			if anim_sprite.animation != &"run":
+				anim_sprite.play(&"run")
+		State.JUMP:
+			if anim_sprite.animation != &"jump":
+				anim_sprite.play(&"jump")
+		State.FALL:
+			if anim_sprite.animation != &"fall":
+				anim_sprite.play(&"fall")
+		State.CLIMB:
+			if anim_sprite.animation != &"climb":
+				anim_sprite.play(&"climb")
+		State.ATTACK:
+			anim_sprite.play(&"attack")
+		State.HURT:
+			anim_sprite.play(&"hurt")
+		State.DEAD:
+			anim_sprite.play(&"death")
+
+
 func _physics_process(delta: float) -> void:
+	if state == State.DEAD:
+		if not is_on_floor():
+			velocity.y += GRAVITY * delta
+		velocity.x = 0.0
+		move_and_slide()
+		return
+
 	if (global_position.y > 700.0 or global_position.y < -300.0) and state != State.DEAD:
 		die_instant()
 		return
@@ -193,6 +238,7 @@ func _handle_climb(_delta: float, horizontal_direction: float, vertical_directio
 	velocity.x = 0.0
 	velocity.y = CLIMB_SPEED if drop_through_remaining > 0.0 and vertical_direction == 0.0 else vertical_direction * CLIMB_SPEED
 	move_and_slide()
+	_update_animation()
 
 
 func _update_movement_state(horizontal_direction: float) -> void:
@@ -202,6 +248,7 @@ func _update_movement_state(horizontal_direction: float) -> void:
 		state = State.RUN
 	else:
 		state = State.IDLE
+	_update_animation()
 
 
 func _handle_attack(delta: float) -> void:
@@ -367,6 +414,7 @@ func attack() -> void:
 	attack_in_progress = true
 	state = State.ATTACK
 	velocity.x = 0.0
+	_update_animation()
 	if AudioManager:
 		AudioManager.play_sfx("attack")
 	$AttackHitbox/CollisionShape2D.set_deferred("disabled", false)
@@ -421,8 +469,11 @@ func die_instant() -> void:
 		return
 
 	state = State.DEAD
+	velocity = Vector2.ZERO
+	_update_animation()
 	if AudioManager:
 		AudioManager.play_sfx("death")
+	await get_tree().create_timer(0.5).timeout
 	GameState.respawn_current_floor()
 
 
@@ -435,6 +486,7 @@ func take_damage(amount: int) -> void:
 	invincibility_remaining = INVINCIBILITY_TIME
 	hurt_remaining = HURT_DURATION
 	state = State.HURT
+	_update_animation()
 	if AudioManager:
 		AudioManager.play_sfx("hurt")
 

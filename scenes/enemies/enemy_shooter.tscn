@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://scenes/enemies/enemy_shooter.gd" id="1_script"]
+[ext_resource type="SpriteFrames" path="res://assets/art/sprites/enemies/archer_sprite_frames.tres" id="2_frames"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_enemy"]
 size = Vector2(32, 48)
@@ -13,10 +14,14 @@ shape = SubResource("RectangleShape2D_enemy")
 
 [node name="Visuals" type="Node2D" parent="."]
 
-[node name="SpriteSlot" type="Sprite2D" parent="Visuals"]
-visible = false
+[node name="SpriteSlot" type="AnimatedSprite2D" parent="Visuals"]
+scale = Vector2(0.48, 0.48)
+sprite_frames = ExtResource("2_frames")
+animation = &"idle"
+autoplay = "idle"
 
 [node name="Procedural" type="Node2D" parent="Visuals"]
+visible = false
 
 [node name="Body" type="Polygon2D" parent="Visuals/Procedural"]
 color = Color(0.9, 0.31, 0.35, 1)

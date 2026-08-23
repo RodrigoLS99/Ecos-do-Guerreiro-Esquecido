@@ -7,7 +7,7 @@ var active := false
 var timer := 0.0
 var overlapping_player: Node2D = null
 
-@onready var visual: Polygon2D = $Visual
+@onready var visual: Polygon2D = $Visual if has_node("Visual") else null
 
 
 func _ready() -> void:
@@ -22,13 +22,13 @@ func _ready() -> void:
 func activate() -> void:
 	active = true
 	timer = damage_interval
-	if visual:
+	if visual != null:
 		visual.visible = true
 
 
 func deactivate() -> void:
 	active = false
-	if visual:
+	if visual != null:
 		visual.visible = false
 
 

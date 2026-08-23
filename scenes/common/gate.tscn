@@ -3,9 +3,9 @@
 [ext_resource type="Script" path="res://scenes/common/gate.gd" id="1_script"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gate"]
-size = Vector2(20, 96)
+size = Vector2(16, 96)
 
-[node name="Gate" type="StaticBody2D"]
+[node name="Gate" type="StaticBody2D" groups=["gate"]]
 script = ExtResource("1_script")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -13,9 +13,115 @@ shape = SubResource("RectangleShape2D_gate")
 
 [node name="Visual" type="Node2D" parent="."]
 
-[node name="SpriteSlot" type="Sprite2D" parent="Visual"]
+[node name="StoneFrame" type="Node2D" parent="Visual"]
+
+[node name="PillarLeft" type="Polygon2D" parent="Visual/StoneFrame"]
+color = Color(0.18, 0.16, 0.24, 1)
+polygon = PackedVector2Array(-12, -48, -7, -48, -7, 48, -12, 48)
+
+[node name="PillarRight" type="Polygon2D" parent="Visual/StoneFrame"]
+color = Color(0.18, 0.16, 0.24, 1)
+polygon = PackedVector2Array(7, -48, 12, -48, 12, 48, 7, 48)
+
+[node name="ArchTop" type="Polygon2D" parent="Visual/StoneFrame"]
+color = Color(0.13, 0.11, 0.18, 1)
+polygon = PackedVector2Array(-14, -48, 14, -48, 10, -42, -10, -42)
+
+[node name="ArchBottom" type="Polygon2D" parent="Visual/StoneFrame"]
+color = Color(0.13, 0.11, 0.18, 1)
+polygon = PackedVector2Array(-14, 48, 14, 48, 10, 42, -10, 42)
+
+[node name="PillarRunesLeft" type="Node2D" parent="Visual/StoneFrame"]
+
+[node name="PR1" type="Polygon2D" parent="Visual/StoneFrame/PillarRunesLeft"]
+color = Color(0.75, 0.25, 0.85, 0.9)
+polygon = PackedVector2Array(-9.5, -28, -7.5, -24, -9.5, -20, -11.5, -24)
+
+[node name="PR2" type="Polygon2D" parent="Visual/StoneFrame/PillarRunesLeft"]
+color = Color(0.75, 0.25, 0.85, 0.9)
+polygon = PackedVector2Array(-9.5, -4, -7.5, 0, -9.5, 4, -11.5, 0)
+
+[node name="PR3" type="Polygon2D" parent="Visual/StoneFrame/PillarRunesLeft"]
+color = Color(0.75, 0.25, 0.85, 0.9)
+polygon = PackedVector2Array(-9.5, 20, -7.5, 24, -9.5, 28, -11.5, 24)
+
+[node name="PillarRunesRight" type="Node2D" parent="Visual/StoneFrame"]
+
+[node name="PR1" type="Polygon2D" parent="Visual/StoneFrame/PillarRunesRight"]
+color = Color(0.75, 0.25, 0.85, 0.9)
+polygon = PackedVector2Array(9.5, -28, 11.5, -24, 9.5, -20, 7.5, -24)
+
+[node name="PR2" type="Polygon2D" parent="Visual/StoneFrame/PillarRunesRight"]
+color = Color(0.75, 0.25, 0.85, 0.9)
+polygon = PackedVector2Array(9.5, -4, 11.5, 0, 9.5, 4, 7.5, 0)
+
+[node name="PR3" type="Polygon2D" parent="Visual/StoneFrame/PillarRunesRight"]
+color = Color(0.75, 0.25, 0.85, 0.9)
+polygon = PackedVector2Array(9.5, 20, 11.5, 24, 9.5, 28, 7.5, 24)
+
+[node name="ClosedBarrier" type="Node2D" parent="Visual"]
+
+[node name="MysticAura" type="Polygon2D" parent="Visual/ClosedBarrier"]
+color = Color(0.55, 0.15, 0.7, 0.3)
+polygon = PackedVector2Array(-8, -42, 0, -46, 8, -42, 7, 42, 0, 46, -7, 42)
+
+[node name="AstralVeil" type="Polygon2D" parent="Visual/ClosedBarrier"]
+color = Color(0.75, 0.2, 0.85, 0.5)
+polygon = PackedVector2Array(-5, -40, 0, -44, 5, -40, 3, 0, 5, 40, 0, 44, -5, 40, -3, 0)
+
+[node name="RuneGlyph1" type="Node2D" parent="Visual/ClosedBarrier"]
+position = Vector2(0, -30)
+
+[node name="Glyph" type="Polygon2D" parent="Visual/ClosedBarrier/RuneGlyph1"]
+color = Color(1, 0.85, 0.45, 0.95)
+polygon = PackedVector2Array(0, -6, 4, 0, 0, 6, -4, 0, -2, 0, 0, -3, 2, 0, 0, 3)
+
+[node name="RuneGlyph2" type="Node2D" parent="Visual/ClosedBarrier"]
+position = Vector2(0, -15)
+
+[node name="Glyph" type="Polygon2D" parent="Visual/ClosedBarrier/RuneGlyph2"]
+color = Color(0.9, 0.7, 1, 0.95)
+polygon = PackedVector2Array(-3, -4, 3, -4, 0, -1, 3, 4, -3, 4, 0, 1)
+
+[node name="ArcaneSeal" type="Node2D" parent="Visual/ClosedBarrier"]
+
+[node name="Octagram" type="Polygon2D" parent="Visual/ClosedBarrier/ArcaneSeal"]
+color = Color(1, 0.82, 0.35, 0.95)
+polygon = PackedVector2Array(0, -11, 4, -8, 11, 0, 4, 8, 0, 11, -4, 8, -11, 0, -4, -8)
+
+[node name="InnerRune" type="Polygon2D" parent="Visual/ClosedBarrier/ArcaneSeal"]
+color = Color(0.45, 0.1, 0.65, 0.95)
+polygon = PackedVector2Array(0, -7, 6, 0, 0, 7, -6, 0)
+
+[node name="SealCore" type="Polygon2D" parent="Visual/ClosedBarrier/ArcaneSeal"]
+color = Color(1, 0.95, 0.8, 1)
+polygon = PackedVector2Array(0, -3, 3, 0, 0, 3, -3, 0)
+
+[node name="RuneGlyph3" type="Node2D" parent="Visual/ClosedBarrier"]
+position = Vector2(0, 15)
+
+[node name="Glyph" type="Polygon2D" parent="Visual/ClosedBarrier/RuneGlyph3"]
+color = Color(0.9, 0.7, 1, 0.95)
+polygon = PackedVector2Array(-3, -4, 3, -4, 0, -1, 3, 4, -3, 4, 0, 1)
+
+[node name="RuneGlyph4" type="Node2D" parent="Visual/ClosedBarrier"]
+position = Vector2(0, 30)
+
+[node name="Glyph" type="Polygon2D" parent="Visual/ClosedBarrier/RuneGlyph4"]
+color = Color(1, 0.85, 0.45, 0.95)
+polygon = PackedVector2Array(0, -6, 4, 0, 0, 6, -4, 0, -2, 0, 0, -3, 2, 0, 0, 3)
+
+[node name="OpenPassage" type="Node2D" parent="Visual"]
 visible = false
 
-[node name="Procedural" type="Polygon2D" parent="Visual"]
-color = Color(0.95, 0.25, 0.25, 0.9)
-polygon = PackedVector2Array(-10, -48, 10, -48, 10, 48, -10, 48)
+[node name="PassageAura" type="Polygon2D" parent="Visual/OpenPassage"]
+color = Color(0.2, 0.85, 0.95, 0.2)
+polygon = PackedVector2Array(-7, -42, 0, -46, 7, -42, 7, 42, 0, 46, -7, 42)
+
+[node name="EtherealGlowLeft" type="Polygon2D" parent="Visual/OpenPassage"]
+color = Color(0.35, 0.95, 0.9, 0.45)
+polygon = PackedVector2Array(-7, -42, -5, -42, -5, 42, -7, 42)
+
+[node name="EtherealGlowRight" type="Polygon2D" parent="Visual/OpenPassage"]
+color = Color(0.35, 0.95, 0.9, 0.45)
+polygon = PackedVector2Array(5, -42, 7, -42, 7, 42, 5, 42)
