@@ -332,21 +332,35 @@ func _synth_floor_5_track() -> AudioStreamWAV:
 	return _make_stream_16(data, true)
 
 
-# Menu Principal: Mistério e Acolhimento
+# Menu Principal: Canção Nostálgica do Guerreiro (Melancólica, suave, dedilhado de alaúde/harpa sem fadiga)
 func _synth_menu_track() -> AudioStreamWAV:
 	var duration := 4.0
 	var samples := int(SAMPLE_RATE * duration)
 	var data := PackedByteArray()
 	data.resize(samples * 2)
-	var chord := [130.75, 164.75, 196.00, 246.75]
+	# Dedilhado melancólico em Lá menor (A3, C4, E4, D4, C4, B3, A3, E3)
+	var lute_melody := [220.00, 261.50, 329.50, 293.75, 261.50, 246.75, 220.00, 164.75]
+	var pad_chord := [110.00, 164.75, 220.00] # A2, E3, A3
 	
 	for i in range(samples):
 		var t := float(i) / float(SAMPLE_RATE)
+		# Pad aveludado e suave de fundo
 		var pad := 0.0
-		for f in chord:
-			pad += sin(TAU * f * t) * 0.25
-		var sweep := 0.85 + sin(TAU * 0.25 * t) * 0.15
-		var mix := pad * sweep * 16500.0
+		for f in pad_chord:
+			pad += sin(TAU * f * t) * 0.18
+		
+		# Dedilhado melancólico com envelope de corda dedilhada suave
+		var step_idx := int((t / duration) * 8.0) % 8
+		var step_t := fmod(t, duration / 8.0)
+		var env := sin((step_t / (duration / 8.0)) * PI) * exp(- step_t * 3.8)
+		var note_f: float = lute_melody[step_idx]
+		var lute := (sin(TAU * note_f * t) + sin(TAU * note_f * 2.0 * t) * 0.15) * env
+		
+		# Baixo acústico quente
+		var bass := sin(TAU * 55.00 * t) * 0.25
+		
+		var breath := 0.9 + sin(TAU * 0.25 * t) * 0.1
+		var mix := (pad * 0.4 + lute * 0.45 + bass * 0.25) * breath * 16500.0
 		data.encode_s16(i * 2, int(clampf(mix, -32000.0, 32000.0)))
 	
 	return _make_stream_16(data, true)

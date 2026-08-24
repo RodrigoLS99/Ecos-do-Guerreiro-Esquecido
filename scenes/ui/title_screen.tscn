@@ -1,8 +1,35 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=7 format=3]
 
 [ext_resource type="Script" path="res://scenes/ui/title_screen.gd" id="1_script"]
 [ext_resource type="PackedScene" path="res://scenes/ui/help_dialog.tscn" id="2_help"]
 [ext_resource type="PackedScene" path="res://scenes/ui/options_menu.tscn" id="3_options"]
+[ext_resource type="PackedScene" path="res://scenes/common/torch.tscn" id="4_torch"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_title_panel"]
+bg_color = Color(0.06, 0.08, 0.16, 0.92)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.98, 0.88, 0.42, 0.95)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+shadow_color = Color(0, 0, 0, 0.6)
+shadow_size = 14
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_play"]
+bg_color = Color(0.12, 0.20, 0.36, 0.9)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.98, 0.88, 0.42, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
 [node name="TitleScreen" type="Control"]
 layout_mode = 3
@@ -20,7 +47,121 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.055, 0.075, 0.13, 1)
+color = Color(0.04, 0.06, 0.12, 1)
+
+[node name="SkyGlow" type="Polygon2D" parent="."]
+color = Color(0.08, 0.14, 0.26, 0.75)
+polygon = PackedVector2Array(0, 0, 1152, 0, 1152, 400, 0, 400)
+
+[node name="Stars" type="Node2D" parent="."]
+
+[node name="Star1" type="Polygon2D" parent="Stars"]
+position = Vector2(100, 60)
+color = Color(1, 0.95, 0.8, 0.8)
+polygon = PackedVector2Array(0, -4, 1.2, -1.2, 4, 0, 1.2, 1.2, 0, 4, -1.2, 1.2, -4, 0, -1.2, -1.2)
+
+[node name="Star2" type="Polygon2D" parent="Stars"]
+position = Vector2(300, 40)
+color = Color(0.85, 0.92, 1, 0.85)
+polygon = PackedVector2Array(0, -5, 1.5, -1.5, 5, 0, 1.5, 1.5, 0, 5, -1.5, 1.5, -5, 0, -1.5, -1.5)
+
+[node name="Star3" type="Polygon2D" parent="Stars"]
+position = Vector2(850, 45)
+color = Color(1, 0.95, 0.8, 0.9)
+polygon = PackedVector2Array(0, -5, 1.5, -1.5, 5, 0, 1.5, 1.5, 0, 5, -1.5, 1.5, -5, 0, -1.5, -1.5)
+
+[node name="Star4" type="Polygon2D" parent="Stars"]
+position = Vector2(1050, 70)
+color = Color(0.85, 0.92, 1, 0.8)
+polygon = PackedVector2Array(0, -4, 1.2, -1.2, 4, 0, 1.2, 1.2, 0, 4, -1.2, 1.2, -4, 0, -1.2, -1.2)
+
+[node name="TowerSilhouettes" type="Node2D" parent="."]
+
+[node name="TowerL" type="Polygon2D" parent="TowerSilhouettes"]
+color = Color(0.03, 0.045, 0.08, 0.95)
+polygon = PackedVector2Array(40, 648, 40, 240, 70, 240, 70, 220, 90, 220, 90, 240, 120, 240, 120, 220, 140, 220, 140, 240, 170, 240, 170, 648)
+
+[node name="TowerR" type="Polygon2D" parent="TowerSilhouettes"]
+color = Color(0.03, 0.045, 0.08, 0.95)
+polygon = PackedVector2Array(980, 648, 980, 240, 1010, 240, 1010, 220, 1030, 220, 1030, 240, 1060, 240, 1060, 220, 1080, 220, 1080, 240, 1110, 240, 1110, 648)
+
+[node name="CastleWall" type="Polygon2D" parent="TowerSilhouettes"]
+color = Color(0.025, 0.035, 0.07, 0.98)
+polygon = PackedVector2Array(0, 648, 0, 520, 1152, 520, 1152, 648)
+
+[node name="StonePillars" type="Node2D" parent="."]
+
+[node name="PillarL" type="Node2D" parent="StonePillars"]
+position = Vector2(160, 480)
+
+[node name="Shaft" type="Polygon2D" parent="StonePillars/PillarL"]
+color = Color(0.18, 0.24, 0.36, 0.95)
+polygon = PackedVector2Array(-18, -140, 18, -140, 22, 168, -22, 168)
+
+[node name="Fluting" type="Polygon2D" parent="StonePillars/PillarL"]
+color = Color(0.12, 0.16, 0.26, 0.9)
+polygon = PackedVector2Array(-8, -135, 8, -135, 10, 160, -10, 160)
+
+[node name="Capital" type="Polygon2D" parent="StonePillars/PillarL"]
+color = Color(0.98, 0.88, 0.42, 0.95)
+polygon = PackedVector2Array(-24, -148, 24, -148, 18, -138, -18, -138)
+
+[node name="Base" type="Polygon2D" parent="StonePillars/PillarL"]
+color = Color(0.98, 0.88, 0.42, 0.95)
+polygon = PackedVector2Array(-26, 168, 26, 168, 22, 158, -22, 158)
+
+[node name="TorchLeft" parent="StonePillars/PillarL" instance=ExtResource("4_torch")]
+position = Vector2(0, -90)
+glow_color = Color(1, 0.85, 0.45, 0.3)
+flame_outer_color = Color(1, 0.65, 0.2, 0.98)
+flame_inner_color = Color(1, 0.95, 0.7, 1)
+
+[node name="PillarR" type="Node2D" parent="StonePillars"]
+position = Vector2(992, 480)
+
+[node name="Shaft" type="Polygon2D" parent="StonePillars/PillarR"]
+color = Color(0.18, 0.24, 0.36, 0.95)
+polygon = PackedVector2Array(-18, -140, 18, -140, 22, 168, -22, 168)
+
+[node name="Fluting" type="Polygon2D" parent="StonePillars/PillarR"]
+color = Color(0.12, 0.16, 0.26, 0.9)
+polygon = PackedVector2Array(-8, -135, 8, -135, 10, 160, -10, 160)
+
+[node name="Capital" type="Polygon2D" parent="StonePillars/PillarR"]
+color = Color(0.98, 0.88, 0.42, 0.95)
+polygon = PackedVector2Array(-24, -148, 24, -148, 18, -138, -18, -138)
+
+[node name="Base" type="Polygon2D" parent="StonePillars/PillarR"]
+color = Color(0.98, 0.88, 0.42, 0.95)
+polygon = PackedVector2Array(-26, 168, 26, 168, 22, 158, -22, 158)
+
+[node name="TorchRight" parent="StonePillars/PillarR" instance=ExtResource("4_torch")]
+position = Vector2(0, -90)
+glow_color = Color(1, 0.85, 0.45, 0.3)
+flame_outer_color = Color(1, 0.65, 0.2, 0.98)
+flame_inner_color = Color(1, 0.95, 0.7, 1)
+
+[node name="EchoParticles" type="Node2D" parent="."]
+
+[node name="EchoMote1" type="Polygon2D" parent="EchoParticles"]
+position = Vector2(280, 480)
+color = Color(0.4, 0.85, 1, 0.6)
+polygon = PackedVector2Array(-3, -3, 3, -3, 3, 3, -3, 3)
+
+[node name="EchoMote2" type="Polygon2D" parent="EchoParticles"]
+position = Vector2(420, 540)
+color = Color(0.95, 0.85, 0.4, 0.6)
+polygon = PackedVector2Array(-3, -3, 3, -3, 3, 3, -3, 3)
+
+[node name="EchoMote3" type="Polygon2D" parent="EchoParticles"]
+position = Vector2(740, 500)
+color = Color(0.4, 0.85, 1, 0.6)
+polygon = PackedVector2Array(-3, -3, 3, -3, 3, 3, -3, 3)
+
+[node name="EchoMote4" type="Polygon2D" parent="EchoParticles"]
+position = Vector2(880, 560)
+color = Color(0.95, 0.85, 0.4, 0.6)
+polygon = PackedVector2Array(-3, -3, 3, -3, 3, 3, -3, 3)
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1
@@ -30,57 +171,87 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+[node name="MainPanel" type="PanelContainer" parent="CenterContainer"]
+custom_minimum_size = Vector2(680, 490)
 layout_mode = 2
-theme_override_constants/separation = 20
+theme_override_styles/panel = SubResource("StyleBoxFlat_title_panel")
 
-[node name="TitleLabel" type="Label" parent="CenterContainer/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/MainPanel"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 40
-text = "Ecos do Guerreiro Esquecido"
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 28
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 28
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/MainPanel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="TitleBox" type="VBoxContainer" parent="CenterContainer/MainPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="EmblemLabel" type="Label" parent="CenterContainer/MainPanel/MarginContainer/VBoxContainer/TitleBox"]
+modulate = Color(0.98, 0.88, 0.42, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "✦ ✦ ✦"
 horizontal_alignment = 1
 
-[node name="SubtitleLabel" type="Label" parent="CenterContainer/VBoxContainer"]
-modulate = Color(0.7, 0.8, 0.9, 0.8)
+[node name="TitleLabel" type="Label" parent="CenterContainer/MainPanel/MarginContainer/VBoxContainer/TitleBox"]
+modulate = Color(0.98, 0.88, 0.42, 1)
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
-text = "Use os ecos do passado para superar os desafios"
+theme_override_font_sizes/font_size = 36
+text = "ECOS DO GUERREIRO ESQUECIDO"
 horizontal_alignment = 1
 
-[node name="ControlSpacer" type="Control" parent="CenterContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 12)
+[node name="SubtitleLabel" type="Label" parent="CenterContainer/MainPanel/MarginContainer/VBoxContainer/TitleBox"]
+modulate = Color(0.7, 0.88, 1, 0.9)
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Domine as sombras do tempo & Liberte o reino"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="CenterContainer/MainPanel/MarginContainer/VBoxContainer"]
+modulate = Color(0.98, 0.88, 0.42, 0.6)
 layout_mode = 2
 
-[node name="ButtonsContainer" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
+[node name="SpacerTop" type="Control" parent="CenterContainer/MainPanel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+
+[node name="ButtonsContainer" type="VBoxContainer" parent="CenterContainer/MainPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="PlayButton" type="Button" parent="CenterContainer/VBoxContainer/ButtonsContainer"]
-custom_minimum_size = Vector2(220, 48)
+[node name="PlayButton" type="Button" parent="CenterContainer/MainPanel/MarginContainer/VBoxContainer/ButtonsContainer"]
+custom_minimum_size = Vector2(260, 48)
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_colors/font_color = Color(1, 0.95, 0.8, 1)
 theme_override_font_sizes/font_size = 20
-text = "Jogar"
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_play")
+text = "⚔ Iniciar Jornada"
 
-[node name="OptionsButton" type="Button" parent="CenterContainer/VBoxContainer/ButtonsContainer"]
-custom_minimum_size = Vector2(220, 44)
+[node name="OptionsButton" type="Button" parent="CenterContainer/MainPanel/MarginContainer/VBoxContainer/ButtonsContainer"]
+custom_minimum_size = Vector2(260, 42)
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 17
 text = "Opções"
 
-[node name="HelpButton" type="Button" parent="CenterContainer/VBoxContainer/ButtonsContainer"]
-custom_minimum_size = Vector2(220, 44)
+[node name="HelpButton" type="Button" parent="CenterContainer/MainPanel/MarginContainer/VBoxContainer/ButtonsContainer"]
+custom_minimum_size = Vector2(260, 42)
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 18
-text = "Ajuda / Controles"
+theme_override_font_sizes/font_size = 17
+text = "Ajuda & Controles"
 
-[node name="QuitButton" type="Button" parent="CenterContainer/VBoxContainer/ButtonsContainer"]
-custom_minimum_size = Vector2(220, 44)
+[node name="QuitButton" type="Button" parent="CenterContainer/MainPanel/MarginContainer/VBoxContainer/ButtonsContainer"]
+custom_minimum_size = Vector2(260, 42)
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 17
 text = "Sair"
 
 [node name="OptionsMenu" parent="." instance=ExtResource("3_options")]
@@ -91,7 +262,7 @@ layout_mode = 1
 visible = false
 layout_mode = 1
 
-[connection signal="pressed" from="CenterContainer/VBoxContainer/ButtonsContainer/PlayButton" to="." method="_on_play_button_pressed"]
-[connection signal="pressed" from="CenterContainer/VBoxContainer/ButtonsContainer/OptionsButton" to="." method="_on_options_button_pressed"]
-[connection signal="pressed" from="CenterContainer/VBoxContainer/ButtonsContainer/HelpButton" to="." method="_on_help_button_pressed"]
-[connection signal="pressed" from="CenterContainer/VBoxContainer/ButtonsContainer/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="CenterContainer/MainPanel/MarginContainer/VBoxContainer/ButtonsContainer/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="CenterContainer/MainPanel/MarginContainer/VBoxContainer/ButtonsContainer/OptionsButton" to="." method="_on_options_button_pressed"]
+[connection signal="pressed" from="CenterContainer/MainPanel/MarginContainer/VBoxContainer/ButtonsContainer/HelpButton" to="." method="_on_help_button_pressed"]
+[connection signal="pressed" from="CenterContainer/MainPanel/MarginContainer/VBoxContainer/ButtonsContainer/QuitButton" to="." method="_on_quit_button_pressed"]

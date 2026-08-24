@@ -9,18 +9,25 @@ on:
   workflow_dispatch:
 
 env:
-  GODOT_VERSION: "4.7.2"
+  GODOT_VERSION: "4.3"
 
 jobs:
   export:
-    name: Exportar Godot 4
+    name: Exportar Multiplataforma (Linux, Windows, Web)
     runs-on: ubuntu-latest
     permissions:
       contents: write
 
     steps:
-      - name: Checkout do Repositorio
+      - name: Checkout do Repositório
         uses: actions/checkout@v4
+
+      - name: Criar Diretórios de Build
+        run: |
+          mkdir -p builds/linux
+          mkdir -p builds/windows
+          mkdir -p builds/web
+          mkdir -p release_assets
 
       - name: Exportar com Godot 4
         id: export
@@ -32,21 +39,40 @@ jobs:
           archive_output: false
           cache: true
 
+      - name: Padronizar Nomes dos Arquivos de Release
+        run: |
+          # Linux
+          if [ -f "builds/linux/Ecos do Guerreiro Esquecido.x86_64" ]; then
+            cp "builds/linux/Ecos do Guerreiro Esquecido.x86_64" "release_assets/Ecos do Guerreiro Esquecido - Linux.x86-64"
+          fi
+          
+          # Windows
+          if [ -f "builds/windows/Ecos do Guerreiro Esquecido.exe" ]; then
+            cp "builds/windows/Ecos do Guerreiro Esquecido.exe" "release_assets/Ecos do Guerreiro Esquecido - Windows.exe"
+          fi
+          
+          # Web
+          if [ -f "builds/web/Ecos do Guerreiro Esquecido.zip" ]; then
+            cp "builds/web/Ecos do Guerreiro Esquecido.zip" "release_assets/Ecos do Guerreiro Esquecido - Web.zip"
+          elif [ -d "builds/web" ]; then
+            cd builds/web && zip -r "../../release_assets/Ecos do Guerreiro Esquecido - Web.zip" . && cd ../..
+          fi
+
       - name: Upload dos Artefatos de Build
         uses: actions/upload-artifact@v4
         with:
           name: Ecos-do-Guerreiro-Esquecido-Builds
-          path: |
-            ${{ steps.export.outputs.build_directory }}/**/*.x86_64
-            ${{ steps.export.outputs.build_directory }}/**/*.exe
+          path: release_assets/*
           if-no-files-found: warn
 
-      - name: Criar Release no GitHub (Tags apenas)
+      - name: Publicar Release no GitHub (Tags apenas)
         if: startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            ${{ steps.export.outputs.build_directory }}/**/*.x86_64
-            ${{ steps.export.outputs.build_directory }}/**/*.exe
+            release_assets/Ecos do Guerreiro Esquecido - Linux.x86-64
+            release_assets/Ecos do Guerreiro Esquecido - Windows.exe
+            release_assets/Ecos do Guerreiro Esquecido - Web.zip
           draft: false
-          prerelease: false
+          prerelease: ${{ contains(github.ref, '-rc') || contains(github.ref, '-beta') || contains(github.ref, '-alpha') || contains(github.ref, '-pre') }}
+          generate_release_notes: true
