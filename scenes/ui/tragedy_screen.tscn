@@ -1,22 +1,22 @@
 [gd_scene load_steps=3 format=3]
 
-[ext_resource type="Script" path="res://scenes/ui/victory_screen.gd" id="1_script"]
+[ext_resource type="Script" path="res://scenes/ui/tragedy_screen.gd" id="1_script"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_scroll"]
-bg_color = Color(0.08, 0.12, 0.22, 0.92)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tragedy"]
+bg_color = Color(0.08, 0.02, 0.02, 0.94)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
-border_color = Color(0.98, 0.88, 0.42, 0.95)
+border_color = Color(0.85, 0.15, 0.2, 0.95)
 corner_radius_top_left = 12
 corner_radius_top_right = 12
 corner_radius_bottom_right = 12
 corner_radius_bottom_left = 12
-shadow_color = Color(0, 0, 0, 0.6)
-shadow_size = 12
+shadow_color = Color(0.4, 0, 0, 0.6)
+shadow_size = 16
 
-[node name="VictoryScreen" type="Control"]
+[node name="TragedyScreen" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -32,29 +32,11 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.06, 0.09, 0.18, 1)
+color = Color(0.03, 0.01, 0.02, 1)
 
-[node name="CelestialStars" type="Node2D" parent="."]
-
-[node name="Star1" type="Polygon2D" parent="CelestialStars"]
-position = Vector2(160, 100)
-color = Color(1, 0.95, 0.8, 0.8)
-polygon = PackedVector2Array(0, -5, 1.5, -1.5, 5, 0, 1.5, 1.5, 0, 5, -1.5, 1.5, -5, 0, -1.5, -1.5)
-
-[node name="Star2" type="Polygon2D" parent="CelestialStars"]
-position = Vector2(980, 80)
-color = Color(0.85, 0.95, 1, 0.9)
-polygon = PackedVector2Array(0, -6, 1.5, -1.5, 6, 0, 1.5, 1.5, 0, 6, -1.5, 1.5, -6, 0, -1.5, -1.5)
-
-[node name="Star3" type="Polygon2D" parent="CelestialStars"]
-position = Vector2(240, 520)
-color = Color(0.85, 0.95, 1, 0.75)
-polygon = PackedVector2Array(0, -4, 1.2, -1.2, 4, 0, 1.2, 1.2, 0, 4, -1.2, 1.2, -4, 0, -1.2, -1.2)
-
-[node name="Star4" type="Polygon2D" parent="CelestialStars"]
-position = Vector2(920, 540)
-color = Color(1, 0.95, 0.8, 0.8)
-polygon = PackedVector2Array(0, -5, 1.5, -1.5, 5, 0, 1.5, 1.5, 0, 5, -1.5, 1.5, -5, 0, -1.5, -1.5)
+[node name="RedGlow" type="Polygon2D" parent="."]
+color = Color(0.6, 0.05, 0.1, 0.25)
+polygon = PackedVector2Array(0, 0, 1152, 0, 1152, 648, 0, 648)
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1
@@ -67,7 +49,7 @@ grow_vertical = 2
 [node name="PanelContainer" type="PanelContainer" parent="CenterContainer"]
 custom_minimum_size = Vector2(760, 480)
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_scroll")
+theme_override_styles/panel = SubResource("StyleBoxFlat_tragedy")
 
 [node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PanelContainer"]
 layout_mode = 2
@@ -81,32 +63,32 @@ layout_mode = 2
 theme_override_constants/separation = 18
 
 [node name="TitleLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
-modulate = Color(0.98, 0.88, 0.42, 1)
+modulate = Color(0.95, 0.2, 0.25, 1)
 layout_mode = 2
 theme_override_font_sizes/font_size = 34
-text = "✦ O Reino Renascido ✦"
+text = "☠ Tragédia & Desolação ☠"
 horizontal_alignment = 1
 
 [node name="SubtitleLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
-modulate = Color(0.65, 0.85, 1, 0.9)
+modulate = Color(0.9, 0.6, 0.6, 0.9)
 layout_mode = 2
-theme_override_font_sizes/font_size = 16
-text = "A profecia dos ecos foi consumada"
+theme_override_font_sizes/font_size = 18
+text = "Você é um monstro..."
 horizontal_alignment = 1
 
 [node name="HSeparator" type="HSeparator" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
-modulate = Color(0.98, 0.88, 0.42, 0.5)
+modulate = Color(0.85, 0.2, 0.25, 0.5)
 layout_mode = 2
 
 [node name="StoryLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
-modulate = Color(0.92, 0.95, 1, 0.95)
+modulate = Color(0.95, 0.85, 0.85, 0.95)
 layout_mode = 2
-theme_override_font_sizes/font_size = 15
-text = "Com o Artefato Sagrado em mãos e a Princesa libertada do ápice da Torre, a névoa de corrupção que assolava a terra começou a se dissipar das muralhas milenares.
+theme_override_font_sizes/font_size = 16
+text = "Você desferiu sua lâmina contra a Princesa e extinguiu a última centelha de esperança da humanidade.
 
-Os ecos do passado, antes almas em tormento e solidão, agora descansam em paz, gravados como guardiões eternos nas crônicas do reino renascido.
+Sem a pureza sagrada de seu espírito, a corrupção primordial rompeu todos os selos e consumiu a torre num abismo insondável.
 
-Sua coragem e maestria sobre os ecos restauraram o equilíbrio da terra. A humanidade contempla uma nova aurora de esperança e harmonia."
+A luz do mundo se apagou para sempre. O mundo sucumbiu à escuridão eterna, e restou apenas o eco do seu terrível pecado."
 horizontal_alignment = 1
 autowrap_mode = 3
 
@@ -118,8 +100,8 @@ layout_mode = 2
 custom_minimum_size = Vector2(240, 44)
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_colors/font_color = Color(1, 0.95, 0.8, 1)
+theme_override_colors/font_color = Color(1, 0.8, 0.8, 1)
 theme_override_font_sizes/font_size = 18
-text = "Retornar ao Menu"
+text = "Tentar Redenção"
 
 [connection signal="pressed" from="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]

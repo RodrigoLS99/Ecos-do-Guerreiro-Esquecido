@@ -90,6 +90,8 @@ func take_damage(amount: int) -> void:
 
 	if health <= 0:
 		is_dying = true
+		if AudioManager:
+			AudioManager.play_sfx_at_position("enemy_death", global_position, 650.0)
 		if shoot_timer != null:
 			shoot_timer.stop()
 		defeated.emit()

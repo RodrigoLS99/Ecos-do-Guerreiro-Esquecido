@@ -34,6 +34,7 @@ var hurt_remaining := 0.0
 var step_timer := 0.0
 var coyote_timer := 0.0
 var jump_buffer_timer := 0.0
+var climb_sfx_timer := 0.0
 
 @onready var visual_root: Node2D = $Visual if has_node("Visual") else null
 @onready var sprite_slot: Node2D = $Visual/SpriteSlot if has_node("Visual/SpriteSlot") else null
@@ -218,7 +219,7 @@ func _update_footsteps(delta: float, horizontal_direction: float) -> void:
 		step_timer = 0.12
 
 
-func _handle_climb(_delta: float, horizontal_direction: float, vertical_direction: float) -> void:
+func _handle_climb(delta: float, horizontal_direction: float, vertical_direction: float) -> void:
 	if ladders_in_range.is_empty() and ladders_below_in_range.is_empty():
 		state = State.FALL
 		velocity.y = 0.0
@@ -265,6 +266,16 @@ func _handle_climb(_delta: float, horizontal_direction: float, vertical_directio
 		state = State.IDLE
 		_update_animation(0.0)
 		return
+
+	# Som de subida de escada
+	if vertical_direction != 0.0:
+		climb_sfx_timer -= delta
+		if climb_sfx_timer <= 0.0:
+			climb_sfx_timer = 0.28
+			if AudioManager:
+				AudioManager.play_sfx("ladder_climb", 0.45, randf_range(0.95, 1.05))
+	else:
+		climb_sfx_timer = 0.1
 
 	global_position.x = ladder.global_position.x
 	velocity.x = 0.0
@@ -492,6 +503,8 @@ func attack() -> void:
 func _on_attack_hitbox_body_entered(body: Node2D) -> void:
 	if body.is_in_group(&"enemy") and body.has_method("take_damage"):
 		body.take_damage(1)
+	elif body.is_in_group(&"princess") and body.has_method("take_hit"):
+		body.take_hit()
 
 
 func _on_attack_hitbox_area_entered(area: Area2D) -> void:
@@ -500,6 +513,8 @@ func _on_attack_hitbox_area_entered(area: Area2D) -> void:
 			area.deflect(facing_direction)
 		elif area.has_method("destroy"):
 			area.destroy()
+	elif area.is_in_group(&"princess") and area.has_method("take_hit"):
+		area.take_hit()
 
 
 func _on_hurtbox_body_entered(body: Node2D) -> void:
@@ -510,7 +525,10 @@ func _on_hurtbox_body_entered(body: Node2D) -> void:
 
 
 func _on_hurtbox_area_entered(area: Area2D) -> void:
-	if area.is_in_group(&"hazard") or area.is_in_group(&"pit"):
+	if area.is_in_group(&"pit"):
+		die_fall()
+		return
+	elif area.is_in_group(&"hazard"):
 		die_instant()
 		return
 
@@ -530,8 +548,21 @@ func die_instant() -> void:
 	velocity = Vector2.ZERO
 	_update_animation()
 	if AudioManager:
-		AudioManager.play_sfx("death")
-	await get_tree().create_timer(0.5).timeout
+		AudioManager.play_sfx("player_death")
+	await get_tree().create_timer(0.65).timeout
+	GameState.respawn_current_floor()
+
+
+func die_fall() -> void:
+	if state == State.DEAD:
+		return
+
+	state = State.DEAD
+	velocity = Vector2.ZERO
+	_update_animation()
+	if AudioManager:
+		AudioManager.play_sfx("fall_death")
+	await get_tree().create_timer(1.2).timeout
 	GameState.respawn_current_floor()
 
 

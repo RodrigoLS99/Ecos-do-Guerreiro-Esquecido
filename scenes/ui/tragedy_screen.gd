@@ -5,7 +5,7 @@ extends Control
 
 func _ready() -> void:
 	if AudioManager:
-		AudioManager.play_ambient_track("victory")
+		AudioManager.play_ambient_track("tragedy")
 	
 	if panel != null:
 		panel.modulate.a = 0.0

@@ -3,6 +3,7 @@ extends Area2D
 signal rescued
 
 var is_rescued := false
+var is_dead := false
 var time_passed := 0.0
 
 @onready var visual: Node2D = $Visual if has_node("Visual") else null
@@ -39,6 +40,8 @@ func _setup_visual_slots() -> void:
 
 
 func _process(delta: float) -> void:
+	if is_dead:
+		return
 	time_passed += delta
 	if visual != null and not is_rescued:
 		visual.position.y = sin(time_passed * 2.5) * 1.5
@@ -47,7 +50,7 @@ func _process(delta: float) -> void:
 
 
 func _on_body_entered(body: Node2D) -> void:
-	if is_rescued:
+	if is_rescued or is_dead:
 		return
 
 	if body.is_in_group(&"player"):
@@ -71,3 +74,27 @@ func _on_body_entered(body: Node2D) -> void:
 			tw.tween_property(heart_bubble, "position:y", -65.0, 0.8)
 			tw.tween_property(heart_bubble, "modulate:a", 1.0, 0.3)
 			tw.chain().tween_property(heart_bubble, "modulate:a", 0.0, 0.5)
+
+
+func take_hit() -> void:
+	if is_dead:
+		return
+	is_dead = true
+	is_rescued = false
+	
+	if AudioManager:
+		AudioManager.play_sfx("princess_hit")
+		AudioManager.play_ambient_track("tragedy")
+	
+	# Visual collapse / shatter sem afundar na plataforma
+	if visual != null:
+		var tw := create_tween().set_parallel(true).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+		tw.tween_property(visual, "modulate", Color(0.95, 0.2, 0.2, 0.8), 0.25)
+		tw.tween_property(visual, "position:x", 12.0, 0.6)
+		tw.tween_property(visual, "position:y", -6.0, 0.6)
+		tw.tween_property(visual, "rotation", deg_to_rad(85.0), 0.6)
+		tw.chain().tween_property(visual, "modulate:a", 0.0, 0.6)
+	
+	# Dramatic delay before changing to tragedy screen
+	await get_tree().create_timer(1.3).timeout
+	get_tree().call_deferred(&"change_scene_to_file", "res://scenes/ui/tragedy_screen.tscn")
