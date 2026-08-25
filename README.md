@@ -2,6 +2,8 @@
 
 Um jogo de plataforma e quebra-cabeça 2D focado no domínio estratégico de ecos temporais, combate com espada e reflexão de projéteis, desenvolvido com a **Godot Engine 4**.
 
+🎮 **[Jogue agora no Itch.io: Ecos do Guerreiro Esquecido](https://rodrigols99.itch.io/ecos-do-guerreiro-esquecido)**
+
 ---
 
 ## Sinopse
