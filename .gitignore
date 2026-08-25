@@ -1,8 +1,13 @@
 # Godot 4+ specific ignores
 .godot/
+src/.godot/
 /android/
+src/android/
 
 !.godot/uid_cache.bin
+!src/.godot/uid_cache.bin
 
 builds/
+src/builds/
+release_assets/
 exports/

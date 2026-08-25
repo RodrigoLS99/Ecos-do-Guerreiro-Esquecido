@@ -25,9 +25,9 @@ jobs:
 
       - name: Criar Diretórios de Build
         run: |
-          mkdir -p builds/linux
-          mkdir -p builds/windows
-          mkdir -p builds/web
+          mkdir -p src/builds/linux
+          mkdir -p src/builds/windows
+          mkdir -p src/builds/web
           mkdir -p release_assets
 
       - name: Exportar com Godot 4
@@ -36,7 +36,7 @@ jobs:
         with:
           godot_executable_download_url: https://github.com/godotengine/godot/releases/download/${{ env.GODOT_VERSION }}-stable/Godot_v${{ env.GODOT_VERSION }}-stable_linux.x86_64.zip
           godot_export_templates_download_url: https://github.com/godotengine/godot/releases/download/${{ env.GODOT_VERSION }}-stable/Godot_v${{ env.GODOT_VERSION }}-stable_export_templates.tpz
-          relative_project_path: ./
+          relative_project_path: ./src
           archive_output: false
           cache: true
 
@@ -50,30 +50,36 @@ jobs:
           # 1. Linux
           if [ -f "$BUILD_DIR/$LINUX_BIN" ]; then
             cp "$BUILD_DIR/$LINUX_BIN" "release_assets/Ecos do Guerreiro Esquecido - Linux.x86-64"
+          elif [ -f "src/$LINUX_BIN" ]; then
+            cp "src/$LINUX_BIN" "release_assets/Ecos do Guerreiro Esquecido - Linux.x86-64"
           elif [ -f "$LINUX_BIN" ]; then
             cp "$LINUX_BIN" "release_assets/Ecos do Guerreiro Esquecido - Linux.x86-64"
           else
-            LINUX_SRC=$(find "$BUILD_DIR" ./builds -type f \( -name "*.x86_64" -o -name "*.x86-64" \) | head -n 1)
+            LINUX_SRC=$(find "$BUILD_DIR" ./src/builds ./builds -type f \( -name "*.x86_64" -o -name "*.x86-64" \) 2>/dev/null | head -n 1)
             cp "$LINUX_SRC" "release_assets/Ecos do Guerreiro Esquecido - Linux.x86-64"
           fi
 
           # 2. Windows
           if [ -f "$BUILD_DIR/$WINDOWS_BIN" ]; then
             cp "$BUILD_DIR/$WINDOWS_BIN" "release_assets/Ecos do Guerreiro Esquecido - Windows.exe"
+          elif [ -f "src/$WINDOWS_BIN" ]; then
+            cp "src/$WINDOWS_BIN" "release_assets/Ecos do Guerreiro Esquecido - Windows.exe"
           elif [ -f "$WINDOWS_BIN" ]; then
             cp "$WINDOWS_BIN" "release_assets/Ecos do Guerreiro Esquecido - Windows.exe"
           else
-            WIN_SRC=$(find "$BUILD_DIR" ./builds -type f -name "*.exe" | head -n 1)
+            WIN_SRC=$(find "$BUILD_DIR" ./src/builds ./builds -type f -name "*.exe" 2>/dev/null | head -n 1)
             cp "$WIN_SRC" "release_assets/Ecos do Guerreiro Esquecido - Windows.exe"
           fi
 
           # 3. Web
           if [ -d "$BUILD_DIR/$WEB_DIR" ] && [ "$(find "$BUILD_DIR/$WEB_DIR" -type f | wc -l)" -gt 0 ]; then
             (cd "$BUILD_DIR/$WEB_DIR" && zip -rq "$GITHUB_WORKSPACE/release_assets/Ecos do Guerreiro Esquecido - Web.zip" .)
+          elif [ -d "src/$WEB_DIR" ] && [ "$(find "src/$WEB_DIR" -type f | wc -l)" -gt 0 ]; then
+            (cd "src/$WEB_DIR" && zip -rq "$GITHUB_WORKSPACE/release_assets/Ecos do Guerreiro Esquecido - Web.zip" .)
           elif [ -d "$WEB_DIR" ] && [ "$(find "$WEB_DIR" -type f | wc -l)" -gt 0 ]; then
             (cd "$WEB_DIR" && zip -rq "$GITHUB_WORKSPACE/release_assets/Ecos do Guerreiro Esquecido - Web.zip" .)
           else
-            WEB_SRC=$(find "$BUILD_DIR" ./builds -type d \( -name "*web*" -o -name "*Web*" \) | head -n 1)
+            WEB_SRC=$(find "$BUILD_DIR" ./src/builds ./builds -type d \( -name "*web*" -o -name "*Web*" \) 2>/dev/null | head -n 1)
             (cd "$WEB_SRC" && zip -rq "$GITHUB_WORKSPACE/release_assets/Ecos do Guerreiro Esquecido - Web.zip" .)
           fi
 
