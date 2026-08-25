@@ -889,5 +889,5 @@ position = Vector2(100, 550)
 
 [node name="Tutorial_Echo" parent="." unique_id=1234129258 instance=ExtResource("8_tut")]
 position = Vector2(100, 550)
-message = "✦ Pressione [{echo_create}] para invocar um Eco como plataforma e [{echo_collapse}] para se teletransportar até ele ✦"
+message = "Pressione [{echo_create}] para invocar um Eco como plataforma e [{echo_collapse}] para se teletransportar até ele"
 auto_trigger_on_start = true

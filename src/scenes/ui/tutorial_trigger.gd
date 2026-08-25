@@ -1,6 +1,6 @@
 extends Area2D
 
-@export_multiline var message: String = "✦ Mensagem Tutorial ✦"
+@export_multiline var message: String = "Mensagem Tutorial"
 @export var display_duration: float = 3.5
 @export var auto_trigger_on_start := false
 

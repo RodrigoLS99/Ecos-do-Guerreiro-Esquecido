@@ -71,7 +71,7 @@ alignment = 1
 layout_mode = 2
 theme_override_colors/font_color = Color(0.95, 0.85, 0.35, 1)
 theme_override_font_sizes/font_size = 26
-text = "✦ Jogo Pausado ✦"
+text = "Jogo Pausado"
 horizontal_alignment = 1
 
 [node name="ControlSpacer" type="Control" parent="MenuRoot/Panel/MarginContainer/VBoxContainer"]

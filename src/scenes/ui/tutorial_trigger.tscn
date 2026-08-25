@@ -45,6 +45,6 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_banner")
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.95, 0.8, 1)
 theme_override_font_sizes/font_size = 17
-text = "✦ Mensagem Tutorial ✦"
+text = "Mensagem Tutorial"
 horizontal_alignment = 1
 vertical_alignment = 1

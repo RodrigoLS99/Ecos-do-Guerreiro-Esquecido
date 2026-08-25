@@ -84,7 +84,7 @@ theme_override_constants/separation = 18
 modulate = Color(0.98, 0.88, 0.42, 1)
 layout_mode = 2
 theme_override_font_sizes/font_size = 34
-text = "✦ O Reino Renascido ✦"
+text = "O Reino Renascido"
 horizontal_alignment = 1
 
 [node name="SubtitleLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]

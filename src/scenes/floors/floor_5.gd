@@ -22,13 +22,13 @@ func _ready() -> void:
 
 
 func _on_artifact_collected() -> void:
-	show_message("✦ Artefato Sagrado Recuperado! O selo da câmara se abriu. ✦")
+	show_message("Artefato Sagrado Recuperado! O selo da câmara se abriu.")
 	if gate_princess and gate_princess.has_method("open"):
 		gate_princess.open()
 
 
 func _on_princess_rescued() -> void:
-	show_message("❤ A Princesa foi libertada! O portal da vitória está aberto. ❤")
+	show_message("A Princesa foi libertada! O portal da vitória está aberto.")
 	if floor_exit:
 		floor_exit.visible = true
 		if floor_exit.has_node("CollisionShape2D"):
