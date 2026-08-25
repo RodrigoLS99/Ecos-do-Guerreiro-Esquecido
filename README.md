@@ -37,9 +37,9 @@ O jogador assume o controle do Guerreiro Esquecido, o único combatente imune ao
 | Subir Escada | W | Movimentação vertical ascendente em escadas |
 | Descer Escada | S | Movimentação vertical descendente em escadas |
 | Pular | Barra de Espaço | Salto com altura variável |
-| Atacar com a Espada | X | Golpe de lâmina e reflexão de projéteis |
-| Invocar Eco | C | Criação de réplica espectral sólida |
-| Colapsar Eco (Teleporte) | V | Teletransporte instantâneo para a posição do eco |
+| Atacar com a Espada | J | Golpe de lâmina e reflexão de projéteis |
+| Invocar Eco | K | Criação de réplica espectral sólida |
+| Colapsar Eco (Teleporte) | L | Teletransporte instantâneo para a posição do eco |
 | Pausar Jogo | ESC | Abertura do menu de pausa |
 
 Todas as teclas podem ser remapeadas livremente no menu de Opções durante a execução, com suporte a detecção e resolução automática de conflitos de teclas.

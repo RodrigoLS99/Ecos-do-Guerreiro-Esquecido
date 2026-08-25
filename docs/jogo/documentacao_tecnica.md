@@ -39,10 +39,13 @@ Responsável pelo ciclo de vida da sessão de jogo, controle de fluxo entre anda
 - `go_to_next_floor() -> void`: Incrementa o índice do andar e carrega a cena subsequente. Caso o jogador conclua o quinto andar, a transição é direcionada para a tela de vitória (`res://scenes/ui/victory_screen.tscn`).
 
 ### 2.2 SettingsManager (`autoload/settings_manager.gd`)
-Gerencia o armazenamento persistente em disco e a reatribuição dinâmica de teclas de controle:
-- Persistência em Disco: Lê e grava parâmetros no arquivo `user://settings.cfg` através de `ConfigFile` nas seções `audio` e `controls`.
-- Canais de Áudio: Controla os barramentos `Master`, `Music` e `SFX` aplicando conversão de ganho linear (0.0 a 1.0) para decibéis via função nativa `linear_to_db()`.
-- Remapeamento com Resolução de Conflitos: Na função `remap_action(action_name, new_event)`, o sistema varre todas as ações mapeadas no `InputMap`. Caso a nova tecla já esteja em uso por outra ação, ela é automaticamente removida da ação anterior para prevenir comandos duplicados simultâneos.
+Gerencia o armazenamento persistente em disco, a reatribuição dinâmica de teclas de controle, a exibição em tela cheia e o comportamento dinâmico do cursor do mouse:
+- Persistência em Disco: Lê e grava parâmetros no arquivo `user://settings.cfg` através de `ConfigFile` nas seções `audio`, `video` e `controls`.
+- Gestão de Vídeo: Alternância entre modo janela e tela cheia via `DisplayServer.window_set_mode()`, sincronizada com o menu de opções.
+- Gestão Dinâmica do Cursor: Oculta automaticamente o ponteiro do mouse após 2.5 segundos de inatividade, reexibindo o cursor instantaneamente assim que o mouse é movimentado ou clicado.
+- Controles Padrão Ergonômicos: Mapeamento nativo com `WASD` (movimento e escadas), `Barra de Espaço` (pulo), `J` (ataque e deflexão com a espada), `K` (invocação de eco como plataforma) e `L` (colapso temporal e teletransporte).
+- Canais de Áudio: Controla os barramentos de áudio aplicando conversão de ganho linear (0.0 a 1.0) para decibéis via função nativa `linear_to_db()`.
+- Remapeamento com Resolução de Conflitos: Ao alterar uma ação no menu de opções, se a nova tecla já estiver atribuída a outra ação configurável, o sistema realiza a troca recíproca entre as duas ações para evitar comandos duplicados simultâneos.
 
 ### 2.3 AudioManager (`autoload/audio_manager.gd`)
 Motor de síntese de áudio procedural que sintetiza em tempo de execução todas as músicas e efeitos sonoros diretamente na memória RAM, sem carregar arquivos WAV ou MP3 externos:

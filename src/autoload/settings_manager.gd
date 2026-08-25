@@ -2,8 +2,10 @@ extends Node
 
 signal controls_changed
 signal volume_changed(new_volume: float)
+signal fullscreen_changed(is_fullscreen: bool)
 
 const SAVE_PATH := "user://settings.cfg"
+const MOUSE_HIDE_DELAY := 2.5
 
 const DEFAULT_KEYS := {
 	"ui_left": KEY_A,
@@ -11,9 +13,9 @@ const DEFAULT_KEYS := {
 	"ui_up": KEY_W,
 	"ui_down": KEY_S,
 	"jump": KEY_SPACE,
-	"attack": KEY_X,
-	"echo_create": KEY_C,
-	"echo_collapse": KEY_V,
+	"attack": KEY_J,
+	"echo_create": KEY_K,
+	"echo_collapse": KEY_L,
 	"pause": KEY_ESCAPE,
 }
 
@@ -31,10 +33,12 @@ const ACTION_LABELS := {
 
 var master_volume: float = 1.0
 var is_muted: bool = false
+var fullscreen: bool = false
+var _mouse_idle_timer: float = 0.0
 
 
 func _ready() -> void:
-	# Ensure pause action exists in InputMap
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	if not InputMap.has_action("pause"):
 		InputMap.add_action("pause")
 		var ev_esc := InputEventKey.new()
@@ -43,6 +47,32 @@ func _ready() -> void:
 
 	load_settings()
 	apply_audio_volume()
+
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseMotion or event is InputEventMouseButton:
+		if Input.mouse_mode != Input.MOUSE_MODE_VISIBLE:
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		_mouse_idle_timer = 0.0
+
+
+func _process(delta: float) -> void:
+	if Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
+		_mouse_idle_timer += delta
+		if _mouse_idle_timer >= MOUSE_HIDE_DELAY:
+			Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
+
+
+# --- GESTÃO DE VÍDEO (TELA CHEIA) ---
+
+func set_fullscreen(enabled: bool) -> void:
+	fullscreen = enabled
+	if fullscreen:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+	else:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+	save_settings()
+	fullscreen_changed.emit(fullscreen)
 
 
 # --- GESTÃO DE ÁUDIO ---
@@ -177,7 +207,9 @@ func format_prompt(template: String) -> String:
 func reset_to_defaults() -> void:
 	master_volume = 1.0
 	is_muted = false
+	fullscreen = false
 	apply_audio_volume()
+	set_fullscreen(false)
 
 	for action_name in DEFAULT_KEYS:
 		var keycode: Key = DEFAULT_KEYS[action_name]
@@ -194,6 +226,7 @@ func save_settings() -> void:
 	var config := ConfigFile.new()
 	config.set_value("audio", "master_volume", master_volume)
 	config.set_value("audio", "is_muted", is_muted)
+	config.set_value("video", "fullscreen", fullscreen)
 
 	for action_name in DEFAULT_KEYS:
 		var code := get_action_keycode(action_name)
@@ -211,6 +244,12 @@ func load_settings() -> void:
 
 	master_volume = config.get_value("audio", "master_volume", 1.0)
 	is_muted = config.get_value("audio", "is_muted", false)
+	fullscreen = config.get_value("video", "fullscreen", false)
+
+	if fullscreen:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+	else:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 
 	for action_name in DEFAULT_KEYS:
 		if config.has_section_key("controls", action_name):

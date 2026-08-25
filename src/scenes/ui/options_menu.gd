@@ -4,6 +4,9 @@ signal closed
 
 var listening_action: String = ""
 
+# Video UI reference
+@onready var fullscreen_checkbox: CheckBox = %FullscreenCheckBox if has_node("%FullscreenCheckBox") else null
+
 # Audio UI references
 @onready var volume_slider: HSlider = %VolumeSlider if has_node("%VolumeSlider") else null
 @onready var volume_label: Label = %VolumeLabel if has_node("%VolumeLabel") else null
@@ -19,6 +22,7 @@ var listening_action: String = ""
 @onready var btn_echo_create: Button = %BtnEchoCreate if has_node("%BtnEchoCreate") else null
 @onready var btn_echo_teleport: Button = %BtnEchoTeleport if has_node("%BtnEchoTeleport") else null
 @onready var btn_pause: Button = %BtnPause if has_node("%BtnPause") else null
+@onready var back_button: Button = %BackButton if has_node("%BackButton") else null
 @onready var listening_overlay: PanelContainer = %ListeningOverlay if has_node("%ListeningOverlay") else null
 @onready var listening_label: Label = %ListeningLabel if has_node("%ListeningLabel") else null
 
@@ -31,6 +35,7 @@ func _ready() -> void:
 	if SettingsManager:
 		SettingsManager.controls_changed.connect(refresh_ui)
 		SettingsManager.volume_changed.connect(_on_settings_volume_changed)
+		SettingsManager.fullscreen_changed.connect(_on_settings_fullscreen_changed)
 	
 	_connect_button_signals()
 	refresh_ui()
@@ -67,6 +72,10 @@ func refresh_ui() -> void:
 	if not is_instance_valid(SettingsManager):
 		return
 	
+	# Update Video UI
+	if fullscreen_checkbox:
+		fullscreen_checkbox.set_pressed_no_signal(SettingsManager.fullscreen)
+
 	# Update Audio UI
 	var eff_vol := SettingsManager.get_effective_volume()
 	if volume_slider:
@@ -117,6 +126,16 @@ func stop_listening() -> void:
 	if listening_overlay:
 		listening_overlay.visible = false
 	refresh_ui()
+
+
+func _on_fullscreen_check_box_toggled(toggled_on: bool) -> void:
+	if SettingsManager:
+		SettingsManager.set_fullscreen(toggled_on)
+
+
+func _on_settings_fullscreen_changed(is_full: bool) -> void:
+	if fullscreen_checkbox:
+		fullscreen_checkbox.set_pressed_no_signal(is_full)
 
 
 func _on_volume_slider_value_changed(value: float) -> void:

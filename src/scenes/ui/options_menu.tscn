@@ -89,6 +89,24 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 16
 
+[node name="VideoHeader" type="Label" parent="Panel/MarginContainer/VBoxContainer/ScrollContainer/SectionsVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.35, 0.8, 1, 1)
+theme_override_font_sizes/font_size = 18
+text = "Vídeo"
+
+[node name="VideoSettingsHBox" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer/ScrollContainer/SectionsVBox"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="FullscreenCheckBox" type="CheckBox" parent="Panel/MarginContainer/VBoxContainer/ScrollContainer/SectionsVBox/VideoSettingsHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Tela Cheia (Fullscreen)"
+
+[node name="HSeparatorVideo" type="HSeparator" parent="Panel/MarginContainer/VBoxContainer/ScrollContainer/SectionsVBox"]
+layout_mode = 2
+
 [node name="AudioHeader" type="Label" parent="Panel/MarginContainer/VBoxContainer/ScrollContainer/SectionsVBox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.35, 0.8, 1, 1)
@@ -203,7 +221,7 @@ text = "Atacar / Rebater:"
 unique_name_in_owner = true
 custom_minimum_size = Vector2(160, 36)
 layout_mode = 2
-text = "X"
+text = "J"
 
 [node name="LblE" type="Label" parent="Panel/MarginContainer/VBoxContainer/ScrollContainer/SectionsVBox/ControlsGrid"]
 layout_mode = 2
@@ -214,7 +232,7 @@ text = "Invocar Eco (Plataforma):"
 unique_name_in_owner = true
 custom_minimum_size = Vector2(160, 36)
 layout_mode = 2
-text = "C"
+text = "K"
 
 [node name="LblT" type="Label" parent="Panel/MarginContainer/VBoxContainer/ScrollContainer/SectionsVBox/ControlsGrid"]
 layout_mode = 2
@@ -225,7 +243,7 @@ text = "Colapsar Eco / Teleportar:"
 unique_name_in_owner = true
 custom_minimum_size = Vector2(160, 36)
 layout_mode = 2
-text = "V"
+text = "L"
 
 [node name="LblP" type="Label" parent="Panel/MarginContainer/VBoxContainer/ScrollContainer/SectionsVBox/ControlsGrid"]
 layout_mode = 2
@@ -249,6 +267,7 @@ layout_mode = 2
 text = "Restaurar Padrões"
 
 [node name="BackButton" type="Button" parent="Panel/MarginContainer/VBoxContainer/FooterButtonsHBox"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(180, 42)
 layout_mode = 2
 text = "Voltar"
@@ -280,6 +299,7 @@ text = "Pressione uma tecla para [Ação]...
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[connection signal="toggled" from="Panel/MarginContainer/VBoxContainer/ScrollContainer/SectionsVBox/VideoSettingsHBox/FullscreenCheckBox" to="." method="_on_fullscreen_check_box_toggled"]
 [connection signal="value_changed" from="Panel/MarginContainer/VBoxContainer/ScrollContainer/SectionsVBox/AudioSettingsHBox/VolumeSlider" to="." method="_on_volume_slider_value_changed"]
 [connection signal="toggled" from="Panel/MarginContainer/VBoxContainer/ScrollContainer/SectionsVBox/AudioSettingsHBox/MuteCheckBox" to="." method="_on_mute_check_box_toggled"]
 [connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/FooterButtonsHBox/ResetDefaultsButton" to="." method="_on_reset_defaults_button_pressed"]
